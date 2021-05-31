@@ -2,7 +2,6 @@ package com.example.Egida
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.myapplication.R
 import com.example.Egida.presentation.ui.MainFragment
 
 class MainActivity : AppCompatActivity() {
