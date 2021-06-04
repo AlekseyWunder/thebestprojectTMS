@@ -1,11 +1,3 @@
 <resources>
     <string name="app_name">Egida</string>
-    <string name="E_mail">Your e-mail</string>
-    <string name="Password">Your password</string>
-    <string name="sign_in">Sign In</string>
-    <string name="repeatPassword">Repeat your password</string>
-    <string name="details">FORGOT DETAILS?</string>
-    <string name="login_in">LOGIN IN?</string>
-    <string name="registrate">REGISTRATE</string>
-    <string name="forgot_password">FORGOT PASSWORD</string>
 </resources>
