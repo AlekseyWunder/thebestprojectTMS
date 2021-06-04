@@ -1,33 +1,48 @@
 package com.example.Egida.data
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import com.example.Egida.domain.entity.User
 import com.example.Egida.domain.useCase.UserRepository
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
+import kotlin.properties.Delegates
 
 class Database() : UserRepository {
     companion object {
         const val TAG = " database"
     }
 
-
+    private var chek by Delegates.notNull<Boolean>()
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    @SuppressLint("ShowToast")
-    override fun addUser(user: User) {
-        mAuth.createUserWithEmailAndPassword(
-            user.email,
-            user.password
-        ).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                // Sign in success, update UI with the signed-in user's information
-                Log.d(TAG, "createUserWithEmail:success")
 
-            } else {
-                // If sign in fails, display a message to the user.
-                Log.w(TAG, "createUserWithEmail:failure", task.exception)
+    private val cUser: FirebaseUser? = mAuth.currentUser
+    override fun checkingUser(): Boolean {
+        return cUser != null
+    }
+
+    override suspend fun addUser(user: User) {
+        withContext(Dispatchers.Main) {
+
+            mAuth.createUserWithEmailAndPassword(
+                user.email,
+                user.password
+            ).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "createUserWithEmail:success")
+                    this@Database.chek = true
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                    this@Database.chek = false
+                }
+            }
+            delay(2000)
+            if (this@Database.chek) {
+                sendEmailVerification()
             }
         }
     }
@@ -38,11 +53,35 @@ class Database() : UserRepository {
             user.password
         ).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-
+                Log.d(TAG, "signInWithEmailAndPassword:success")
             } else {
-
+                Log.w(TAG, "signInWithEmailAndPassword:failure", task.exception)
             }
         }
-
     }
+
+    private fun sendEmailVerification() {
+        mAuth.currentUser?.sendEmailVerification()
+            ?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "sendEmailVerification:success")
+                } else {
+                    Log.d(TAG, "sendEmailVerification:failure", task.exception)
+                }
+            }
+    }
+
+    override fun sendPasswordResetEmail(email: String) {
+        var emailAddress = email
+        mAuth.sendPasswordResetEmail(emailAddress)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "Email sent.")
+                } else {
+                    Log.d(TAG, "Email failed")
+                }
+            }
+    }
+
+
 }
