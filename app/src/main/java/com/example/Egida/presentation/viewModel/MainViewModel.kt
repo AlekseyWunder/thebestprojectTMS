@@ -38,7 +38,6 @@ class MainViewModel(
             if (password == doublePassword) {
                 viewModelScope.launch {
                     userUseCase.addUser(user)
-                    toast.value = "Проверьте вашу почту для подтверждения регистрации"
                 }
 
             } else {
