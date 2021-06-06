@@ -6,8 +6,8 @@
     <string name="repeatPassword">Repeat your password</string>
     <string name="details">FORGOT DETAILS?</string>
     <string name="login_in">LOGIN IN?</string>
-    <string name="registration">REGISTRATE</string>
+    <string name="registration">REGISTRATION</string>
     <string name="forgot_password">FORGOT PASSWORD</string>
     <string name="create_account">CREATE ACCOUNT</string>
-    <string name="send_pasword_to_email">SEND PASWORD TO EMAIL</string>
+    <string name="send_password_to_email">SEND PASSWORD TO EMAIL</string>
 </resources>

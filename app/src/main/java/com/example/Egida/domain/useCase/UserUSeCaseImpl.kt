@@ -7,8 +7,8 @@ class UserUSeCaseImpl(
     private val database: Database
 ) : UserUseCase {
 
-    override fun checkingUser(): Boolean {
-        return database.checkingUser()
+    override fun checkUser(): Boolean {
+        return database.checkUser()
     }
 
     override suspend fun addUser(user: User) {

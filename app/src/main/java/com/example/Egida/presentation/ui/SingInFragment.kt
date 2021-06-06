@@ -56,23 +56,20 @@ class SingInFragment : Fragment() {
 
         bSingIn.setOnClickListener {
             viewModel.singInUser()
-            viewModel.toast
         }
 
         bDetails.setOnClickListener {
-            requireActivity()
-                .supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.container, PasswordRecoveryFragment.newInstance())
-                .commitNow()
+            viewModel.replaceFragment(
+                requireView(),
+                PasswordRecoveryFragment.newInstance()
+            )
         }
 
         bCreateAccount.setOnClickListener {
-            requireActivity()
-                .supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.container, RegistrationFragment.newInstance())
-                .commitNow()
+            viewModel.replaceFragment(
+                requireView(),
+                RegistrationFragment.newInstance()
+            )
         }
 
     }

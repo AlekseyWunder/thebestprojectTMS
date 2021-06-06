@@ -1,6 +1,5 @@
 package com.example.Egida.presentation.ui
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,8 +14,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.Egida.R
 import com.example.Egida.presentation.viewModel.MainViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import kotlin.properties.Delegates
 
 class RegistrationFragment : Fragment() {
@@ -38,12 +35,12 @@ class RegistrationFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-      chek = viewModel.checkingUser()
-       if(chek){
+        chek = viewModel.checkUser()
+        if (chek) {
 
-       }else{
-           fragment = R.layout.registration_fragment
-       }
+        } else {
+            fragment = R.layout.registration_fragment
+        }
     }
 
 
@@ -80,23 +77,20 @@ class RegistrationFragment : Fragment() {
 //      в этом методе нужно прописать toast, при совпадении паролей, но он не отображается
         bRegistration.setOnClickListener {
             viewModel.addUser()
-            viewModel.toast
         }
 
         bDetails.setOnClickListener {
-            requireActivity()
-                .supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.container, PasswordRecoveryFragment.newInstance())
-                .commitNow()
+            viewModel.replaceFragment(
+                requireView(),
+                PasswordRecoveryFragment.newInstance()
+            )
         }
 
         bLoginIn.setOnClickListener {
-            requireActivity()
-                .supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.container, SingInFragment.newInstance())
-                .commitNow()
+            viewModel.replaceFragment(
+                requireView(),
+                SingInFragment.newInstance()
+            )
         }
 
 

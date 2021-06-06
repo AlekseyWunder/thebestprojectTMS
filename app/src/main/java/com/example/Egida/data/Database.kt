@@ -19,7 +19,7 @@ class Database() : UserRepository {
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
     private val cUser: FirebaseUser? = mAuth.currentUser
-    override fun checkingUser(): Boolean {
+    override fun checkUser(): Boolean {
         return cUser != null
     }
 
