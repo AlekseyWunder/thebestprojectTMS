@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.Egida.App
 import com.example.Egida.Dependencies
 import com.example.Egida.R
 import com.example.Egida.domain.entity.User
@@ -22,9 +23,9 @@ class MainViewModel(
     var email: String = ""
     var password: String = ""
     var doublePassword: String = ""
-    private val user = User(email, password)
     var toast = MutableLiveData<String>()
     var fragment = MutableLiveData<Fragment>()
+
 
     fun checkUser(): Boolean {
         return userUseCase.checkUser()
@@ -37,14 +38,14 @@ class MainViewModel(
         ) {
             if (password == doublePassword) {
                 viewModelScope.launch {
+                    val user = User(email, password)
                     userUseCase.addUser(user)
                 }
-
             } else {
-                toast.value = "Пароли не совпадают"
+                toast.value = statesUser(StatesUser.PasswordsDontMatch)
             }
         } else {
-            toast.value = "Введите логин и пароль"
+            toast.value = statesUser(StatesUser.EmailAndPassword)
         }
     }
 
@@ -52,10 +53,10 @@ class MainViewModel(
         if (!TextUtils.isEmpty(email)
             && !TextUtils.isEmpty(password)
         ) {
+            val user = User(email, password)
             userUseCase.singInUser(user)
-            toast.value = "Пользователь добавлен"
         } else {
-            toast.value = "Введите логин и пароль"
+            toast.value = statesUser(StatesUser.EmailAndPassword)
         }
     }
 
@@ -75,5 +76,19 @@ class MainViewModel(
             .replace(R.id.container, fragment)
             .addToBackStack(null).commit();
     }
+
+    fun statesUser(stateUser: StatesUser) = when (stateUser) {
+        is StatesUser.PasswordsDontMatch -> App.instance.resources.getString(R.string.passwords_dont_match)
+        is StatesUser.EmailAndPassword -> App.instance.resources.getString(R.string.email_and_password)
+    }
 }
+
+sealed class StatesUser {
+    object PasswordsDontMatch : StatesUser()
+    object EmailAndPassword : StatesUser()
+}
+
+
+
+
 

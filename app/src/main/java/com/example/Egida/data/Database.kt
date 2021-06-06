@@ -29,7 +29,6 @@ class Database() : UserRepository {
 
     override suspend fun addUser(user: User) {
         withContext(Dispatchers.Main) {
-
             mAuth.createUserWithEmailAndPassword(
                 user.email,
                 user.password
@@ -38,13 +37,7 @@ class Database() : UserRepository {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "createUserWithEmail:success")
                     this@Database.chek = true
-
                 }
-//                } else {
-//                    // If sign in fails, display a message to the user.
-//                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
-//                    this@Database.chek = false
-//                }
             }.addOnFailureListener {
                 this@Database.chek = false
                 val errorCode = (it as FirebaseAuthException).errorCode
@@ -53,14 +46,18 @@ class Database() : UserRepository {
                     toast(errorMessage)
                 }
             }
-        }
-        delay(2000)
-        if (this@Database.chek) {
-            sendEmailVerification()
-            Toast.makeText(App.instance, "Проверьте вашу почту для подтверждения регистрации",Toast.LENGTH_LONG).show()
+            delay(2000)
+            if (this@Database.chek) {
+                sendEmailVerification()
+                //При такой архитектуре правиль но ли сдесь сделано
+                Toast.makeText(
+                    App.instance.applicationContext,
+                    "Проверьте вашу почту для подтверждения регистрации",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
     }
-
 
     override fun singInUser(user: User) {
         mAuth.signInWithEmailAndPassword(
@@ -69,8 +66,13 @@ class Database() : UserRepository {
         ).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Log.d(TAG, "signInWithEmailAndPassword:success")
-            } else {
-                Log.w(TAG, "signInWithEmailAndPassword:failure", task.exception)
+            }
+        }.addOnFailureListener {
+            this@Database.chek = false
+            val errorCode = (it as FirebaseAuthException).errorCode
+            val errorMessage = authErrors[errorCode]
+            if (errorMessage != null) {
+                toast(errorMessage)
             }
         }
     }
@@ -92,8 +94,13 @@ class Database() : UserRepository {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "Email sent.")
-                } else {
-                    Log.d(TAG, "Email failed")
+                }
+            }.addOnFailureListener {
+                this@Database.chek = false
+                val errorCode = (it as FirebaseAuthException).errorCode
+                val errorMessage = authErrors[errorCode]
+                if (errorMessage != null) {
+                    toast(errorMessage)
                 }
             }
     }

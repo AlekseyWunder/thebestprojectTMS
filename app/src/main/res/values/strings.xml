@@ -10,4 +10,6 @@
     <string name="forgot_password">FORGOT PASSWORD</string>
     <string name="create_account">CREATE ACCOUNT</string>
     <string name="send_password_to_email">SEND PASSWORD TO EMAIL</string>
+    <string name="passwords_dont_match">Passwords don\'t match</string>
+    <string name="email_and_password">Enter your email and password</string>
 </resources>
