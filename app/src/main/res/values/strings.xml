@@ -12,4 +12,20 @@
     <string name="send_password_to_email">SEND PASSWORD TO EMAIL</string>
     <string name="passwords_dont_match">Passwords don\'t match</string>
     <string name="email_and_password">Enter your email and password</string>
+    <string name="chat">CHAT</string>
+    <string name="people">PEOPLE</string>
+    <string name="user">USER</string>
+    <string name="_156">156</string>
+    <string name="update_you_day">UPDATE YOU DAY</string>
+    <string name="setting">SETTING</string>
+    <string name="user_param">USER PARAM</string>
+    <string name="accept_the_data_usage_agreement">ACCEPT THE DATA USAGE AGREEMENT</string>
+    <string name="phone_number">PHONE NUMBER</string>
+    <string name="photo">PHOTO</string>
+    <string name="height">HEIGHT</string>
+    <string name="_180">180</string>
+    <string name="weight">WEIGHT</string>
+    <string name="_70">70</string>
+    <string name="last_name">LAST NAME</string>
+    <string name="first_name">FIRST NAME</string>
 </resources>

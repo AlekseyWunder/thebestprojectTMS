@@ -3,6 +3,7 @@ package com.example.Egida
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.Egida.presentation.ui.RegistrationFragment
+import com.example.Egida.presentation.ui.SettingFragment
 import com.example.Egida.presentation.ui.SingInFragment
 
 class MainActivity : AppCompatActivity() {
@@ -12,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, SingInFragment.newInstance())
+                    .replace(R.id.container, SettingFragment.newInstance())
                     .commitNow()
         }
     }

@@ -6,6 +6,10 @@
         <item name="android:layout_marginStart">20dp</item>
         <item name="android:layout_marginEnd">20dp</item>
         <item name="android:layout_marginTop">20dp</item>
+    </style>
 
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">4dp</item>
     </style>
 </resources>

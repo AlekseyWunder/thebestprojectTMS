@@ -38,6 +38,7 @@ class Database() : UserRepository {
                     Log.d(TAG, "createUserWithEmail:success")
                     this@Database.chek = true
                 }
+
             }.addOnFailureListener {
                 this@Database.chek = false
                 val errorCode = (it as FirebaseAuthException).errorCode
@@ -77,7 +78,8 @@ class Database() : UserRepository {
         }
     }
 
-    private fun sendEmailVerification() {
+    private suspend fun sendEmailVerification() {
+        delay(2000)
         mAuth.currentUser?.sendEmailVerification()
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -133,3 +135,4 @@ class Database() : UserRepository {
             .show()
     }
 }
+
