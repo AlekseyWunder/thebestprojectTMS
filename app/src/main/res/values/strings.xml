@@ -28,4 +28,15 @@
     <string name="_70">70</string>
     <string name="last_name">LAST NAME</string>
     <string name="first_name">FIRST NAME</string>
+    <string name="running_km">RUNNING (KM)</string>
+    <string name="bike_ride_km">BIKE RIDE (KM)</string>
+    <string name="sleep_hour">SLEEP (HOUR)</string>
+    <string name="fit">FIT</string>
+    <string name="meeal_kkall">MEEAL (KKALL)</string>
+    <string name="water_ml">WATER (ML)</string>
+    <string name="alcohol_ml">ALCOHOL (ML)</string>
+    <string name="work">WORK</string>
+    <string name="work_hour">WORK (HOUR)</string>
+    <string name="leisure_hour">LEISURE (HOUR)</string>
+    <string name="_8">8</string>
 </resources>
