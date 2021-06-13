@@ -12,7 +12,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.Egida.R
-import com.example.Egida.presentation.viewModel.MainViewModel
+import com.example.Egida.presentation.viewModel.LoginViewModel
 
 class PasswordRecoveryFragment : Fragment() {
 
@@ -21,7 +21,7 @@ class PasswordRecoveryFragment : Fragment() {
         const val TAG = " passwordRecoveryFragment"
     }
 
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: LoginViewModel
     private lateinit var editUserEmail: EditText
     private lateinit var btnLoginIn: Button
     private lateinit var btnSendPassword: Button
@@ -35,7 +35,7 @@ class PasswordRecoveryFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         editUserEmail.doAfterTextChanged {
             viewModel.email = it.toString()
             Log.d(TAG, viewModel.email)

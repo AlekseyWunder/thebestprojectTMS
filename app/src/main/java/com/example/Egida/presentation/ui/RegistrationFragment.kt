@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.Egida.R
-import com.example.Egida.presentation.viewModel.MainViewModel
+import com.example.Egida.presentation.viewModel.LoginViewModel
 import kotlin.properties.Delegates
 
 class RegistrationFragment : Fragment() {
@@ -25,7 +25,7 @@ class RegistrationFragment : Fragment() {
 
     private var fragment = R.layout.registration_fragment
     private var chek by Delegates.notNull<Boolean>()
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: LoginViewModel
     private lateinit var editUserEmail: EditText
     private lateinit var editUserPassword: EditText
     private lateinit var editDoubleUserPassword: EditText
@@ -54,7 +54,7 @@ class RegistrationFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         editUserEmail.doAfterTextChanged {
             viewModel.email = it.toString()
             Log.d(TAG, viewModel.email)

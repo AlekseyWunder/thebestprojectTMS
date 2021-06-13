@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.Egida.R
-import com.example.Egida.presentation.viewModel.MainViewModel
+import com.example.Egida.presentation.viewModel.LoginViewModel
 
 class SingInFragment : Fragment() {
 
@@ -22,7 +22,7 @@ class SingInFragment : Fragment() {
         const val TAG = " singInFragment"
     }
 
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: LoginViewModel
     private lateinit var editUserEmail: EditText
     private lateinit var editUserPassword: EditText
     private lateinit var bDetails: Button
@@ -38,7 +38,7 @@ class SingInFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         editUserEmail.doAfterTextChanged {
             viewModel.email = it.toString()
             Log.d(TAG, viewModel.email)
