@@ -5,14 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.Egida.R
+import com.example.Egida.databinding.SingInFragmentBinding
 import com.example.Egida.presentation.viewModel.LoginViewModel
 
 class SingInFragment : Fragment() {
@@ -22,29 +20,25 @@ class SingInFragment : Fragment() {
         const val TAG = " singInFragment"
     }
 
+    private lateinit var mBinding: SingInFragmentBinding
     private lateinit var viewModel: LoginViewModel
-    private lateinit var editUserEmail: EditText
-    private lateinit var editUserPassword: EditText
-    private lateinit var bDetails: Button
-    private lateinit var bCreateAccount: Button
-    private lateinit var bSingIn: Button
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.sing_in_fragment, container, false)
+        mBinding = SingInFragmentBinding.inflate(layoutInflater)
+        return mBinding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-        editUserEmail.doAfterTextChanged {
+        mBinding.editUserEmail.doAfterTextChanged {
             viewModel.email = it.toString()
             Log.d(TAG, viewModel.email)
         }
 
-        editUserPassword.doAfterTextChanged {
+        mBinding.editUserPassword.doAfterTextChanged {
             viewModel.password = it.toString()
             Log.d(TAG, viewModel.password)
 
@@ -54,18 +48,18 @@ class SingInFragment : Fragment() {
             Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
         })
 
-        bSingIn.setOnClickListener {
+        mBinding.btnSingIn.setOnClickListener {
             viewModel.singInUser()
         }
 
-        bDetails.setOnClickListener {
+        mBinding.btnDetails.setOnClickListener {
             viewModel.replaceFragment(
                 requireView(),
                 PasswordRecoveryFragment.newInstance()
             )
         }
 
-        bCreateAccount.setOnClickListener {
+        mBinding.btnCreateAccount.setOnClickListener {
             viewModel.replaceFragment(
                 requireView(),
                 RegistrationFragment.newInstance()
@@ -74,14 +68,6 @@ class SingInFragment : Fragment() {
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        editUserEmail = view.findViewById(R.id.editUserEmail)
-        editUserPassword = view.findViewById(R.id.editUserPassword)
-        bSingIn = view.findViewById(R.id.bSingIn)
-        bDetails = view.findViewById(R.id.bDetails)
-        bCreateAccount = view.findViewById(R.id.bCreateAccount)
 
-    }
 
 }

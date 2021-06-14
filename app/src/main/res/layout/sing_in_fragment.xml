@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/registration"
+    android:id="@+id/singIn"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backgroundlogin"
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@id/editUserEmail" />
 
     <Button
-        android:id="@+id/bDetails"
+        android:id="@+id/btnDetails"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/bCreateAccount"
+        android:id="@+id/btnCreateAccount"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/bSingIn"
+        android:id="@+id/btnSingIn"
         style="@style/LoginEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
