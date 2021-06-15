@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         initFields()
         initFun()
+
     }
 
     private fun initFun() {

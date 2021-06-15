@@ -5,12 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.Egida.databinding.PasswordRecoveryFragmentBinding
 import com.example.Egida.presentation.viewModel.LoginViewModel
+import com.example.Egida.utils.replaceFragment
+import com.example.Egida.utils.showToast
 
 class PasswordRecoveryFragment : Fragment() {
 
@@ -39,15 +40,15 @@ class PasswordRecoveryFragment : Fragment() {
         }
 
         viewModel.toast.observe(viewLifecycleOwner, {
-            Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+            showToast(it)
         })
 
         mBinding.btnSendPassword.setOnClickListener {
             viewModel.sendPasswordResetEmail()
         }
 
-        mBinding.btnLoginIN.setOnClickListener {
-            viewModel.replaceFragment(
+        mBinding.btnLoginIn.setOnClickListener {
+            replaceFragment(
                 requireView(),
                 SingInFragment.newInstance()
             )

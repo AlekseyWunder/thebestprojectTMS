@@ -5,13 +5,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.Egida.activity.MainActivity
 import com.example.Egida.databinding.SingInFragmentBinding
 import com.example.Egida.presentation.viewModel.LoginViewModel
+import com.example.Egida.utils.replaceActivity
+import com.example.Egida.utils.replaceFragment
+import com.example.Egida.utils.showToast
 
 class SingInFragment : Fragment() {
 
@@ -22,6 +25,7 @@ class SingInFragment : Fragment() {
 
     private lateinit var mBinding: SingInFragmentBinding
     private lateinit var viewModel: LoginViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,29 +49,26 @@ class SingInFragment : Fragment() {
         }
 
         viewModel.toast.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+            showToast(it)
         })
 
         mBinding.btnSingIn.setOnClickListener {
             viewModel.singInUser()
+            replaceActivity(requireView(), MainActivity())
         }
 
         mBinding.btnDetails.setOnClickListener {
-            viewModel.replaceFragment(
+            replaceFragment(
                 requireView(),
                 PasswordRecoveryFragment.newInstance()
             )
         }
 
         mBinding.btnCreateAccount.setOnClickListener {
-            viewModel.replaceFragment(
+            replaceFragment(
                 requireView(),
                 RegistrationFragment.newInstance()
             )
         }
-
     }
-
-
-
 }
