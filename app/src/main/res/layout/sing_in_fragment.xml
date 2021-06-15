@@ -6,7 +6,7 @@
     android:id="@+id/singIn"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroundlogin"
+    android:background="@drawable/background_login"
     tools:context="com.example.Egida.presentation.ui.RegistrationFragment">
 
     <EditText
