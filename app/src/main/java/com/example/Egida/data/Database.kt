@@ -6,7 +6,7 @@ import com.example.Egida.App
 import com.example.Egida.R
 import com.example.Egida.domain.entity.User
 import com.example.Egida.domain.useCase.UserRepository
-import com.google.firebase.auth.FirebaseAuth
+import com.example.Egida.utils.AUTH
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers
@@ -20,16 +20,16 @@ class Database() : UserRepository {
     }
 
     private var chek by Delegates.notNull<Boolean>()
-    private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
-    private val cUser: FirebaseUser? = mAuth.currentUser
+    //Вынести в утилиты
+    private val cUser: FirebaseUser? = AUTH.currentUser
     override fun checkUser(): Boolean {
         return cUser != null
     }
 
     override suspend fun addUser(user: User) {
         withContext(Dispatchers.Main) {
-            mAuth.createUserWithEmailAndPassword(
+            AUTH.createUserWithEmailAndPassword(
                 user.email,
                 user.password
             ).addOnCompleteListener { task ->
@@ -60,7 +60,7 @@ class Database() : UserRepository {
     }
 
     override fun singInUser(user: User) {
-        mAuth.signInWithEmailAndPassword(
+        AUTH.signInWithEmailAndPassword(
             user.email,
             user.password
         ).addOnCompleteListener { task ->
@@ -78,7 +78,7 @@ class Database() : UserRepository {
     }
 
     private fun sendEmailVerification() {
-        mAuth.currentUser?.sendEmailVerification()
+        AUTH.currentUser?.sendEmailVerification()
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "sendEmailVerification:success")
@@ -90,7 +90,7 @@ class Database() : UserRepository {
 
     override fun sendPasswordResetEmail(email: String) {
         var emailAddress = email
-        mAuth.sendPasswordResetEmail(emailAddress)
+        AUTH.sendPasswordResetEmail(emailAddress)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "Email sent.")

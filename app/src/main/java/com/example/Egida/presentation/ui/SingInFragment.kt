@@ -5,15 +5,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.Egida.R
-import com.example.Egida.presentation.viewModel.MainViewModel
+import com.example.Egida.activity.MainActivity
+import com.example.Egida.databinding.SingInFragmentBinding
+import com.example.Egida.presentation.viewModel.LoginViewModel
+import com.example.Egida.utils.replaceActivity
+import com.example.Egida.utils.replaceFragment
+import com.example.Egida.utils.showToast
 
 class SingInFragment : Fragment() {
 
@@ -22,66 +23,52 @@ class SingInFragment : Fragment() {
         const val TAG = " singInFragment"
     }
 
-    private lateinit var viewModel: MainViewModel
-    private lateinit var editUserEmail: EditText
-    private lateinit var editUserPassword: EditText
-    private lateinit var bDetails: Button
-    private lateinit var bCreateAccount: Button
-    private lateinit var bSingIn: Button
+    private lateinit var mBinding: SingInFragmentBinding
+    private lateinit var viewModel: LoginViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.sing_in_fragment, container, false)
+        mBinding = SingInFragmentBinding.inflate(layoutInflater)
+        return mBinding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        editUserEmail.doAfterTextChanged {
+        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        mBinding.editUserEmail.doAfterTextChanged {
             viewModel.email = it.toString()
             Log.d(TAG, viewModel.email)
         }
 
-        editUserPassword.doAfterTextChanged {
+        mBinding.editUserPassword.doAfterTextChanged {
             viewModel.password = it.toString()
             Log.d(TAG, viewModel.password)
 
         }
 
         viewModel.toast.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+            showToast(it)
         })
 
-        bSingIn.setOnClickListener {
+        mBinding.btnSingIn.setOnClickListener {
             viewModel.singInUser()
+            replaceActivity(requireView(), MainActivity())
         }
 
-        bDetails.setOnClickListener {
-            viewModel.replaceFragment(
+        mBinding.btnDetails.setOnClickListener {
+            replaceFragment(
                 requireView(),
                 PasswordRecoveryFragment.newInstance()
             )
         }
 
-        bCreateAccount.setOnClickListener {
-            viewModel.replaceFragment(
+        mBinding.btnCreateAccount.setOnClickListener {
+            replaceFragment(
                 requireView(),
                 RegistrationFragment.newInstance()
             )
         }
-
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        editUserEmail = view.findViewById(R.id.editUserEmail)
-        editUserPassword = view.findViewById(R.id.editUserPassword)
-        bSingIn = view.findViewById(R.id.bSingIn)
-        bDetails = view.findViewById(R.id.bDetails)
-        bCreateAccount = view.findViewById(R.id.bCreateAccount)
-
-    }
-
 }
