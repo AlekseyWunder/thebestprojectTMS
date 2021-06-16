@@ -60,4 +60,6 @@ dependencies {
 // Add for NavController support
     implementation "com.mikepenz:materialdrawer-nav:7.0.0"
 
+
+    implementation 'net.steamcrafted:materialiconlib:1.1.5'
 }
