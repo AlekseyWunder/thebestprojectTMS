@@ -1,83 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/registration"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background_login"
-    tools:context="com.example.Egida.presentation.ui.RegistrationFragment">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+    android:scrollbars="none"
+    android:background="@drawable/background_logo"
+    android:theme="@style/Theme.MyApplication">
 
-    <EditText
-        android:id="@+id/editUserEmail"
-        style="@style/LoginEditText"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:hint="@string/E_mail"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.473" />
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/editUserPassword"
-        style="@style/LoginEditText"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:hint="@string/Password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editUserEmail" />
+        <ImageView
+            android:id="@+id/registration_fragment_btn_back"
+            android:src="@drawable/btn_back"
+            style="@style/btn_back" />
 
-    <EditText
-        android:id="@+id/editDoubleUserPassword"
-        style="@style/LoginEditText"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:hint="@string/repeatPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editUserPassword" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/registration_fragment_padding_24dp"
+            android:paddingTop="@dimen/registration_fragment_padding_26dp"
+            android:paddingRight="@dimen/registration_fragment_padding_24dp">
 
-    <Button
-        android:id="@+id/btnDetails"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/forgot_password"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/btnLoginIn"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/login_in"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-    <Button
-        android:id="@+id/btnRegistration"
-        style="@style/LoginEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/registration"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editDoubleUserPassword"
-        tools:visibility="visible" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_20dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/new_egida_file" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center"
+                    android:text="@string/registration_fragment_text_registration"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="@dimen/text_size_22sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/userinfo_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20dp"
+                    android:background="@drawable/circular_border_solid"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_18dp">
+
+                    <EditText
+                        android:id="@+id/registration_fragment_input_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:fontFamily="@font/montserrat"
+                        android:hint="@string/hint_name"
+                        android:inputType="text"
+                        android:textSize="@dimen/registration_fragment_text_size_14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20dp"
+                    android:background="@drawable/circular_border_solid"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_18dp">
+
+                    <EditText
+                        android:id="@+id/registration_fragment_input_user_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:fontFamily="@font/montserrat"
+                        android:hint="@string/hint_email"
+                        android:inputType="textEmailAddress"
+                        android:textSize="@dimen/registration_fragment_text_size_14sp"
+                         />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20dp"
+                    android:background="@drawable/circular_border_solid"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_18dp">
+
+                    <EditText
+                        android:id="@+id/registration_fragment_input_user_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:fontFamily="@font/montserrat"
+                        android:hint="@string/hint_password"
+                        android:inputType="textPassword"
+                        android:textSize="@dimen/registration_fragment_text_size_14sp" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/phone_number_textll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/registration_fragment_margin_8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:padding="@dimen/registration_fragment_padding_10dp"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textSize="@dimen/registration_fragment_text_size_12sp" />
+
+                <Button
+                    android:id="@+id/registration_fragment_btn_continue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/registration_fragment_margin_24dp"
+                    android:layout_marginBottom="@dimen/registration_fragment_margin_14dp"
+                    android:background="@drawable/circular_blue_border_solid"
+                    android:fontFamily="@font/montserrat"
+                    android:padding="@dimen/registration_fragment_padding_18dp"
+                    android:text="@string/text_continue"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/verification_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_20dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</ScrollView>

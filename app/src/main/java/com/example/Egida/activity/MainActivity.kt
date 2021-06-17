@@ -6,7 +6,7 @@ import androidx.appcompat.widget.Toolbar
 import com.example.Egida.R
 import com.example.Egida.databinding.MainActivityBinding
 import com.example.Egida.presentation.`object`.AppDrawer
-import com.example.Egida.presentation.ui.MainFragment
+import com.example.Egida.presentation.ui.HomeFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(mBinding.root)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
+                .replace(R.id.container, HomeFragment.newInstance())
                 .commitNow()
         }
     }

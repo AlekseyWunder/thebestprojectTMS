@@ -6,7 +6,7 @@ import com.example.Egida.App
 import com.example.Egida.R
 import com.example.Egida.domain.entity.User
 import com.example.Egida.domain.useCase.UserRepository
-import com.google.firebase.auth.FirebaseAuth
+import com.example.Egida.utils.AUTH
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers

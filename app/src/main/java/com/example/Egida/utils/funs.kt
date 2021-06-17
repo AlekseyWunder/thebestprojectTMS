@@ -1,5 +1,6 @@
 package com.example.Egida.utils
 
+import android.app.Activity
 import android.content.Intent
 import android.view.View
 import android.widget.Toast
@@ -7,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.Egida.R
 
-fun replaceFragment(view: View, fragment: Fragment) {
+fun replaceFragment(view:Fragment, fragment: Fragment) {
     val activity: AppCompatActivity? = (view.context as AppCompatActivity?)
     activity?.supportFragmentManager
         ?.beginTransaction()
@@ -24,10 +25,8 @@ fun Fragment.showToast(message: String) {
     ).show()
 }
 
-fun replaceActivity(view: View, activity: AppCompatActivity){
+fun replaceActivity(view: View, activity: Activity){
+    val intent = Intent(view.context,activity::class.java)
+    view.context?.startActivity(intent)
 
-    val appCompatActivity:AppCompatActivity? = (view.context as AppCompatActivity?)
-    val intent = Intent(appCompatActivity,activity::class.java)
-    appCompatActivity?.startActivity(intent)
-    appCompatActivity?.finish()
 }

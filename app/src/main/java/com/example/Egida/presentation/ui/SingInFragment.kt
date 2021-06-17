@@ -37,12 +37,12 @@ class SingInFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-        mBinding.editUserEmail.doAfterTextChanged {
+        mBinding.singInFragmentInputUserEmail.doAfterTextChanged {
             viewModel.email = it.toString()
             Log.d(TAG, viewModel.email)
         }
 
-        mBinding.editUserPassword.doAfterTextChanged {
+        mBinding.singInFragmentInputUserPassword.doAfterTextChanged {
             viewModel.password = it.toString()
             Log.d(TAG, viewModel.password)
 
@@ -52,21 +52,22 @@ class SingInFragment : Fragment() {
             showToast(it)
         })
 
-        mBinding.btnSingIn.setOnClickListener {
+        mBinding.singInFragmentBtnLogin.setOnClickListener {
             viewModel.singInUser()
-            replaceActivity(requireView(), MainActivity())
+            //переделать
+          replaceActivity(requireView(), MainActivity())
         }
 
-        mBinding.btnDetails.setOnClickListener {
+        mBinding.singInFragmentBtnForgotPassword.setOnClickListener {
             replaceFragment(
-                requireView(),
+                this,
                 PasswordRecoveryFragment.newInstance()
             )
         }
 
-        mBinding.btnCreateAccount.setOnClickListener {
+        mBinding.singInFragmentBtnCreateAccount.setOnClickListener {
             replaceFragment(
-                requireView(),
+                this,
                 RegistrationFragment.newInstance()
             )
         }

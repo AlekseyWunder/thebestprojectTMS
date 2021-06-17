@@ -9,12 +9,10 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.Egida.R
 import com.example.Egida.databinding.RegistrationFragmentBinding
 import com.example.Egida.presentation.viewModel.LoginViewModel
 import com.example.Egida.utils.replaceFragment
 import com.example.Egida.utils.showToast
-import kotlin.properties.Delegates
 
 class RegistrationFragment : Fragment() {
 
@@ -24,8 +22,6 @@ class RegistrationFragment : Fragment() {
     }
 
     private lateinit var mBinding: RegistrationFragmentBinding
-    private var fragment = R.layout.registration_fragment
-    private var chek by Delegates.notNull<Boolean>()
     private lateinit var viewModel: LoginViewModel
 
 
@@ -41,18 +37,18 @@ class RegistrationFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-        mBinding.editUserEmail.doAfterTextChanged {
+        mBinding.registrationFragmentInputUserEmail.doAfterTextChanged {
             viewModel.email = it.toString()
             Log.d(TAG, viewModel.email)
         }
 
-        mBinding.editUserPassword.doAfterTextChanged {
+        mBinding.registrationFragmentInputUserPassword.doAfterTextChanged {
             viewModel.password = it.toString()
             Log.d(TAG, viewModel.password)
 
         }
 
-        mBinding.editDoubleUserPassword.doAfterTextChanged {
+        mBinding.registrationFragmentInputUserPassword.doAfterTextChanged {
             viewModel.doublePassword = it.toString()
         }
 
@@ -60,21 +56,14 @@ class RegistrationFragment : Fragment() {
             showToast(it)
         })
 
-//      в этом методе нужно прописать toast, при совпадении паролей, но он не отображается
-        mBinding.btnRegistration.setOnClickListener {
+
+        mBinding.registrationFragmentBtnContinue.setOnClickListener {
             viewModel.addUser()
         }
 
-        mBinding.btnDetails.setOnClickListener {
+        mBinding.registrationFragmentBtnBack.setOnClickListener {
             replaceFragment(
-                requireView(),
-                PasswordRecoveryFragment.newInstance()
-            )
-        }
-
-        mBinding.btnDetails.setOnClickListener {
-            replaceFragment(
-                requireView(),
+                this,
                 SingInFragment.newInstance()
             )
         }

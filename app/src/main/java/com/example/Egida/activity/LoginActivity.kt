@@ -1,9 +1,7 @@
 package com.example.Egida
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.Egida.R
 import com.example.Egida.databinding.LoginActivityBinding
 import com.example.Egida.presentation.ui.SingInFragment
 

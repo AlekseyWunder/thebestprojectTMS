@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_20dp">20dp</dimen>
+    <dimen name="margin_10dp">10dp</dimen>
+    <dimen name="text_size_22sp">22sp</dimen>
+    <dimen name="padding_18dp">18dp</dimen>
+
+    <!-- Sing in fragment-->
+    <dimen name="sing_in_fragment_padding_24dp">24dp</dimen>
+    <dimen name="sing_in_fragment_padding_66dp">66dp</dimen>
+    <dimen name="sing_in_fragment_text_size_14sp">14sp</dimen>
+    <dimen name="sing_in_fragment_padding_14dp">14dp</dimen>
+    <dimen name="sing_in_fragment_padding_16dp">16dp</dimen>
+    <dimen name="sing_in_fragment_margin_24dp">24dp</dimen>
+    <dimen name="sing_in_fragment_padding_10dp">10dp</dimen>
+    <dimen name="sing_in_fragment_text_size_16sp">16sp</dimen>
+    <!-- -->
+
+    <!-- Registration fragment-->
+    <dimen name="registration_fragment_padding_24dp">24dp</dimen>
+    <dimen name="registration_fragment_padding_26dp">26dp</dimen>
+    <dimen name="registration_fragment_text_size_14sp">14sp</dimen>
+    <dimen name="registration_fragment_margin_8dp">8dp</dimen>
+    <dimen name="registration_fragment_padding_10dp">10dp</dimen>
+    <dimen name="registration_fragment_text_size_12sp">12sp</dimen>
+    <dimen name="registration_fragment_margin_24dp">24dp</dimen>
+    <dimen name="registration_fragment_margin_14dp">14dp</dimen>
+    <dimen name="registration_fragment_padding_18dp">16dp</dimen>
+    <dimen name="password_recovery_margin_30dp">30dp</dimen>
+    <dimen name="password_recovery_8dp">8dp</dimen>
+    <dimen name="password_recovery_padding_24dp">24dp</dimen>
+    <dimen name="password_recovery_padding_36dp">36dp</dimen>
+    <dimen name="password_recovery_margin_10dp">10dp</dimen>
+    <dimen name="password_recovery_text_size_22sp">22sp</dimen>
+    <dimen name="password_recovery_margin_20dp">20dp</dimen>
+    <dimen name="password_recovery_padding_18dp">18dp</dimen>
+    <dimen name="password_recovery_tet_size_14sp">14sp</dimen>
+    <dimen name="password_recovery_margin_24dp">24dp</dimen>
+    <dimen name="password_recovery_margin_14dp">14dp</dimen>
+    <dimen name="password_recovery_padding_16dp">16dp</dimen>
+    <dimen name="password_recovery_text_size_16sp">16sp</dimen>
+    <!-- -->
+
+    <!-- Password recovery fragment-->
+
+
+    <!-- -->
+
+</resources>

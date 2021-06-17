@@ -1,73 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/singIn"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background_login"
-    tools:context="com.example.Egida.presentation.ui.RegistrationFragment">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background_logo"
+    android:fitsSystemWindows="true"
+    android:theme="@style/Theme.MyApplication">
 
-    <EditText
-        android:id="@+id/editUserEmail"
-        style="@style/LoginEditText"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:hint="@string/E_mail"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.518" />
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/editUserPassword"
-        style="@style/LoginEditText"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:hint="@string/Password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editUserEmail" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/sing_in_fragment_padding_24dp"
+            android:paddingTop="@dimen/sing_in_fragment_padding_66dp"
+            android:paddingEnd="@dimen/sing_in_fragment_padding_24dp">
 
-    <Button
-        android:id="@+id/btnDetails"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/forgot_password"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/new_egida_file" />
 
-    <Button
-        android:id="@+id/btnCreateAccount"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/create_account"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/btnSingIn"
-        style="@style/LoginEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="125dp"
-        android:text="@string/sign_in"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-         />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_20dp"
+                android:orientation="vertical">
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center"
+                    android:text="@string/sing_in_fragment_login_in"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="@dimen/text_size_22sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circular_border_solid_top"
+                android:gravity="center"
+                android:padding="@dimen/padding_18dp">
+
+                <EditText
+                    android:id="@+id/sing_in_fragment_input_user_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:baselineAligned="false"
+                    android:fontFamily="@font/montserrat"
+                    android:hint="@string/hint_email"
+                    android:inputType="textEmailAddress"
+                    android:textSize="@dimen/sing_in_fragment_text_size_14sp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circular_border_solid_bottom"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_18dp">
+
+                <EditText
+                    android:id="@+id/sing_in_fragment_input_user_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:fontFamily="@font/montserrat"
+                    android:hint="@string/sing_in_fragment_hint_your_password"
+                    android:inputType="textPassword"
+                    android:textSize="@dimen/sing_in_fragment_text_size_14sp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/sing_in_fragment_btn_forgot_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:layout_gravity="end"
+                    android:text="@string/sing_in_fragment_forgot_password"
+                    android:textColor="@color/button_sing_in_fragment"
+                    android:textSize="@dimen/sing_in_fragment_text_size_14sp"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/sing_in_fragment_btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/sing_in_fragment_padding_24dp"
+                android:layout_marginBottom="@dimen/sing_in_fragment_padding_14dp"
+                android:background="@drawable/circular_blue_border_solid"
+                android:fontFamily="@font/montserrat"
+                android:padding="@dimen/sing_in_fragment_padding_16dp"
+                android:text="@string/sing_in_fragment_continue"
+                android:textColor="@color/white" />
+
+            <LinearLayout
+                android:id="@+id/sing_in_fragment_btn_create_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/sing_in_fragment_margin_24dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/sing_in_fragment_padding_10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center"
+                    android:text="@string/sing_in_fragment_no_account_yet"
+                    android:textColor="@color/sing_in_fragment_btn_sing_up"
+                    android:textSize="@dimen/sing_in_fragment_text_size_16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center"
+                    android:text="@string/sing_in_fragment_create_one"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sing_in_fragment_text_size_16sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</ScrollView>

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.Egida.activity.LoginActivity
+import com.example.Egida.LoginActivity
 import com.example.Egida.databinding.MainFragmentBinding
 import com.example.Egida.presentation.viewModel.MainViewModel
 import com.example.Egida.utils.replaceActivity

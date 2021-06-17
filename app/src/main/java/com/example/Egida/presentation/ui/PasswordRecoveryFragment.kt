@@ -34,7 +34,7 @@ class PasswordRecoveryFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-        mBinding.editUserEmail.doAfterTextChanged {
+        mBinding.passwordRecoveryInputEmail.doAfterTextChanged {
             viewModel.email = it.toString()
             Log.d(TAG, viewModel.email)
         }
@@ -43,13 +43,13 @@ class PasswordRecoveryFragment : Fragment() {
             showToast(it)
         })
 
-        mBinding.btnSendPassword.setOnClickListener {
+        mBinding.btnResetPassword.setOnClickListener {
             viewModel.sendPasswordResetEmail()
         }
 
-        mBinding.btnLoginIn.setOnClickListener {
+        mBinding.passwordRecoveryBtnBack.setOnClickListener {
             replaceFragment(
-                requireView(),
+                this,
                 SingInFragment.newInstance()
             )
         }

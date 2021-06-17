@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="tint">#009688</color>
 
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#FFA9A8A8</color>
@@ -42,13 +43,15 @@
     <color name="start_gradient">#A173FF</color>
     <color name="finish_gradient">#FC203E</color>
 
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
-
-
+    <!-- Color UI -->
+    <color name="primary">#008577</color>colorPrimary
+    <color name="primaryDark">#00574B</color>colorPrimaryDark
+    <color name="accent">#D81B60</color>colorAccent
     <color name="bg_color">#f3f5f9</color>
-    <color name="darkgrey">#424242</color>
+    <color name="dark_grey">#424242</color>
     <color name="gradientViolet">#8A52E9</color>
     <color name="gradientLightBlue">#376DF6</color>
+    <color name="button_sing_in_fragment">#b6bcc5</color>
+    <color name="sing_in_fragment_btn_sing_up">#3c4b5d</color>
+    <color name="password_recovery_text_view">#3c4b5d</color>
 </resources>
