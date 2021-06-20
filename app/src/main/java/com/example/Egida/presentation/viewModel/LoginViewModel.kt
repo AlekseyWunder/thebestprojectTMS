@@ -8,8 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.Egida.Dependencies
 import com.example.Egida.domain.entity.UserAUTH
 import com.example.Egida.domain.entity.UserDB
-import com.example.Egida.domain.useCase.UserAUTHUseCase
 import com.example.Egida.domain.useCase.UserDBUseCase
+import com.example.Egida.domain.useCase.userAUTH.UserAUTHUseCase
 import com.example.Egida.utils.StatesUser
 import com.example.Egida.utils.statesUser
 import kotlinx.coroutines.launch
@@ -38,7 +38,7 @@ class LoginViewModel : ViewModel() {
                     val user = UserAUTH(email, password)
                     userAUTHUseCase.addUser(user)
                     val userDB = UserDB(id, login)
-                    userDBUseCase.initUser(userDB)
+                    userDBUseCase.createUser(userDB)
                 }
             } else {
                 toast.value = statesUser(StatesUser.PasswordsDontMatch)

@@ -2,10 +2,10 @@ package com.example.Egida
 
 import com.example.Egida.data.DatabaseAUTH
 import com.example.Egida.data.DatabaseUser
-import com.example.Egida.domain.useCase.UserAUTHUSeCaseImpl
-import com.example.Egida.domain.useCase.UserAUTHUseCase
 import com.example.Egida.domain.useCase.UserDBUseCase
-import com.example.Egida.domain.useCase.UserDBUseCaseImpl
+import com.example.Egida.domain.useCase.userAUTH.UserAUTHUSeCaseImpl
+import com.example.Egida.domain.useCase.userAUTH.UserAUTHUseCase
+import com.example.Egida.domain.useCase.userDB.UserDBUseCaseImpl
 
 
 object Dependencies {

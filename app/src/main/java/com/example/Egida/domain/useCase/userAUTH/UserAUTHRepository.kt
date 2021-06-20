@@ -1,4 +1,4 @@
-package com.example.Egida.domain.useCase
+package com.example.Egida.domain.useCase.userAUTH
 
 import com.example.Egida.domain.entity.UserAUTH
 import com.google.firebase.auth.FirebaseUser

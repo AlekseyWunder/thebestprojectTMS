@@ -5,7 +5,7 @@ import android.widget.Toast
 import com.example.Egida.App
 import com.example.Egida.R
 import com.example.Egida.domain.entity.UserAUTH
-import com.example.Egida.domain.useCase.UserAUTHRepository
+import com.example.Egida.domain.useCase.userAUTH.UserAUTHRepository
 import com.example.Egida.utils.AUTH
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
