@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:background="@drawable/background_logo"
     android:fitsSystemWindows="true"
-    android:theme="@style/Theme.MyApplication">
+    android:theme="@style/Theme.AppLogin">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -37,6 +37,10 @@ class RegistrationFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        mBinding.registrationFragmentInputName.doAfterTextChanged {
+            viewModel.login = it.toString()
+            Log.d(TAG, viewModel.login)
+        }
         mBinding.registrationFragmentInputUserEmail.doAfterTextChanged {
             viewModel.email = it.toString()
             Log.d(TAG, viewModel.email)

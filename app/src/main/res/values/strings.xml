@@ -76,5 +76,7 @@
     <string name="password_recovery_hint_email">Email</string>
     <string name="password_recovery_text_reset_my_password">Reset My Password</string>
     <string name="password_recovery_text_continue_login">Continue Login?</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_text_exit">Exit</string>
 
 </resources>

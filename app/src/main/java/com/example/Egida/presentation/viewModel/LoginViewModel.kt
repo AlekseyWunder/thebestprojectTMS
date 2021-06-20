@@ -6,16 +6,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.Egida.Dependencies
-import com.example.Egida.domain.entity.User
-import com.example.Egida.domain.useCase.UserUseCase
+import com.example.Egida.domain.entity.UserAUTH
+import com.example.Egida.domain.entity.UserDB
+import com.example.Egida.domain.useCase.UserAUTHUseCase
+import com.example.Egida.domain.useCase.UserDBUseCase
 import com.example.Egida.utils.StatesUser
 import com.example.Egida.utils.statesUser
 import kotlinx.coroutines.launch
 
 
-class LoginViewModel() : ViewModel() {
+class LoginViewModel : ViewModel() {
 
-    private val userUseCase: UserUseCase by lazy { Dependencies.getUserUseCase() }
+    private val userAUTHUseCase: UserAUTHUseCase by lazy { Dependencies.userAUTHUseCase() }
+    private val userDBUseCase:UserDBUseCase by lazy { Dependencies.userDBUseCase()}
+
+    var login: String =""
+    var id:String = ""
     var email: String = ""
     var password: String = ""
     var doublePassword: String = ""
@@ -29,8 +35,10 @@ class LoginViewModel() : ViewModel() {
         ) {
             if (password == doublePassword) {
                 viewModelScope.launch {
-                    val user = User(email, password)
-                    userUseCase.addUser(user)
+                    val user = UserAUTH(email, password)
+                    userAUTHUseCase.addUser(user)
+                    val userDB = UserDB(id, login)
+                    userDBUseCase.initUser(userDB)
                 }
             } else {
                 toast.value = statesUser(StatesUser.PasswordsDontMatch)
@@ -44,8 +52,8 @@ class LoginViewModel() : ViewModel() {
         if (!TextUtils.isEmpty(email)
             && !TextUtils.isEmpty(password)
         ) {
-            val user = User(email, password)
-            userUseCase.singInUser(user)
+            val user = UserAUTH(email, password)
+            userAUTHUseCase.singInUser(user)
         } else {
             toast.value = statesUser(StatesUser.EmailAndPassword)
         }
@@ -53,7 +61,7 @@ class LoginViewModel() : ViewModel() {
 
     fun sendPasswordResetEmail() {
         if (!TextUtils.isEmpty(email)) {
-            userUseCase.sendPasswordResetEmail(email)
+            userAUTHUseCase.sendPasswordResetEmail(email)
             toast.value = "Письмо для востановления пороля отправлено на почту"
         } else {
             toast.value = "Проверьте правильность написания электронного адреса"

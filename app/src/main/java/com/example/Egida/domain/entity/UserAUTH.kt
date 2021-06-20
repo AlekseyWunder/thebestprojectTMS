@@ -1,6 +1,6 @@
 package com.example.Egida.domain.entity
 
-class User {
+class UserAUTH {
     var email: String
     var password: String
 
@@ -8,5 +8,4 @@ class User {
         this.email = email
         this.password = password
     }
-
 }

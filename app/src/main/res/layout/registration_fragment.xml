@@ -6,7 +6,7 @@
     android:fitsSystemWindows="true"
     android:scrollbars="none"
     android:background="@drawable/background_logo"
-    android:theme="@style/Theme.MyApplication">
+    android:theme="@style/Theme.AppLogin">
 
     <RelativeLayout
         android:layout_width="match_parent"

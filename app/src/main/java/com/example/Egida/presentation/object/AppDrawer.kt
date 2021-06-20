@@ -1,11 +1,11 @@
 package com.example.Egida.presentation.`object`
 
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import com.example.Egida.R
-import com.mikepenz.iconics.Iconics.applicationContext
+import com.example.Egida.presentation.ui.SettingFragment
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
@@ -16,14 +16,34 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 
 class AppDrawer(
     val activity: AppCompatActivity,
-    val toolbar: Toolbar
+    private val toolbar: Toolbar
 ) {
     private lateinit var mDrawer: Drawer
-    private lateinit var mHeader: AccountHeader
+    lateinit var mHeader: AccountHeader
+    private lateinit var mDrawerLayout:DrawerLayout
 
     fun create() {
         createHeader()
         createDrawer()
+        mDrawerLayout = mDrawer.drawerLayout
+    }
+
+    fun disableDrawer() {
+        mDrawer.actionBarDrawerToggle?.isDrawerIndicatorEnabled = false
+        activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        toolbar.setNavigationOnClickListener {
+            activity.supportFragmentManager.popBackStack()
+        }
+    }
+
+    fun enableDrawer() {
+        activity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        mDrawer.actionBarDrawerToggle?.isDrawerIndicatorEnabled = true
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        toolbar.setNavigationOnClickListener {
+            mDrawer.openDrawer()
+        }
     }
 
     private fun createDrawer() {
@@ -72,8 +92,13 @@ class AppDrawer(
                     position: Int,
                     drawerItem: IDrawerItem<*>
                 ): Boolean {
-                    Toast.makeText(applicationContext, position.toString(), Toast.LENGTH_SHORT)
-                        .show()
+                    when(position){
+                        5 -> activity.supportFragmentManager.beginTransaction()
+                            .addToBackStack(null)
+                            .replace(R.id.container, SettingFragment.newInstance())
+                            .commit()
+                    }
+
                     return false
                 }
             })

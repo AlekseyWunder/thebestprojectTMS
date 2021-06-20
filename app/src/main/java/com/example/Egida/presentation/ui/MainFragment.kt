@@ -1,13 +1,11 @@
 package com.example.Egida.presentation.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.Egida.LoginActivity
-import com.example.Egida.databinding.MainFragmentBinding
+import com.example.Egida.R
 import com.example.Egida.presentation.viewModel.MainViewModel
 import com.example.Egida.utils.replaceActivity
 
@@ -15,16 +13,16 @@ class MainFragment : Fragment() {
 
     companion object {
         fun newInstance() = MainFragment()
+        const val TAG = " mainFragment"
     }
 
     private lateinit var viewModel: MainViewModel
-    private lateinit var mBinding: MainFragmentBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        mBinding = MainFragmentBinding.inflate(layoutInflater)
-        return mBinding.root
+        return inflater.inflate(R.layout.main_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -38,4 +36,17 @@ class MainFragment : Fragment() {
         if (!viewModel.checkUser()) replaceActivity(requireView(), LoginActivity())
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        activity?.menuInflater?.inflate(R.menu.menu_exit, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.exit_to_app -> {
+                viewModel.singOutUser()
+                replaceActivity(requireView(),LoginActivity())
+            }
+        }
+        return true
+    }
 }

@@ -4,9 +4,10 @@ import android.util.Log
 import android.widget.Toast
 import com.example.Egida.App
 import com.example.Egida.R
-import com.example.Egida.domain.entity.User
-import com.example.Egida.domain.useCase.UserRepository
+import com.example.Egida.domain.entity.UserAUTH
+import com.example.Egida.domain.useCase.UserAUTHRepository
 import com.example.Egida.utils.AUTH
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers
@@ -14,32 +15,34 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import kotlin.properties.Delegates
 
-class Database() : UserRepository {
+class DatabaseAUTH() : UserAUTHRepository {
     companion object {
-        const val TAG = " database"
+        const val TAG = " databaseAUTH"
+    }
+
+    init {
+        AUTH = FirebaseAuth.getInstance()
     }
 
     private var chek by Delegates.notNull<Boolean>()
 
-    //Вынести в утилиты
-    private val cUser: FirebaseUser? = AUTH.currentUser
-    override fun checkUser(): Boolean {
-        return cUser != null
+    override fun getCurrentUser(): FirebaseUser? {
+        return AUTH.currentUser
     }
 
-    override suspend fun addUser(user: User) {
+    override suspend fun addUser(userAUTH: UserAUTH) {
         withContext(Dispatchers.Main) {
             AUTH.createUserWithEmailAndPassword(
-                user.email,
-                user.password
+                userAUTH.email,
+                userAUTH.password
             ).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "createUserWithEmail:success")
-                    this@Database.chek = true
+                    this@DatabaseAUTH.chek = true
                 }
             }.addOnFailureListener {
-                this@Database.chek = false
+                this@DatabaseAUTH.chek = false
                 val errorCode = (it as FirebaseAuthException).errorCode
                 val errorMessage = authErrors[errorCode]
                 if (errorMessage != null) {
@@ -47,7 +50,7 @@ class Database() : UserRepository {
                 }
             }
             delay(2000)
-            if (this@Database.chek) {
+            if (this@DatabaseAUTH.chek) {
                 sendEmailVerification()
                 //При такой архитектуре правиль но ли сдесь сделано
                 Toast.makeText(
@@ -59,16 +62,16 @@ class Database() : UserRepository {
         }
     }
 
-    override fun singInUser(user: User) {
+    override fun singInUser(userAUTH: UserAUTH) {
         AUTH.signInWithEmailAndPassword(
-            user.email,
-            user.password
+            userAUTH.email,
+            userAUTH.password
         ).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Log.d(TAG, "signInWithEmailAndPassword:success")
             }
         }.addOnFailureListener {
-            this@Database.chek = false
+            this@DatabaseAUTH.chek = false
             val errorCode = (it as FirebaseAuthException).errorCode
             val errorMessage = authErrors[errorCode]
             if (errorMessage != null) {
@@ -96,13 +99,17 @@ class Database() : UserRepository {
                     Log.d(TAG, "Email sent.")
                 }
             }.addOnFailureListener {
-                this@Database.chek = false
+                this@DatabaseAUTH.chek = false
                 val errorCode = (it as FirebaseAuthException).errorCode
                 val errorMessage = authErrors[errorCode]
                 if (errorMessage != null) {
                     toast(errorMessage)
                 }
             }
+    }
+
+    override fun singOutUser() {
+        AUTH.signOut()
     }
 
     private val authErrors = mapOf(
