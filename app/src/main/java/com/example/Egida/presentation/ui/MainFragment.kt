@@ -30,7 +30,6 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
     }
 
     override fun onStart() {
@@ -38,8 +37,5 @@ class MainFragment : Fragment() {
         if (!viewModel.checkUser()) replaceActivity(requireView(), LoginActivity())
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.initUser()
-    }
+
 }

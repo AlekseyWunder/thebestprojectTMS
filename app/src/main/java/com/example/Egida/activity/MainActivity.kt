@@ -6,11 +6,15 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProvider
 import com.example.Egida.LoginActivity
 import com.example.Egida.R
 import com.example.Egida.databinding.MainActivityBinding
+import com.example.Egida.domain.entity.UserDB
 import com.example.Egida.presentation.`object`.AppDrawer
 import com.example.Egida.presentation.ui.MainFragment
+import com.example.Egida.presentation.viewModel.MainViewModel
+import com.example.Egida.utils.USER_DB
 import com.example.Egida.utils.singOutUser
 
 class MainActivity : AppCompatActivity() {
@@ -18,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mBinding: MainActivityBinding
     private lateinit var mToolbar: Toolbar
     lateinit var mAppDrawer: AppDrawer
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,13 +33,18 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.container, MainFragment.newInstance())
                 .commitNow()
         }
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+    }
+
+    init {
+        USER_DB = UserDB()
     }
 
     override fun onStart() {
         super.onStart()
         initFields()
         initFun()
-
+        viewModel.getUser()
     }
 
     private fun initFun() {
@@ -46,7 +56,8 @@ class MainActivity : AppCompatActivity() {
         mToolbar = mBinding.mainToolbar
         mAppDrawer = AppDrawer(this, mToolbar)
     }
-    override fun onCreateOptionsMenu(menu: Menu,):Boolean {
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater?.inflate(R.menu.menu_exit, menu)
         return true
     }
@@ -55,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.exit_to_app -> {
                 singOutUser()
-                val intent = Intent(this,LoginActivity::class.java)
+                val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             }
         }

@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.Egida.activity.MainActivity
 import com.example.Egida.databinding.SettingFragmentBinding
-import com.example.Egida.domain.entity.UserDB
+import com.example.Egida.presentation.viewModel.MainViewModel
 import com.example.Egida.presentation.viewModel.SettingViewModel
 import com.example.Egida.utils.USER_DB
 import com.example.Egida.utils.replaceFragment
@@ -19,27 +19,24 @@ class SettingFragment : Fragment() {
 
     companion object {
         fun newInstance() = SettingFragment()
-        const val TAG = " registrationFragment"
+        const val TAG = " SettingFragment"
     }
 
     private lateinit var mBinding: SettingFragmentBinding
     private lateinit var viewModel: SettingViewModel
-
-    init {
-        USER_DB = UserDB()
-    }
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onStart() {
         super.onStart()
         (activity as MainActivity).mAppDrawer.disableDrawer()
+        Log.d(TAG, " $USER_DB")
     }
 
     override fun onResume() {
         super.onResume()
-       // viewModel.initUser()
-        mBinding.settingsEditFirstName.setText(USER_DB.firstName)
-        mBinding.settingEditLastName.setText(USER_DB.lastName)
-        mBinding.settingEditPhoneNumber.setText(USER_DB.phoneNumber)
+       changeValuesFragmentFields()
+
+
     }
 
     override fun onStop() {
@@ -58,6 +55,7 @@ class SettingFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(SettingViewModel::class.java)
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         mBinding.settingsEditFirstName.doAfterTextChanged {
             viewModel.firstName = it.toString()
@@ -104,5 +102,12 @@ class SettingFragment : Fragment() {
 
 
     }
-
+ private fun changeValuesFragmentFields(){
+     mBinding.settingsEditFirstName.setText(USER_DB.firstName)
+     mBinding.settingEditLastName.setText(USER_DB.lastName)
+     mBinding.settingCheckAgreement.isChecked = USER_DB.checkAgreement
+     mBinding.settingEditPhoneNumber.setText(USER_DB.phoneNumber)
+     mBinding.settingTextHeight.text = USER_DB.height.toString()
+     mBinding.settingTextWeight.text = USER_DB.weight.toString()
+ }
 }

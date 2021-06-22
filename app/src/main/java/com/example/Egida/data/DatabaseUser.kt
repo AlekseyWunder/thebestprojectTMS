@@ -4,9 +4,6 @@ import android.util.Log
 import com.example.Egida.domain.entity.UserDB
 import com.example.Egida.domain.useCase.userDB.UserDBRepository
 import com.example.Egida.utils.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
 
 class DatabaseUser : UserDBRepository {
     companion object {
@@ -17,7 +14,7 @@ class DatabaseUser : UserDBRepository {
         initFirebase()
         initDatabase()
         UID = AUTH.currentUser?.uid.toString()
-
+        USER_DB = UserDB()
     }
 
     override fun createUser(user: UserDB) {
@@ -25,18 +22,22 @@ class DatabaseUser : UserDBRepository {
         REF_DATABASE_ROOT.child(NODE_USERS).child(UID).updateChildren(addUser(user))
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Log.d(DatabaseAUTH.TAG, "database complete")
+                    Log.d(TAG, "database complete")
                 }
             }
     }
 
-    override suspend fun initUser() {
-        withContext(Dispatchers.IO) {
+    override fun getUser() {
         REF_DATABASE_ROOT.child(NODE_USERS).child(UID)
             .addListenerForSingleValueEvent(AppValueEventListener {
                 USER_DB = it.getValue(UserDB::class.java) ?: UserDB()
+                Log.d(TAG, " database user loading")
+                Log.d(TAG, " ${USER_DB.height}")
+                Log.d(TAG, " ${USER_DB.firstName}")
+                Log.d(TAG, " ${USER_DB.lastName}")
+                Log.d(TAG, " ${USER_DB.id}")
+                Log.d(TAG, " ${USER_DB.phoneNumber}")
             })
-        delay(2000)}
     }
 
     override fun updateUser(user: UserDB) {

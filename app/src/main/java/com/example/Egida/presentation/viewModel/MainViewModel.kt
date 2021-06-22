@@ -2,19 +2,23 @@ package com.example.Egida.presentation.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.Egida.Dependencies
+import com.example.Egida.domain.entity.UserDB
 import com.example.Egida.domain.useCase.UserDBUseCase
 import com.example.Egida.domain.useCase.userAUTH.UserAUTHUseCase
-import kotlinx.coroutines.launch
 
 
 class MainViewModel : ViewModel() {
+
+    companion object {
+        const val TAG = " mainViewModel"
+    }
 
     private val userAUTHUseCase: UserAUTHUseCase by lazy { Dependencies.userAUTHUseCase() }
     private val userDBUseCase: UserDBUseCase by lazy { Dependencies.userDBUseCase() }
 
     var toast = MutableLiveData<String>()
+    var userDB = UserDB()
 
 
     fun checkUser(): Boolean {
@@ -33,9 +37,7 @@ class MainViewModel : ViewModel() {
         userAUTHUseCase.singOutUser()
     }
 
-    fun initUser() {
-        viewModelScope.launch {
-            userDBUseCase.initUser()
-        }
+    fun getUser(){
+        userDBUseCase.getUser()
     }
 }

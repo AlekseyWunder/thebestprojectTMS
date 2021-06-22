@@ -26,9 +26,6 @@ const val CHILD_WEIGHT = "weight"
 
 fun initFirebase() {
     AUTH = FirebaseAuth.getInstance()
-    USER_DB = UserDB()
-   // UID = AUTH.currentUser!!.uid
-
 }
 
 fun initDatabase() {

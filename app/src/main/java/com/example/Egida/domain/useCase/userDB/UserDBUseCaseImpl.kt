@@ -11,11 +11,11 @@ class UserDBUseCaseImpl(
        return databaseUser.createUser(user)
     }
 
-    override suspend fun initUser() {
-        return databaseUser.initUser()
-    }
-
     override fun updateUser(user: UserDB) {
         return databaseUser.updateUser(user)
+    }
+
+    override fun getUser() {
+        return databaseUser.getUser()
     }
 }
