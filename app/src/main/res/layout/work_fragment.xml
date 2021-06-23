@@ -7,23 +7,6 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBarSetting"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/black"
-            app:navigationIcon="@drawable/baseline_arrow_back_white_24dp"
-            app:navigationIconTint="@color/white"
-            app:title="@string/work"
-            app:titleMarginStart="130dp"
-            app:titleTextColor="@color/white" />
-    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -43,13 +26,17 @@
             android:textSize="15sp" />
 
         <ImageButton
+            android:id="@+id/minus_value_work"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_weight="2"
-            android:background="@drawable/remove_circle_grey_700_36dp" />
+            android:background="@drawable/remove_circle_grey_700_36dp"
+            android:clickable="true"
+            android:focusable="true" />
 
         <TextView
+            android:id="@+id/text_work"
             android:layout_width="24dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -60,12 +47,15 @@
             android:textSize="15sp" />
 
         <ImageButton
+            android:id="@+id/plus_value_work"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="20dp"
             android:layout_weight="2"
-            android:background="@drawable/baseline_add_circle_grey_700_36dp" />
+            android:background="@drawable/baseline_add_circle_grey_700_36dp"
+            android:clickable="true"
+            android:focusable="true" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -86,13 +76,17 @@
             android:textSize="15sp" />
 
         <ImageButton
+            android:id="@+id/minus_value_leisure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_weight="2"
-            android:background="@drawable/remove_circle_grey_700_36dp" />
+            android:background="@drawable/remove_circle_grey_700_36dp"
+            android:clickable="true"
+            android:focusable="true" />
 
         <TextView
+            android:id="@+id/text_leisure"
             android:layout_width="24dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -103,14 +97,26 @@
             android:textSize="15sp" />
 
         <ImageButton
+            android:id="@+id/plus_value_leisure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="20dp"
             android:layout_weight="2"
-            android:background="@drawable/baseline_add_circle_grey_700_36dp" />
+            android:background="@drawable/baseline_add_circle_grey_700_36dp"
+            android:clickable="true"
+            android:focusable="true" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <Button
+        android:id="@+id/work_btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_20dp"
+        android:text="SAVE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
