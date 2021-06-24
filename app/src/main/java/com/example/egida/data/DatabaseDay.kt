@@ -43,8 +43,8 @@ class DatabaseDay() : DayRepository {
 
     override fun getDay() {
         REF_DATABASE_ROOT.child(NODE_DAY).child(CHILD_DAY).child(UID)
-            .addListenerForSingleValueEvent(AppValueEventListener {
-                day = it.getValue(Day::class.java) ?: Day()
+            .addListenerForSingleValueEvent(AppValueEventListener {data ->
+                day =data.getValue(Day::class.java) ?: Day()
                 Log.d(TAG, " load day: $day")
             })
     }

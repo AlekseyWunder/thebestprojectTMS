@@ -130,7 +130,7 @@ class DatabaseAuth() : UserAuthRepository {
         "ERROR_OPERATION_NOT_ALLOWED" to R.string.error_login_operation_not_allowed,
         "ERROR_WEAK_PASSWORD" to R.string.error_login_password_is_weak
     )
-
+//Very bad solution. You'd better pass error message as a flow to UseCase-> ViewModel -> UI
     private fun toast(message: Int) {
         Toast.makeText(
             App.instance,
