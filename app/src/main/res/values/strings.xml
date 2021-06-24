@@ -1,3 +1,82 @@
 <resources>
     <string name="app_name">Egida</string>
+    <string name="E_mail">Your e-mail</string>
+    <string name="Password">Your password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="repeatPassword">Repeat your password</string>
+    <string name="details">FORGOT DETAILS?</string>
+    <string name="login_in">LOGIN IN?</string>
+    <string name="registration">REGISTRATION</string>
+    <string name="forgot_password">FORGOT PASSWORD</string>
+    <string name="create_account">CREATE ACCOUNT</string>
+    <string name="send_password_to_email">SEND PASSWORD TO EMAIL</string>
+    <string name="passwords_dont_match">Passwords don\'t match</string>
+    <string name="email_and_password">Enter your email and password</string>
+    <string name="chat">CHAT</string>
+    <string name="people">PEOPLE</string>
+    <string name="user">USER</string>
+    <string name="_156">156</string>
+    <string name="update_you_day">UPDATE YOU DAY</string>
+    <string name="setting">SETTING</string>
+    <string name="user_param">USER PARAM</string>
+    <string name="accept_the_data_usage_agreement">ACCEPT THE DATA USAGE AGREEMENT</string>
+    <string name="phone_number">PHONE NUMBER</string>
+    <string name="photo">PHOTO</string>
+    <string name="height">HEIGHT</string>
+    <string name="_180">180</string>
+    <string name="weight">WEIGHT</string>
+    <string name="_70">70</string>
+    <string name="last_name">LAST NAME</string>
+    <string name="first_name">FIRST NAME</string>
+    <string name="running_km">RUNNING (KM)</string>
+    <string name="bike_ride_km">BIKE RIDE (KM)</string>
+    <string name="sleep_hour">SLEEP (HOUR)</string>
+    <string name="fit">FIT</string>
+    <string name="meal_kkall">MEAL (KKALL)</string>
+    <string name="water_ml">WATER (ML)</string>
+    <string name="alcohol_ml">ALCOHOL (ML)</string>
+    <string name="work">WORK</string>
+    <string name="work_hour">WORK (HOUR)</string>
+    <string name="leisure_hour">LEISURE (HOUR)</string>
+    <string name="_8">8</string>
+    <!-- Drawer -->
+    <string name="drawer_text_message">MESSAGE</string>
+    <string name="drawer_text_nutrition">NUTRITION</string>
+    <string name="drawer_text_fit">FIT</string>
+    <string name="drawer_text_work">WORK</string>
+    <string name="drawer_text_setting">SETTING</string>
+    <string name="drawer_text_friends">FRIENDS</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="sing_in_fragment_login_in">Login in</string>
+    <string name="sing_in_fragment_hint_email">Email</string>
+    <string name="sing_in_fragment_hint_your_password">Your Password</string>
+    <string name="sing_in_fragment_forgot_password">Forgot Password?</string>
+    <string name="sing_in_fragment_continue">Continue</string>
+    <string name="sing_in_fragment_no_account_yet">No account yet?</string>
+    <string name="sing_in_fragment_create_one">Create One</string>
+    <string name="registration_fragment_text_registration">Registration</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="text_continue">Continue</string>
+    <string name="password_recovery_text_reset_password">Reset Password</string>
+    <string name="password_recovery_hint_email">Email</string>
+    <string name="password_recovery_text_reset_my_password">Reset My Password</string>
+    <string name="password_recovery_text_continue_login">Continue Login?</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_text_exit">Exit</string>
+
 </resources>

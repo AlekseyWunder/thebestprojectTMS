@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+    android:scrollbars="none"
+    android:background="@drawable/background_logo"
+    android:theme="@style/Theme.AppLogin">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/registration_fragment_btn_back"
+            android:src="@drawable/btn_back"
+            style="@style/btn_back" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/registration_fragment_padding_24dp"
+            android:paddingTop="@dimen/registration_fragment_padding_26dp"
+            android:paddingRight="@dimen/registration_fragment_padding_24dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_20dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/new_egida_file" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center"
+                    android:text="@string/registration_fragment_text_registration"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="@dimen/text_size_22sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/userinfo_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20dp"
+                    android:background="@drawable/circular_border_solid"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_18dp">
+
+                    <EditText
+                        android:id="@+id/registration_fragment_input_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:fontFamily="@font/montserrat"
+                        android:hint="@string/hint_name"
+                        android:inputType="text"
+                        android:textSize="@dimen/registration_fragment_text_size_14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20dp"
+                    android:background="@drawable/circular_border_solid"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_18dp">
+
+                    <EditText
+                        android:id="@+id/registration_fragment_input_user_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:fontFamily="@font/montserrat"
+                        android:hint="@string/hint_email"
+                        android:inputType="textEmailAddress"
+                        android:textSize="@dimen/registration_fragment_text_size_14sp"
+                         />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20dp"
+                    android:background="@drawable/circular_border_solid"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_18dp">
+
+                    <EditText
+                        android:id="@+id/registration_fragment_input_user_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:fontFamily="@font/montserrat"
+                        android:hint="@string/hint_password"
+                        android:inputType="textPassword"
+                        android:textSize="@dimen/registration_fragment_text_size_14sp" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/phone_number_textll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/registration_fragment_margin_8dp"
+                    android:fontFamily="@font/montserrat"
+                    android:padding="@dimen/registration_fragment_padding_10dp"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textSize="@dimen/registration_fragment_text_size_12sp" />
+
+                <Button
+                    android:id="@+id/registration_fragment_btn_continue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/registration_fragment_margin_24dp"
+                    android:layout_marginBottom="@dimen/registration_fragment_margin_14dp"
+                    android:background="@drawable/circular_blue_border_solid"
+                    android:fontFamily="@font/montserrat"
+                    android:padding="@dimen/registration_fragment_padding_18dp"
+                    android:text="@string/text_continue"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/verification_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_20dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</ScrollView>
