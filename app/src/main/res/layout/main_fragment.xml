@@ -4,21 +4,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/background_main"
+    android:background="@color/white"
     tools:context=".activity.MainActivity">
+
 
     <TextView
         android:id="@+id/score"
         android:layout_width="240dp"
         android:layout_height="140dp"
+        android:layout_marginBottom="250dp"
+        android:gravity="center"
         android:text="@string/_156"
+        android:textColor="@color/black"
         android:textSize="120sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="250dp"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/animationlob"
+        app:layout_constraintVertical_bias="0.054" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationlob"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-         />
+        app:layout_constraintVertical_bias="0.0"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="62135-cload.json"
+        app:lottie_loop="true" />
+
+    <ImageView
+        android:layout_width="195dp"
+        android:layout_height="195dp"
+        android:background="@drawable/_profile_image"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/animationlob"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/btn_main_fragment_update_day"
         android:layout_width="match_parent"
@@ -31,9 +61,10 @@
         app:backgroundTint="@color/tint"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/score"
-        />
+        app:layout_constraintVertical_bias="0.954" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -46,5 +77,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

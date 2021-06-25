@@ -9,7 +9,9 @@
         android:id="@+id/page_2"
         android:enabled="true"
         android:icon="@drawable/baseline_people_white_24dp"
-        android:title="@string/people"/>
+        android:title="@string/people"
+        />
+
     <item
         android:id="@+id/page_3"
         android:enabled="true"

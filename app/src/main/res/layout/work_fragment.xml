@@ -23,7 +23,8 @@
             android:layout_weight="85"
             android:text="@string/work_hour"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:fontFamily="@font/montserrat"/>
 
         <ImageButton
             android:id="@+id/minus_value_work"
@@ -44,7 +45,8 @@
             android:gravity="center"
             android:text="@string/_8"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:fontFamily="@font/montserrat"/>
 
         <ImageButton
             android:id="@+id/plus_value_work"
@@ -58,7 +60,10 @@
             android:focusable="true" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/misc_divider_dark" />
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -73,7 +78,8 @@
             android:layout_weight="85"
             android:text="@string/leisure_hour"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:fontFamily="@font/montserrat"/>
 
         <ImageButton
             android:id="@+id/minus_value_leisure"
@@ -83,7 +89,8 @@
             android:layout_weight="2"
             android:background="@drawable/remove_circle_grey_700_36dp"
             android:clickable="true"
-            android:focusable="true" />
+            android:focusable="true"
+            android:fontFamily="@font/montserrat"/>
 
         <TextView
             android:id="@+id/text_leisure"
@@ -94,7 +101,8 @@
             android:gravity="center"
             android:text="@string/_8"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:fontFamily="@font/montserrat"/>
 
         <ImageButton
             android:id="@+id/plus_value_leisure"
@@ -117,6 +125,10 @@
         android:text="SAVE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/circular_blue_border_solid"
+        android:fontFamily="@font/montserrat"
+        android:padding="@dimen/sing_in_fragment_padding_16dp"
+        android:textColor="@color/white"/>/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

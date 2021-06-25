@@ -25,35 +25,51 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:text="@string/user_param"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textColor="@color/dark_grey"
+            android:textSize="13sp"
+            android:fontFamily="@font/montserrat"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/misc_divider_dark" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/first_name"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
-
-
+                android:textSize="15sp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center"
+                android:padding="@dimen/padding_18dp"/>
             <EditText
                 android:id="@+id/settings_edit_first_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="45dp"
+                android:paddingStart="@dimen/margin_10dp"
+                android:layout_marginTop="@dimen/margin_10dp"
                 android:layout_marginEnd="20dp"
+                android:background="@drawable/search_box_1"
                 tools:text=""
                 android:textColorHint="@color/black"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:fontFamily="@font/montserrat"/>
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/misc_divider_dark" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -63,23 +79,35 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="@dimen/margin_10dp"
                 android:text="@string/last_name"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="15sp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center"
+                android:padding="@dimen/padding_18dp"/>
 
 
             <EditText
                 android:id="@+id/setting_edit_last_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="@dimen/margin_10dp"
                 android:layout_marginStart="50dp"
+                android:layout_marginTop="@dimen/margin_10dp"
                 android:layout_marginEnd="20dp"
                 tools:text=""
-                android:textColor="@color/black" />
+                android:background="@drawable/search_box_1"
+                android:textColor="@color/black"
+                android:fontFamily="@font/montserrat"/>
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/misc_divider_dark" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -89,12 +117,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="0.8"
                 android:text="@string/accept_the_data_usage_agreement"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="15sp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center"
+                android:padding="@dimen/padding_18dp"/>
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
             <CheckBox
                 android:id="@+id/setting_check_agreement"
@@ -104,6 +139,10 @@
                 android:layout_marginEnd="20dp"
                 android:layout_weight="0.2" />
         </androidx.appcompat.widget.LinearLayoutCompat>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/misc_divider_dark" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -113,23 +152,35 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="@dimen/margin_10dp"
                 android:text="@string/phone_number"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="15sp"
+                android:fontFamily="@font/montserrat"
+                android:gravity="center"
+                android:padding="@dimen/padding_18dp"/>
 
 
             <EditText
                 android:id="@+id/setting_edit_phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="@dimen/margin_10dp"
                 android:layout_marginEnd="20dp"
+                android:paddingStart="@dimen/margin_10dp"
                 tools:text=""
-                android:textColor="@color/black" />
+                android:background="@drawable/search_box_1"
+                android:textColor="@color/black"
+                android:fontFamily="@font/montserrat"/>
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/misc_divider_dark" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -139,12 +190,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="@dimen/margin_10dp"
                 android:layout_weight="0.8"
                 android:text="@string/photo"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="15sp"
+                android:fontFamily="@font/montserrat"
+                android:padding="@dimen/padding_18dp"/>
+
 
             <ImageButton
                 android:id="@+id/setting_add_photo"
@@ -157,6 +211,10 @@
                 android:focusable="true" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/misc_divider_dark" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -166,12 +224,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="0.8"
                 android:text="@string/height"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="15sp"
+                android:fontFamily="@font/montserrat"
+                android:padding="@dimen/padding_18dp"/>
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
             <ImageButton
                 android:id="@+id/setting_minus_height"
@@ -187,10 +251,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 tools:text="@string/_180"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:fontFamily="@font/montserrat"/>
 
             <ImageButton
                 android:id="@+id/setting_plus_height"
@@ -204,6 +269,11 @@
                 android:focusable="true" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/misc_divider_dark" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -213,12 +283,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="0.8"
                 android:text="@string/weight"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="15sp"
+                android:fontFamily="@font/montserrat"
+                android:padding="@dimen/padding_18dp"
+                />
 
             <ImageButton
                 android:id="@+id/setting_minus_weight"
@@ -234,10 +307,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/_70"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:fontFamily="@font/montserrat"
+                />
 
             <ImageButton
                 android:id="@+id/setting_plus_weight"
@@ -252,6 +327,11 @@
 
         </LinearLayout>
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/misc_divider_dark" />
+
     </LinearLayout>
 
     <Button
@@ -262,7 +342,11 @@
         android:text="SAVE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/circular_blue_border_solid"
+        android:fontFamily="@font/montserrat"
+        android:padding="@dimen/sing_in_fragment_padding_16dp"
+        android:textColor="@color/white"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

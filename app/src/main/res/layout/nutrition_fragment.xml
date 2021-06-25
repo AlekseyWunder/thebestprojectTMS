@@ -7,12 +7,13 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:orientation="horizontal">
+
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -22,7 +23,8 @@
             android:layout_weight="0.8"
             android:text="@string/meal_kkall"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:fontFamily="@font/montserrat"/>
 
         <ImageButton
             android:id="@+id/minus_meal"
@@ -41,7 +43,8 @@
             android:layout_marginTop="20dp"
             android:text="@string/_180"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:fontFamily="@font/montserrat"/>
 
         <ImageButton
             android:id="@+id/plus_meal"
@@ -55,7 +58,10 @@
             android:focusable="true"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/misc_divider_dark" />
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,7 +75,8 @@
             android:layout_weight="0.8"
             android:text="@string/water_ml"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:fontFamily="@font/montserrat"/>
 
         <ImageButton
             android:id="@+id/minus_water"
@@ -88,7 +95,8 @@
             android:layout_marginTop="20dp"
             android:text="@string/_180"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:fontFamily="@font/montserrat"/>
 
         <ImageButton
             android:id="@+id/plus_water"
@@ -102,7 +110,10 @@
             android:focusable="true"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/misc_divider_dark" />
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -116,7 +127,8 @@
             android:layout_weight="0.8"
             android:text="@string/alcohol_ml"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:fontFamily="@font/montserrat"/>
 
         <ImageButton
             android:id="@+id/minus_alcohol"
@@ -135,7 +147,8 @@
             android:layout_marginTop="20dp"
             android:text="@string/_180"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:fontFamily="@font/montserrat"/>
 
         <ImageButton
             android:id="@+id/plus_alcohol"
@@ -158,6 +171,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_20dp"
-        android:text="SAVE" />
+        android:text="SAVE"
+        android:background="@drawable/circular_blue_border_solid"
+        android:fontFamily="@font/montserrat"
+        android:padding="@dimen/sing_in_fragment_padding_16dp"
+        android:textColor="@color/white"/>/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

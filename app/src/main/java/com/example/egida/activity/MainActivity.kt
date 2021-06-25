@@ -1,5 +1,8 @@
 package com.example.egida.activity
 
+import android.annotation.SuppressLint
+import android.app.ActionBar
+import android.app.ActionBar.*
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -26,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var mAppDrawer: AppDrawer
     private lateinit var mainViewModel: MainViewModel
 
+    @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = MainActivityBinding.inflate(layoutInflater)
@@ -35,7 +39,9 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.container, MainFragment.newInstance())
                 .commitNow()
         }
+
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
 
     }
 
@@ -77,6 +83,7 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
+
 }
 
 
