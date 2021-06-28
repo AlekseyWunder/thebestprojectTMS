@@ -4,6 +4,10 @@ import android.util.Log
 import com.example.egida.domain.entity.Day
 import com.example.egida.domain.useCase.day.DayRepository
 import com.example.egida.utils.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 
 class DatabaseDay() : DayRepository {
 
@@ -22,44 +26,72 @@ class DatabaseDay() : DayRepository {
         const val CHILD_SLEEP = "sleep"
     }
 
-    override var day = Day()
+    private var _day = MutableStateFlow(initDay())
+    override var day: Flow<Day> = _day
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + Job())
+    var baseDay: Day = Day()
 
     init {
         initFirebase()
         initDatabase()
         UID = AUTH.currentUser?.uid.toString()
-
     }
 
-    override fun createDay(day: Day) {
+    private fun initDay(): Day {
+        return Day()
+    }
+
+
+    override fun createDay(day: Flow<Day>) {
         addDay(day)
-        REF_DATABASE_ROOT.child(NODE_DAY).child(CHILD_DAY).child(UID).updateChildren(addDay(day))
+        REF_DATABASE_ROOT.child(NODE_DAY).child(CHILD_DAY).child(UID)
+            .updateChildren(addDay(day))
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "database day complete")
                 }
+
             }
     }
 
-    override fun getDay() {
+    override suspend fun getDay() {
         REF_DATABASE_ROOT.child(NODE_DAY).child(CHILD_DAY).child(UID)
-            .addListenerForSingleValueEvent(AppValueEventListener {data ->
-                day =data.getValue(Day::class.java) ?: Day()
+            .addListenerForSingleValueEvent(AppValueEventListener { data ->
+                scope.launch {
+                    _day.emit((data.getValue(Day::class.java) ?: Day()))
+                }
                 Log.d(TAG, " load day: $day")
             })
     }
 
-    private fun addDay(day: Day): Map<String, Any> {
+
+    private fun addDay(day: Flow<Day>): Map<String, Any> {
+        scope.launch {
+            withContext(Dispatchers.IO) {
+                day.collect {
+                    baseDay.scoreBal = it.scoreBal
+                    baseDay.work = it.work
+                    baseDay.leisure = it.leisure
+                    baseDay.meal = it.meal
+                    baseDay.water = it.water
+                    baseDay.alcohol = it.alcohol
+                    baseDay.running = it.running
+                    baseDay.bikeRide = it.bikeRide
+                    baseDay.sleep = it.sleep
+                }
+            }
+        }
+
         val dateMap = mutableMapOf<String, Any>()
-        dateMap[CHILD_SCORE_BAL] = day.scoreBal
-        dateMap[CHILD_WORK] = day.work
-        dateMap[CHILD_LEISURE] = day.leisure
-        dateMap[CHILD_MEAL] = day.meal
-        dateMap[CHILD_WATER] = day.water
-        dateMap[CHILD_ALCOHOL] = day.alcohol
-        dateMap[CHILD_RUNNING] = day.running
-        dateMap[CHILD_BIKE_RIDE] = day.bikeRide
-        dateMap[CHILD_SLEEP] = day.sleep
+        dateMap[CHILD_SCORE_BAL] = baseDay.scoreBal
+        dateMap[CHILD_WORK] = baseDay.work
+        dateMap[CHILD_LEISURE] = baseDay.leisure
+        dateMap[CHILD_MEAL] = baseDay.meal
+        dateMap[CHILD_WATER] = baseDay.water
+        dateMap[CHILD_ALCOHOL] = baseDay.alcohol
+        dateMap[CHILD_RUNNING] = baseDay.running
+        dateMap[CHILD_BIKE_RIDE] = baseDay.bikeRide
+        dateMap[CHILD_SLEEP] = baseDay.sleep
         return dateMap
     }
 }
