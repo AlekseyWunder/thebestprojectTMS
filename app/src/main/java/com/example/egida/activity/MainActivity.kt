@@ -19,11 +19,11 @@ import com.example.egida.utils.DAY
 import com.example.egida.utils.singOutUser
 import com.example.egida.utils.userDb
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),DrawerController {
 
     private lateinit var mBinding: MainActivityBinding
     private lateinit var mToolbar: Toolbar
-    lateinit var mAppDrawer: AppDrawer
+    private lateinit var drawer: AppDrawer
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,12 +54,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun initFun() {
         setSupportActionBar(mToolbar)
-        mAppDrawer.create()
+        drawer.create()
     }
 
     private fun initFields() {
         mToolbar = mBinding.mainToolbar
-        mAppDrawer = AppDrawer(this, mToolbar)
+        drawer = AppDrawer(this, mToolbar)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -77,6 +77,15 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
+
+    override fun openDrawer() {
+        drawer.enableDrawer()
+    }
+
+    override fun closeDrawer() {
+        drawer.disableDrawer()
+    }
 }
+
 
 
