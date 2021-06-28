@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.egida.activity.MainActivity
 import com.example.egida.databinding.SettingFragmentBinding
 import com.example.egida.presentation.viewModel.MainViewModel
 import com.example.egida.presentation.viewModel.SettingViewModel
+import com.example.egida.utils.DAY
 import com.example.egida.utils.replaceFragment
 import com.example.egida.utils.userDb
 
@@ -26,10 +26,11 @@ class SettingFragment : Fragment() {
     private lateinit var viewModel: SettingViewModel
     private lateinit var mainViewModel: MainViewModel
 
+
     override fun onStart() {
         super.onStart()
-        (activity as MainActivity).mAppDrawer.disableDrawer()
-        Log.d(TAG, " $userDb")
+        mainViewModel.closeDrawer(requireActivity())
+        Log.d(FitFragment.TAG, " $DAY")
     }
 
     override fun onResume() {
@@ -39,7 +40,7 @@ class SettingFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        (activity as MainActivity).mAppDrawer.enableDrawer()
+        mainViewModel.openDrawer(requireActivity())
     }
 
     override fun onCreateView(

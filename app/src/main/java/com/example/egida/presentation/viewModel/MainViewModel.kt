@@ -1,6 +1,5 @@
 package com.example.egida.presentation.viewModel
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,7 +14,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class MainViewModel() : ViewModel() {
+class MainViewModel : ViewModel() {
 
     companion object {
         const val TAG = " mainViewModel"
@@ -24,10 +23,6 @@ class MainViewModel() : ViewModel() {
     private val userAuthUseCase: UserAuthUseCase by lazy { Dependencies.authUseCase() }
     private val userDbUseCase: UserDbUseCase by lazy { Dependencies.userDbUseCase() }
     private val dayUseCase: DayUseCase by lazy { Dependencies.dayUseCase() }
-    @SuppressLint("StaticFieldLeak")
-    private val activity = Activity()
-
-
     private var toast = MutableLiveData<String>()
 
     fun checkUser(): Boolean {
@@ -53,21 +48,17 @@ class MainViewModel() : ViewModel() {
                 dayUseCase.getDay()
             }
         }
-
     }
 
-    fun closeDrawer() {
-
-        val currentActivity = activity
-        if (currentActivity is DrawerController) {
-            currentActivity.closeDrawer()
+    fun closeDrawer(activity: Activity) {
+        if (activity is DrawerController) {
+            activity.closeDrawer()
         }
     }
 
-    fun openDrawer() {
-        val currentActivity = activity
-        if (currentActivity is DrawerController) {
-            currentActivity.openDrawer()
+    fun openDrawer(activity: Activity) {
+        if (activity is DrawerController) {
+            activity.openDrawer()
         }
     }
 }

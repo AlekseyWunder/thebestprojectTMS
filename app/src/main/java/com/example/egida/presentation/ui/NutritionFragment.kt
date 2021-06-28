@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.example.egida.activity.MainActivity
 import com.example.egida.databinding.NutritionFragmentBinding
 import com.example.egida.presentation.viewModel.DayViewModel
 import com.example.egida.presentation.viewModel.MainViewModel
@@ -28,20 +27,80 @@ class NutritionFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        (activity as MainActivity).closeDrawer()
-//        mainViewModel.closeDrawer()
-//        Log.d(FitFragment.TAG, " $DAY")
+        mainViewModel.closeDrawer(requireActivity())
     }
 
     override fun onResume() {
         super.onResume()
+        binding.minusMeal.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.day
+                    .collect {
+                        it.meal--
+                        binding.textMeal.text = it.meal.toString()
+                    }
+            }
+        }
+        binding.plusMeal.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.day
+                    .collect {
+                        it.meal++
+                        binding.textMeal.text = it.meal.toString()
+                    }
+            }
+        }
 
+
+        binding.minusWater.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.day
+                    .collect {
+                        it.water--
+                        binding.textWater.text = it.water.toString()
+                    }
+            }
+        }
+
+        binding.plusWater.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.day
+                    .collect {
+                        it.water++
+                        binding.textWater.text = it.water.toString()
+                    }
+            }
+        }
+
+        binding.minusAlcohol.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.day
+                    .collect {
+                        it.alcohol--
+                        binding.textAlcohol.text = it.alcohol.toString()
+                    }
+            }
+        }
+
+        binding.plusAlcohol.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.day
+                    .collect {
+                        it.alcohol++
+                        binding.textAlcohol.text = it.alcohol.toString()
+                    }
+            }
+        }
+
+        binding.btnSave.setOnClickListener {
+            viewModel.save()
+            replaceFragment(this, MainFragment.newInstance())
+        }
     }
 
     override fun onStop() {
         super.onStop()
-        (activity as MainActivity).openDrawer()
-//        mainViewModel.openDrawer()
+        mainViewModel.openDrawer(requireActivity())
     }
 
     override fun onCreateView(
@@ -64,73 +123,5 @@ class NutritionFragment : Fragment() {
                     binding.textAlcohol.text = it.alcohol.toString()
                 }
         }
-
-        binding.minusMeal.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.day
-                    .collect {
-                        binding.textMeal.text = (it.meal--).toString()
-                        binding.textMeal.text = it.meal.toString()
-                    }
-            }
-        }
-
-        binding.plusMeal.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.day
-                    .collect {
-                        binding.textMeal.text = (it.meal++).toString()
-                        binding.textMeal.text = it.meal.toString()
-                    }
-            }
-        }
-
-
-        binding.minusWater.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.day
-                    .collect {
-                        binding.textWater.text = (it.water--).toString()
-                        binding.textWater.text = it.water.toString()
-                    }
-            }
-        }
-
-        binding.plusWater.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.day
-                    .collect {
-                        binding.textWater.text = (it.water++).toString()
-                        binding.textWater.text = it.water.toString()
-                    }
-            }
-        }
-
-        binding.minusAlcohol.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.day
-                    .collect {
-                        binding.textAlcohol.text = (it.alcohol--).toString()
-                        binding.textAlcohol.text = it.alcohol.toString()
-                    }
-            }
-        }
-
-        binding.plusAlcohol.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.day
-                    .collect {
-                        binding.textAlcohol.text = (it.alcohol++).toString()
-                        binding.textAlcohol.text = it.alcohol.toString()
-                    }
-            }
-        }
-
-        binding.btnSave.setOnClickListener {
-            viewModel.save()
-            replaceFragment(this, MainFragment.newInstance())
-        }
     }
-
-
 }

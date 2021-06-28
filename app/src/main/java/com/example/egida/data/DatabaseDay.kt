@@ -7,6 +7,7 @@ import com.example.egida.utils.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 
 class DatabaseDay : DayRepository {
@@ -27,7 +28,7 @@ class DatabaseDay : DayRepository {
     }
 
     private var _day = MutableStateFlow(initDay())
-    override var day: Flow<Day> = _day
+    override var day: Flow<Day> = _day.asStateFlow()
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + Job())
     private var baseDay: Day = Day()
 
@@ -95,4 +96,3 @@ class DatabaseDay : DayRepository {
         return dateMap
     }
 }
-

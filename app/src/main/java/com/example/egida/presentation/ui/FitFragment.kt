@@ -8,11 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.example.egida.activity.MainActivity
 import com.example.egida.databinding.FitFragmentBinding
 import com.example.egida.presentation.viewModel.DayViewModel
 import com.example.egida.presentation.viewModel.MainViewModel
-import com.example.egida.utils.DAY
 import com.example.egida.utils.replaceFragment
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -25,14 +23,12 @@ class FitFragment : Fragment() {
     }
 
     private lateinit var binding: FitFragmentBinding
-    private lateinit var viewModel: DayViewModel
+    private lateinit var dayViewModel: DayViewModel
     private lateinit var mainViewModel: MainViewModel
 
     override fun onStart() {
         super.onStart()
-        (activity as MainActivity).closeDrawer()
-//        mainViewModel.closeDrawer()
-        Log.d(TAG, " $DAY")
+        mainViewModel.closeDrawer(requireActivity())
     }
 
     override fun onResume() {
@@ -40,9 +36,9 @@ class FitFragment : Fragment() {
 
         binding.minusRunning.setOnClickListener {
             lifecycleScope.launch {
-                viewModel.day
+                dayViewModel.day
                     .collect {
-                        binding.textRunning.text = (it.running--).toString()
+                        it.running--
                         binding.textRunning.text = it.running.toString()
                     }
             }
@@ -50,20 +46,19 @@ class FitFragment : Fragment() {
 
         binding.plusRunning.setOnClickListener {
             lifecycleScope.launch {
-                viewModel.day
+                dayViewModel.day
                     .collect {
-                        binding.textRunning.text = (it.running++).toString()
+                        it.running++
                         binding.textRunning.text = it.running.toString()
                     }
             }
         }
 
-
         binding.minusBikeRide.setOnClickListener {
             lifecycleScope.launch {
-                viewModel.day
+                dayViewModel.day
                     .collect {
-                        binding.textBikeRide.text = (it.bikeRide--).toString()
+                        it.bikeRide--
                         binding.textBikeRide.text = it.bikeRide.toString()
                     }
             }
@@ -71,9 +66,9 @@ class FitFragment : Fragment() {
 
         binding.plusBikeRide.setOnClickListener {
             lifecycleScope.launch {
-                viewModel.day
+                dayViewModel.day
                     .collect {
-                        binding.textBikeRide.text = (it.bikeRide++).toString()
+                        it.bikeRide++
                         binding.textBikeRide.text = it.bikeRide.toString()
                     }
             }
@@ -81,9 +76,9 @@ class FitFragment : Fragment() {
 
         binding.minusSleep.setOnClickListener {
             lifecycleScope.launch {
-                viewModel.day
+                dayViewModel.day
                     .collect {
-                        binding.textSleep.text = (it.sleep--).toString()
+                        it.sleep--
                         binding.textSleep.text = it.sleep.toString()
                     }
             }
@@ -91,24 +86,23 @@ class FitFragment : Fragment() {
 
         binding.plusSleep.setOnClickListener {
             lifecycleScope.launch {
-                viewModel.day
+                dayViewModel.day
                     .collect {
-                        binding.textSleep.text = (it.sleep++).toString()
+                        it.sleep++
                         binding.textSleep.text = it.sleep.toString()
                     }
             }
         }
 
         binding.btnSave.setOnClickListener {
-            viewModel.save()
+            dayViewModel.save()
             replaceFragment(this, MainFragment.newInstance())
         }
     }
 
     override fun onStop() {
         super.onStop()
-        (activity as MainActivity).openDrawer()
-//        mainViewModel.openDrawer()
+        mainViewModel.openDrawer(requireActivity())
     }
 
     override fun onCreateView(
@@ -121,11 +115,12 @@ class FitFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(DayViewModel::class.java)
+        dayViewModel = ViewModelProvider(this).get(DayViewModel::class.java)
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         lifecycleScope.launchWhenStarted {
-            viewModel.day
+            dayViewModel.day
                 .collect {
+                    Log.d(TAG, "$it")
                     binding.textRunning.text = it.running.toString()
                     binding.textBikeRide.text = it.bikeRide.toString()
                     binding.textSleep.text = it.sleep.toString()

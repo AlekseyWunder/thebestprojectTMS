@@ -7,4 +7,5 @@ interface DayRepository {
     suspend fun getDay()
     var day: Flow<Day>
     fun createDay(day: Flow<Day>)
+//    I'm pretty sure, that there is no real need to pass flow inside of repository.
 }
