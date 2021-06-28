@@ -65,7 +65,7 @@ class SingInFragment : Fragment() {
             )
         }
 
-        mBinding.singInFragmentBtnCreateAccount.setOnClickListener {
+        mBinding.btnCreateOne.setOnClickListener {
             replaceFragment(
                 this,
                 RegistrationFragment.newInstance()

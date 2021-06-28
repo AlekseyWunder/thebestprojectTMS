@@ -10,6 +10,7 @@ import com.example.egida.LoginActivity
 import com.example.egida.R
 import com.example.egida.presentation.viewModel.MainViewModel
 import com.example.egida.utils.replaceActivity
+import kotlinx.android.synthetic.main.main_fragment.view.*
 
 class MainFragment : Fragment() {
 
@@ -23,9 +24,16 @@ class MainFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+    ): View? {
+        val rootView = inflater.inflate(R.layout.main_fragment, container, false)
+
+        val fragmentName = arguments?.getString("fragmentName")
+
+        rootView.score.text = fragmentName
+
+        return rootView
     }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

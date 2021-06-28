@@ -25,18 +25,17 @@ class FitFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        (activity as MainActivity).mAppDrawer.disableDrawer()
         Log.d(TAG, " $DAY")
     }
 
     override fun onResume() {
         super.onResume()
         changeValuesFragmentFields()
+        
     }
 
     override fun onStop() {
         super.onStop()
-        (activity as MainActivity).mAppDrawer.enableDrawer()
     }
 
     override fun onCreateView(
