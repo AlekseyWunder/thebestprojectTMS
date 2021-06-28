@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 
-class DatabaseDay() : DayRepository {
+class DatabaseDay : DayRepository {
 
     companion object {
         const val TAG = " databaseDay"
@@ -29,7 +29,7 @@ class DatabaseDay() : DayRepository {
     private var _day = MutableStateFlow(initDay())
     override var day: Flow<Day> = _day
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + Job())
-    var baseDay: Day = Day()
+    private var baseDay: Day = Day()
 
     init {
         initFirebase()
