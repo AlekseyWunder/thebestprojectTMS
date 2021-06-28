@@ -1,17 +1,18 @@
 package com.example.egida.presentation.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.egida.activity.MainActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.egida.databinding.NutritionFragmentBinding
 import com.example.egida.presentation.viewModel.DayViewModel
-import com.example.egida.utils.DAY
+import com.example.egida.presentation.viewModel.MainViewModel
 import com.example.egida.utils.replaceFragment
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class NutritionFragment : Fragment() {
 
@@ -22,21 +23,84 @@ class NutritionFragment : Fragment() {
 
     private lateinit var binding: NutritionFragmentBinding
     private lateinit var viewModel: DayViewModel
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onStart() {
         super.onStart()
-        (activity as MainActivity).mAppDrawer.disableDrawer()
-        Log.d(TAG, " $DAY")
+        mainViewModel.closeDrawer(requireActivity())
     }
 
     override fun onResume() {
         super.onResume()
-        changeValuesFragmentFields()
+        binding.minusMeal.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.day
+                    .collect {
+                        it.meal--
+                        binding.textMeal.text = it.meal.toString()
+                    }
+            }
+        }
+        binding.plusMeal.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.day
+                    .collect {
+                        it.meal++
+                        binding.textMeal.text = it.meal.toString()
+                    }
+            }
+        }
+
+
+        binding.minusWater.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.day
+                    .collect {
+                        it.water--
+                        binding.textWater.text = it.water.toString()
+                    }
+            }
+        }
+
+        binding.plusWater.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.day
+                    .collect {
+                        it.water++
+                        binding.textWater.text = it.water.toString()
+                    }
+            }
+        }
+
+        binding.minusAlcohol.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.day
+                    .collect {
+                        it.alcohol--
+                        binding.textAlcohol.text = it.alcohol.toString()
+                    }
+            }
+        }
+
+        binding.plusAlcohol.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.day
+                    .collect {
+                        it.alcohol++
+                        binding.textAlcohol.text = it.alcohol.toString()
+                    }
+            }
+        }
+
+        binding.btnSave.setOnClickListener {
+            viewModel.save()
+            replaceFragment(this, MainFragment.newInstance())
+        }
     }
 
     override fun onStop() {
         super.onStop()
-        (activity as MainActivity).mAppDrawer.enableDrawer()
+        mainViewModel.openDrawer(requireActivity())
     }
 
     override fun onCreateView(
@@ -50,46 +114,14 @@ class NutritionFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(DayViewModel::class.java)
-
-        binding.minusMeal.setOnClickListener {
-            viewModel.day.meal = viewModel.day.meal - 1
-            binding.textMeal.text = viewModel.day.meal.toString()
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        lifecycleScope.launchWhenStarted {
+            viewModel.day
+                .collect {
+                    binding.textMeal.text = it.meal.toString()
+                    binding.textWater.text = it.water.toString()
+                    binding.textAlcohol.text = it.alcohol.toString()
+                }
         }
-
-        binding.plusMeal.setOnClickListener {
-            viewModel.day.meal = viewModel.day.meal + 1
-            binding.textMeal.text = viewModel.day.meal.toString()
-        }
-
-        binding.minusWater.setOnClickListener {
-            viewModel.day.water = viewModel.day.water - 1
-            binding.textWater.text = viewModel.day.water.toString()
-        }
-
-        binding.plusWater.setOnClickListener {
-            viewModel.day.water = viewModel.day.water + 1
-            binding.textWater.text = viewModel.day.water.toString()
-        }
-
-        binding.minusAlcohol.setOnClickListener {
-            viewModel.day.alcohol = viewModel.day.alcohol - 1
-            binding.textAlcohol.text = viewModel.day.alcohol.toString()
-        }
-
-        binding.plusAlcohol.setOnClickListener {
-            viewModel.day.alcohol = viewModel.day.alcohol + 1
-            binding.textAlcohol.text = viewModel.day.alcohol.toString()
-        }
-
-        binding.btnSave.setOnClickListener {
-            viewModel.save()
-            replaceFragment(this, MainFragment.newInstance())
-        }
-    }
-
-    private fun changeValuesFragmentFields() {
-        binding.textAlcohol.text = viewModel.day.alcohol.toString()
-        binding.textWater.text = viewModel.day.water.toString()
-        binding.textMeal.text = viewModel.day.meal.toString()
     }
 }

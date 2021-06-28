@@ -1,17 +1,18 @@
 package com.example.egida.presentation.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.egida.activity.MainActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.egida.databinding.WorkFragmentBinding
 import com.example.egida.presentation.viewModel.DayViewModel
-import com.example.egida.utils.DAY
+import com.example.egida.presentation.viewModel.MainViewModel
 import com.example.egida.utils.replaceFragment
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class WorkFragment : Fragment() {
 
@@ -22,21 +23,64 @@ class WorkFragment : Fragment() {
 
     private lateinit var binding: WorkFragmentBinding
     private lateinit var viewModel: DayViewModel
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onStart() {
         super.onStart()
-        (activity as MainActivity).mAppDrawer.disableDrawer()
-        Log.d(TAG, " $DAY")
+        mainViewModel.closeDrawer(requireActivity())
     }
 
     override fun onResume() {
         super.onResume()
-        changeValuesFragmentFields()
+        binding.minusValueWork.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.day
+                    .collect {
+                        it.work--
+                        binding.textWork.text = it.work.toString()
+                    }
+            }
+        }
+
+        binding.plusValueWork.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.day
+                    .collect {
+                        it.work++
+                        binding.textWork.text = it.work.toString()
+                    }
+            }
+        }
+
+        binding.minusValueLeisure.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.day
+                    .collect {
+                        it.leisure--
+                        binding.textLeisure.text = it.leisure.toString()
+                    }
+            }
+        }
+
+        binding.plusValueLeisure.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.day
+                    .collect {
+                        it.leisure++
+                        binding.textLeisure.text = it.leisure.toString()
+                    }
+            }
+        }
+
+        binding.workBtnSave.setOnClickListener {
+            viewModel.save()
+            replaceFragment(this, MainFragment.newInstance())
+        }
     }
 
     override fun onStop() {
         super.onStop()
-        (activity as MainActivity).mAppDrawer.enableDrawer()
+        mainViewModel.openDrawer(requireActivity())
     }
 
     override fun onCreateView(
@@ -47,38 +91,16 @@ class WorkFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(DayViewModel::class.java)
 
-        binding.minusValueWork.setOnClickListener {
-            viewModel.day.work = viewModel.day.work - 1
-            binding.textWork.text = viewModel.day.work.toString()
+        lifecycleScope.launchWhenStarted {
+            viewModel.day
+                .collect {
+                    binding.textLeisure.text = it.leisure.toString()
+                    binding.textWork.text = it.work.toString()
+                }
         }
-
-        binding.plusValueWork.setOnClickListener {
-            viewModel.day.work = viewModel.day.work + 1
-            binding.textWork.text = viewModel.day.work.toString()
-        }
-
-        binding.minusValueLeisure.setOnClickListener {
-            viewModel.day.leisure = viewModel.day.leisure - 1
-            binding.textLeisure.text = viewModel.day.leisure.toString()
-        }
-
-        binding.plusValueLeisure.setOnClickListener {
-            viewModel.day.leisure = viewModel.day.leisure + 1
-            binding.textLeisure.text = viewModel.day.leisure.toString()
-        }
-
-        binding.workBtnSave.setOnClickListener {
-            viewModel.save()
-            replaceFragment(this, MainFragment.newInstance())
-        }
-    }
-
-    private fun changeValuesFragmentFields() {
-        binding.textLeisure.text = viewModel.day.leisure.toString()
-        binding.textWork.text = viewModel.day.work.toString()
     }
 }

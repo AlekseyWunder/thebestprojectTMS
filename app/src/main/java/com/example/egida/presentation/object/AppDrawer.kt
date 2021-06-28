@@ -54,7 +54,7 @@ class AppDrawer(
     fun enableDrawer() {
         activity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
         mDrawer.actionBarDrawerToggle?.isDrawerIndicatorEnabled = true
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         toolbar.setNavigationOnClickListener {
             mDrawer.openDrawer()
         }

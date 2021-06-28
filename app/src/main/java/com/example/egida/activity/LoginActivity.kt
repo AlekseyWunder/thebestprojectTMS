@@ -13,8 +13,8 @@ class LoginActivity : AppCompatActivity() {
         setContentView(mBinding.root)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, SingInFragment.newInstance())
-                    .commitNow()
+                .replace(R.id.container, SingInFragment.newInstance())
+                .commitNow()
         }
     }
 }
