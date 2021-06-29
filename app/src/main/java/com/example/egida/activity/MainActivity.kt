@@ -33,11 +33,10 @@ import com.example.egida.utils.singOutUser
 import com.example.egida.utils.userDb
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var binding:MainActivityBinding
-    private lateinit var mainViewModel: MainViewModel
     lateinit var drawerLayout: DrawerLayout
     private lateinit var adapter: NavigationRVAdapter
+    private lateinit var binding:MainActivityBinding
+    private lateinit var mainViewModel: MainViewModel
     private var items = arrayListOf(
         NavigationItemModel(R.drawable.baseline_person_outline_white_24dp, "Home"),
         NavigationItemModel(R.drawable.baseline_chat_white_24dp, "Message"),
@@ -52,9 +51,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        drawerLayout = findViewById(R.id.drawer_layout)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
+                .replace(R.id.activity_main_content_id, MainFragment.newInstance())
                 .commitNow()
         }
 
