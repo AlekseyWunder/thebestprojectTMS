@@ -7,9 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.egida.Dependencies
 import com.example.egida.domain.entity.UserAuth
-import com.example.egida.domain.entity.UserDb
-import com.example.egida.domain.useCase.UserDbUseCase
+import com.example.egida.domain.entity.UserDatabase
 import com.example.egida.domain.useCase.userAUTH.UserAuthUseCase
+import com.example.egida.domain.useCase.userDatabase.UserDatabaseUseCase
 import com.example.egida.utils.StatesUser
 import com.example.egida.utils.statesUser
 import kotlinx.coroutines.launch
@@ -18,10 +18,10 @@ import kotlinx.coroutines.launch
 class LoginViewModel : ViewModel() {
 
     private val userAuthUseCase: UserAuthUseCase by lazy { Dependencies.authUseCase() }
-    private val userDbUseCase:UserDbUseCase by lazy { Dependencies.userDbUseCase()}
+    private val userDbUseCase: UserDatabaseUseCase by lazy { Dependencies.userDatabaseUseCase() }
 
-    var login: String =""
-    var id:String = ""
+    var login: String = ""
+    var id: String = ""
     var email: String = ""
     var password: String = ""
     var doublePassword: String = ""
@@ -37,8 +37,8 @@ class LoginViewModel : ViewModel() {
                 viewModelScope.launch {
                     val user = UserAuth(email, password)
                     userAuthUseCase.addUser(user)
-                    val userDB = UserDb(id, login)
-                    userDbUseCase.updateUser(userDB)
+//                    val userDB = UserDatabase(id, login)
+//                    userDbUseCase.updateUser(userDB)
                 }
             } else {
                 toast.value = statesUser(StatesUser.PasswordsDontMatch)

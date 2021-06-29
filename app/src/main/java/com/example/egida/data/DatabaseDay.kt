@@ -82,7 +82,6 @@ class DatabaseDay : DayRepository {
                 }
             }
         }
-
         val dateMap = mutableMapOf<String, Any>()
         dateMap[CHILD_SCORE_BAL] = baseDay.scoreBal
         dateMap[CHILD_WORK] = baseDay.work
