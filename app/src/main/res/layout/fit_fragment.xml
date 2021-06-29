@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/fit_fragment"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    >
+    android:id="@+id/fit_fragment"
+    tools:context="com.example.egida.presentation.ui.FitFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"

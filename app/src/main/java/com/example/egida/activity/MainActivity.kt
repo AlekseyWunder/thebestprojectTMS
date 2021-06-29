@@ -31,6 +31,7 @@ import com.example.egida.presentation.viewModel.MainViewModel
 import com.example.egida.utils.DAY
 import com.example.egida.utils.singOutUser
 import com.example.egida.utils.userDb
+import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var drawerLayout: DrawerLayout
@@ -69,76 +70,84 @@ class MainActivity : AppCompatActivity() {
         binding.navigationRv.setHasFixedSize(true)
 
         // Add Item Touch Listener
-        binding.navigationRv.addOnItemTouchListener(RecyclerTouchListener(this, object : ClickListener {
-            override fun onClick(view: View, position: Int) {
-                when (position) {
-                    0 -> {
-                        // # Home Fragment
-                        val bundle = Bundle()
-                        bundle.putString("fragmentName", "Home Fragment")
-                        val homeFragment = MainFragment()
-                        homeFragment.arguments = bundle
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.activity_main_content_id, homeFragment).commit()
-                    }
-                    1 -> {
-                        // # Message Fragment
-                        val bundle = Bundle()
-                        bundle.putString("fragmentName", "Message Fragment")
-                        val messageFragment = MainFragment()
-                        messageFragment.arguments = bundle
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.activity_main_content_id, messageFragment).commit()
-                    }
-                    2 -> {
-                        // # Fit Fragment
-                        val bundle = Bundle()
-                        bundle.putString("fragmentName", "fit Fragment")
-                        val fitFragment = FitFragment()
-                        fitFragment.arguments = bundle
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.activity_main_content_id, fitFragment).commit()
-                    }
-                    3 -> {
-                        // # Nutrition Fragment
-                        val bundle = Bundle()
-                        bundle.putString("fragmentName", "Nutrition Fragment")
-                        val NutritionFragment = NutritionFragment()
-                        NutritionFragment.arguments = bundle
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.activity_main_content_id, NutritionFragment).commit()
-                    }
-                    4 -> {
-                        // Work
-                        val bundle = Bundle()
-                        bundle.putString("fragmentName", "Work Fragment")
-                        val WorkFragment = WorkFragment()
-                        WorkFragment.arguments = bundle
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.activity_main_content_id, WorkFragment).commit()
-                    }
-                    5 -> {
-                        // # Settings Fragment
-                        val bundle = Bundle()
-                        bundle.putString("fragmentName", "Settings Fragment")
-                        val settingsFragment = SettingFragment()
-                        settingsFragment.arguments = bundle
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.activity_main_content_id, settingsFragment).commit()
-                    }
-                    6 -> {
-                        // # Friends
-                        val bundle = Bundle()
-                        bundle.putString("fragmentName", "Friends Fragment")
-                        val FriendsFragment = MainFragment()
-                        FriendsFragment.arguments = bundle
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.activity_main_content_id, FriendsFragment).commit()
-                    }
-                }
+        binding.navigationRv.addOnItemTouchListener(
+            RecyclerTouchListener(
+                this,
+                object : ClickListener {
+                    override fun onClick(view: View, position: Int) {
+                        when (position) {
+                            0 -> {
+                                // # Home Fragment
+                                val bundle = Bundle()
+                                bundle.putString("fragmentName", "Home Fragment")
+                                val homeFragment = MainFragment()
+                                homeFragment.arguments = bundle
+                                supportFragmentManager.beginTransaction()
+                                    .replace(R.id.activity_main_content_id, homeFragment).commit()
+                            }
+                            1 -> {
+                                // # Message Fragment
+                                val bundle = Bundle()
+                                bundle.putString("fragmentName", "Message Fragment")
+                                val messageFragment = MainFragment()
+                                messageFragment.arguments = bundle
+                                supportFragmentManager.beginTransaction()
+                                    .replace(R.id.activity_main_content_id, messageFragment)
+                                    .commit()
+                            }
+                            2 -> {
+                                // # Fit Fragment
+                                val bundle = Bundle()
+                                bundle.putString("fragmentName", "fit Fragment")
+                                val fitFragment = FitFragment()
+                                fitFragment.arguments = bundle
+                                supportFragmentManager.beginTransaction()
+                                    .replace(R.id.activity_main_content_id, fitFragment).commit()
+                            }
+                            3 -> {
+                                // # Nutrition Fragment
+                                val bundle = Bundle()
+                                bundle.putString("fragmentName", "Nutrition Fragment")
+                                val NutritionFragment = NutritionFragment()
+                                NutritionFragment.arguments = bundle
+                                supportFragmentManager.beginTransaction()
+                                    .replace(R.id.activity_main_content_id, NutritionFragment)
+                                    .commit()
+                            }
+                            4 -> {
+                                // Work
+                                val bundle = Bundle()
+                                bundle.putString("fragmentName", "Work Fragment")
+                                val WorkFragment = WorkFragment()
+                                WorkFragment.arguments = bundle
+                                supportFragmentManager.beginTransaction()
+                                    .replace(R.id.activity_main_content_id, WorkFragment).commit()
+                            }
+                            5 -> {
+                                // # Settings Fragment
+                                val bundle = Bundle()
+                                bundle.putString("fragmentName", "Settings Fragment")
+                                val settingsFragment = SettingFragment()
+                                settingsFragment.arguments = bundle
+                                supportFragmentManager.beginTransaction()
+                                    .replace(R.id.activity_main_content_id, settingsFragment)
+                                    .commit()
+                            }
+                            6 -> {
+                                // # Friends
+                                val bundle = Bundle()
+                                bundle.putString("fragmentName", "Friends Fragment")
+                                val FriendsFragment = MainFragment()
+                                FriendsFragment.arguments = bundle
+                                supportFragmentManager.beginTransaction()
+                                    .replace(R.id.activity_main_content_id, FriendsFragment)
+                                    .commit()
+                            }
+                        }
 
-            }
-        }))
+                    }
+                })
+        )
 
         // Update Adapter with item data and highlight the default menu item ('Home' Fragment)
         updateAdapter(0)
@@ -156,7 +165,7 @@ class MainActivity : AppCompatActivity() {
         val toggle: ActionBarDrawerToggle = object : ActionBarDrawerToggle(
             this,
             drawerLayout,
-            binding.activityMainToolbar,
+            activity_main_toolbar,
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         ) {
@@ -190,13 +199,12 @@ class MainActivity : AppCompatActivity() {
 
 
         // Set Header Image
-        binding.navigationHeaderImg.setImageResource(R.color.white)
+        navigation_header_img.setImageResource(R.drawable._profile_image)
 
         // Set background of Drawer
-        binding.navigationLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+        navigation_layout.setBackgroundColor(ContextCompat.getColor(this, R.color.black))
 
     }
-
     init {
         userDb = UserDb()
         DAY = Day()
@@ -221,7 +229,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun updateAdapter(highlightItemPos: Int) {
         adapter = NavigationRVAdapter(items, highlightItemPos)
-        binding.navigationRv.adapter = adapter
+        navigation_rv.adapter = adapter
         adapter.notifyDataSetChanged()
     }
 
@@ -239,7 +247,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 }
 
 

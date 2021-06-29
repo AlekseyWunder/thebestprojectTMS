@@ -14,7 +14,7 @@
         android:layout_height="35sp"
         android:layout_gravity="center_vertical"
         android:scaleType="centerInside"
-        android:src="@drawable/menuliner"
+        android:src="@android:drawable/btn_star_big_on"
         tools:ignore="ContentDescription" />
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginStart="7sp"
         android:gravity="center_vertical"
-        android:text="Fragment Name"
+        android:text="Custom Navigation Drawer Row"
         android:textSize="18sp" />
 
 </LinearLayout>

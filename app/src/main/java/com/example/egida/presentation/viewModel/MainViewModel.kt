@@ -21,15 +21,16 @@ class MainViewModel : ViewModel() {
     var toast = MutableLiveData<String>()
 
     fun checkUser(): Boolean {
-        var cUser = userAuthUseCase.getCurrentUser()
-        return if (cUser != null) {
-            if (!cUser.isEmailVerified) {
-                toast.value = "Проверьте вашу почту для подтверждения емэйл адресса"
-            }
-            true
-        } else {
-            false
-        }
+//        var cUser = userAuthUseCase.getCurrentUser()
+//        return if (cUser != null) {
+//            if (!cUser.isEmailVerified) {
+//                toast.value = "Проверьте вашу почту для подтверждения емэйл адресса"
+//            }
+//            true
+//        } else {
+//            false
+//        }
+        return true
     }
 
     fun singOutUser() {
