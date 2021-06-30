@@ -120,7 +120,9 @@ class SettingFragment : Fragment() {
         }
 
         binding.settingsFragmentBtnSave.setOnClickListener {
-            settingViewModel.save()
+            lifecycleScope.launch {
+                settingViewModel.save()
+            }
             replaceFragment(this, MainFragment.newInstance())
         }
 

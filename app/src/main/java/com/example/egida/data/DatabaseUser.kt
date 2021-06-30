@@ -5,10 +5,7 @@ import com.example.egida.domain.entity.UserDatabase
 import com.example.egida.domain.useCase.userDatabase.UserDatabaseRepository
 import com.example.egida.utils.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.*
 
 class DatabaseUser : UserDatabaseRepository {
     companion object {
@@ -27,7 +24,7 @@ class DatabaseUser : UserDatabaseRepository {
     }
 
     private var _databaseUser = MutableStateFlow(initUser())
-    override var databaseUser: Flow<UserDatabase> = _databaseUser.asStateFlow()
+    override var databaseUser: StateFlow<UserDatabase> = _databaseUser.asStateFlow()
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + Job())
     private var userDatabase: UserDatabase = UserDatabase()
     private val dateMap = mutableMapOf<String, Any>()
@@ -53,20 +50,22 @@ class DatabaseUser : UserDatabaseRepository {
             })
     }
 
-    override fun updateUser(databaseUser: Flow<UserDatabase>) {
-        REF_DATABASE_ROOT.child(NODE_USERS).child(UID).updateChildren(dateMap)
+    override suspend fun updateUser(databaseUser: StateFlow<UserDatabase>) {
+        Log.d(TAG, "updaterUser start ${databaseUser.value}")
+        Log.d(TAG,"updaterUser start $dateMap")
+        REF_DATABASE_ROOT.child(NODE_USERS).child(UID).updateChildren(addUser(databaseUser))
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    Log.d(DatabaseAuth.TAG, "database update complete")
+                    Log.d(TAG, "database update complete $")
                 }
             }
     }
 
-    override fun addUser(databaseUser: Flow<UserDatabase>): Map<String, Any> {
+    override suspend fun addUser(databaseUser: StateFlow<UserDatabase>): Map<String, Any> {
         val uid = UID
         userDatabase.id = uid
         scope.launch {
-            withContext(Dispatchers.IO) {
+            async{
                 databaseUser.collect {
                     userDatabase.id = it.id
                     userDatabase.login = it.login
@@ -78,7 +77,7 @@ class DatabaseUser : UserDatabaseRepository {
                     userDatabase.height = it.height
                     userDatabase.weight = it.weight
                 }
-            }
+            }.await()
         }
         dateMap[CHILD_ID] = userDatabase.id
         dateMap[CHILD_LOGIN] = userDatabase.login
@@ -89,6 +88,7 @@ class DatabaseUser : UserDatabaseRepository {
         dateMap[CHILD_PHOTO_URL] = userDatabase.photoURL
         dateMap[CHILD_HEIGHT] = userDatabase.height
         dateMap[CHILD_WEIGHT] = userDatabase.weight
+        Log.d(TAG,"addUser complete")
         return dateMap
     }
 }

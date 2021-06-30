@@ -3,12 +3,13 @@ package com.example.egida.domain.useCase.userDatabase
 import com.example.egida.data.DatabaseUser
 import com.example.egida.domain.entity.UserDatabase
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 class UserDatabaseUseCaseImpl(
     private val data: DatabaseUser
 ) : UserDatabaseUseCase {
 
-    override fun updateUser(databaseUser: Flow<UserDatabase>) {
+    override suspend fun updateUser(databaseUser: StateFlow<UserDatabase>) {
         return data.updateUser(databaseUser)
     }
 
@@ -16,11 +17,11 @@ class UserDatabaseUseCaseImpl(
         return data.getUser()
     }
 
-    override var databaseUser: Flow<UserDatabase>
+    override var databaseUser: StateFlow<UserDatabase>
         get() = data.databaseUser
         set(value) {}
 
-    override fun addUser(databaseUser: Flow<UserDatabase>): Map<String, Any> {
+    override suspend fun addUser(databaseUser: StateFlow<UserDatabase>): Map<String, Any> {
         return data.addUser(databaseUser)
     }
 }
