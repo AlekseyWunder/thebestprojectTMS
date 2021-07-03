@@ -14,7 +14,6 @@ import com.example.egida.presentation.viewModel.MainViewModel
 import com.example.egida.presentation.viewModel.SettingViewModel
 import com.example.egida.utils.replaceFragment
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 class SettingFragment : Fragment() {
 
@@ -36,49 +35,32 @@ class SettingFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         binding.editFirstName.doAfterTextChanged { editable ->
-            lifecycleScope.launch {
-                settingViewModel.setUserFirstName(editable)
-            }
+            settingViewModel.setUserFirstName(editable)
         }
         binding.editLastName.doAfterTextChanged {
-            lifecycleScope.launch {
-                settingViewModel.setUserLatName(it)
-            }
+            settingViewModel.setUserLatName(it)
         }
         binding.checkAgreement.setOnClickListener {
-            lifecycleScope.launch {
-                settingViewModel.setCheckAgreement(binding.checkAgreement)
-            }
+            settingViewModel.setCheckAgreement(binding.checkAgreement)
         }
         binding.editPhoneNumber.doAfterTextChanged { editable ->
-            lifecycleScope.launch {
-                settingViewModel.setPhoneNumber(editable)
-            }
+            settingViewModel.setPhoneNumber(editable)
         }
         binding.addPhoto.setOnClickListener {
-            lifecycleScope.launch {
-                settingViewModel.setAddPhoto()
-            }
+            settingViewModel.setAddPhoto()
+
         }
         binding.minusHeight.setOnClickListener {
-            lifecycleScope.launch {
-                settingViewModel.minusHeight(binding.textHeight)
-            }
+            settingViewModel.minusHeight(binding.textHeight)
         }
         binding.plusHeight.setOnClickListener {
-            lifecycleScope.launch {
-                settingViewModel.plusHeight(binding.textHeight)
-            }
+            settingViewModel.plusHeight(binding.textHeight)
         }
         binding.minusWeight.setOnClickListener {
-            lifecycleScope.launch {
-                settingViewModel.minusWeight(binding.textWeight)
-            }
+            settingViewModel.minusWeight(binding.textWeight)
         }
         binding.plusWeight.setOnClickListener {
-            lifecycleScope.launch {
-                settingViewModel.plusWeight(binding.textWeight)
-            }
+            settingViewModel.plusWeight(binding.textWeight)
         }
 
         binding.settingsFragmentBtnSave.setOnClickListener {

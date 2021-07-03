@@ -15,7 +15,6 @@ class DatabaseUser : UserDatabaseRepository {
         const val TAG = " databaseUser"
         const val NODE_USERS = "users"
         const val CHILD_ID = "id"
-        const val CHILD_LOGIN = "login"
         const val CHILD_FIRST_NAME = "firstName"
         const val CHILD_LAST_NAME = "lastName"
         const val CHILD_CHECK_AGREEMENT_NAME = "checkAgreement"
@@ -23,7 +22,6 @@ class DatabaseUser : UserDatabaseRepository {
         const val CHILD_PHOTO_URL = "photoURL"
         const val CHILD_HEIGHT = "height"
         const val CHILD_WEIGHT = "weight"
-
     }
 
     private var _databaseUser = MutableSharedFlow<UserDatabase>(replay = 1)
@@ -43,6 +41,7 @@ class DatabaseUser : UserDatabaseRepository {
     }
 
     override fun getUser() {
+
         REF_DATABASE_ROOT.child(NODE_USERS).child(UID)
             .addListenerForSingleValueEvent(AppValueEventListener { snapshot ->
                 scope.launch {
@@ -55,6 +54,7 @@ class DatabaseUser : UserDatabaseRepository {
     }
 
     override suspend fun updateUser(databaseUser: SharedFlow<UserDatabase>) {
+
         Log.d(TAG, "updaterUser start $databaseUser")
         Log.d(TAG, "updaterUser start $dateMap")
         REF_DATABASE_ROOT.child(NODE_USERS).child(UID).updateChildren(addUser(databaseUser))
@@ -67,32 +67,32 @@ class DatabaseUser : UserDatabaseRepository {
 
     override suspend fun addUser(databaseUser: SharedFlow<UserDatabase>): Map<String, Any> {
 
+        val uid = UID
+        userDatabase.id = uid
         scope.launch {
             async {
                 databaseUser.collect {
-//                    userDatabase.id = it.id
-//                    userDatabase.login = it.login
-//                    userDatabase.firstName = it.firstName
-//                    userDatabase.lastName = it.lastName
-//                    userDatabase.checkAgreement = it.checkAgreement
-//                    userDatabase.phoneNumber = it.phoneNumber
-//                    userDatabase.photoURL = it.photoURL
-//                    userDatabase.height = it.height
-//                    userDatabase.weight = it.weight
-                    dateMap[CHILD_ID] = UID
-                    dateMap[CHILD_LOGIN] = it.login
-                    dateMap[CHILD_FIRST_NAME] = it.firstName
-                    dateMap[CHILD_LAST_NAME] = it.lastName
-                    dateMap[CHILD_CHECK_AGREEMENT_NAME] = it.checkAgreement
-                    dateMap[CHILD_PHONE_NUMBER] = it.phoneNumber
-                    dateMap[CHILD_PHOTO_URL] = it.photoURL
-                    dateMap[CHILD_HEIGHT] = it.height
-                    dateMap[CHILD_WEIGHT] = it.weight
+                    userDatabase.id = it.id
+                    userDatabase.firstName = it.firstName
+                    userDatabase.lastName = it.lastName
+                    userDatabase.checkAgreement = it.checkAgreement
+                    userDatabase.phoneNumber = it.phoneNumber
+                    userDatabase.photoURL = it.photoURL
+                    userDatabase.height = it.height
+                    userDatabase.weight = it.weight
                 }
             }.await()
         }
-
-        Log.d(TAG,"addUser complete")
+        dateMap[CHILD_ID] = userDatabase.id
+        dateMap[CHILD_FIRST_NAME] = userDatabase.firstName
+        dateMap[CHILD_LAST_NAME] = userDatabase.lastName
+        dateMap[CHILD_CHECK_AGREEMENT_NAME] = userDatabase.checkAgreement
+        dateMap[CHILD_PHONE_NUMBER] = userDatabase.phoneNumber
+        dateMap[CHILD_PHOTO_URL] = userDatabase.photoURL
+        dateMap[CHILD_HEIGHT] = userDatabase.height
+        dateMap[CHILD_WEIGHT] = userDatabase.weight
+        Log.d(TAG, "addUser complete")
         return dateMap
     }
+
 }
