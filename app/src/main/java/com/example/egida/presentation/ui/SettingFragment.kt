@@ -37,92 +37,52 @@ class SettingFragment : Fragment() {
         super.onResume()
         binding.editFirstName.doAfterTextChanged { editable ->
             lifecycleScope.launch {
-                settingViewModel.userDatabase
-                    .collect { userDatabase ->
-                        userDatabase.firstName = editable.toString()
-                        Log.d(TAG, userDatabase.firstName)
-                    }
+                settingViewModel.setUserFirstName(editable)
             }
         }
-        binding.editLastName.doAfterTextChanged { editable ->
+        binding.editLastName.doAfterTextChanged {
             lifecycleScope.launch {
-                settingViewModel.userDatabase
-                    .collect { userDatabase ->
-                        userDatabase.lastName = editable.toString()
-                        Log.d(TAG, userDatabase.lastName)
-                    }
+                settingViewModel.setUserLatName(it)
             }
         }
         binding.checkAgreement.setOnClickListener {
-            if (binding.checkAgreement.isChecked) {
-                lifecycleScope.launch {
-                    settingViewModel.userDatabase
-                        .collect { userDatabase ->
-                            userDatabase.checkAgreement = true
-                            Log.d(TAG, userDatabase.checkAgreement.toString())
-                        }
-                }
+            lifecycleScope.launch {
+                settingViewModel.setCheckAgreement(binding.checkAgreement)
             }
         }
         binding.editPhoneNumber.doAfterTextChanged { editable ->
             lifecycleScope.launch {
-                settingViewModel.userDatabase
-                    .collect { userDatabase ->
-                        userDatabase.phoneNumber = editable.toString()
-                        Log.d(TAG, userDatabase.phoneNumber)
-                    }
+                settingViewModel.setPhoneNumber(editable)
             }
         }
         binding.addPhoto.setOnClickListener {
             lifecycleScope.launch {
-                settingViewModel.userDatabase
-                    .collect { userDatabase ->
-                        userDatabase.photoURL = it.toString()
-                        Log.d(TAG, userDatabase.photoURL)
-                    }
+                settingViewModel.setAddPhoto()
             }
         }
         binding.minusHeight.setOnClickListener {
             lifecycleScope.launch {
-                settingViewModel.userDatabase
-                    .collect {
-                        it.height--
-                        binding.textHeight.text = it.height.toString()
-                    }
+                settingViewModel.minusHeight(binding.textHeight)
             }
         }
         binding.plusHeight.setOnClickListener {
             lifecycleScope.launch {
-                settingViewModel.userDatabase
-                    .collect {
-                        it.height++
-                        binding.textHeight.text = it.height.toString()
-                    }
+                settingViewModel.plusHeight(binding.textHeight)
             }
         }
         binding.minusWeight.setOnClickListener {
             lifecycleScope.launch {
-                settingViewModel.userDatabase
-                    .collect {
-                        it.weight--
-                        binding.textWeight.text = it.weight.toString()
-                    }
+                settingViewModel.minusWeight(binding.textWeight)
             }
         }
         binding.plusWeight.setOnClickListener {
             lifecycleScope.launch {
-                settingViewModel.userDatabase
-                    .collect {
-                        it.weight++
-                        binding.textWeight.text = it.weight.toString()
-                    }
+                settingViewModel.plusWeight(binding.textWeight)
             }
         }
 
         binding.settingsFragmentBtnSave.setOnClickListener {
-            lifecycleScope.launch {
-                settingViewModel.save()
-            }
+            settingViewModel.save()
             replaceFragment(this, MainFragment.newInstance())
         }
 

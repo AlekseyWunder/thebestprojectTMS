@@ -7,26 +7,35 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.egida.Dependencies
 import com.example.egida.domain.entity.UserAuth
-import com.example.egida.domain.entity.UserDatabase
 import com.example.egida.domain.useCase.userAUTH.UserAuthUseCase
-import com.example.egida.domain.useCase.userDatabase.UserDatabaseUseCase
-import com.example.egida.utils.StatesUser
-import com.example.egida.utils.statesUser
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class LoginViewModel : ViewModel() {
+    companion object {
+        const val TAG = " loginViewModel"
+        private const val passwordDont = "Passwords don\'t match"
+        private const val passwordAndEmail = "Enter your email and password"
+        private const val passwordRecovery = "Письмо для востановления пороля отправлено на почт"
+        private const val correctEmail = "Проверьте правильность написания электронного адреса"
+    }
 
     private val userAuthUseCase: UserAuthUseCase by lazy { Dependencies.authUseCase() }
-    private val userDbUseCase: UserDatabaseUseCase by lazy { Dependencies.userDatabaseUseCase() }
 
-    var login: String = ""
     var id: String = ""
     var email: String = ""
     var password: String = ""
     var doublePassword: String = ""
-    var toast = MutableLiveData<String>()
     var fragment = MutableLiveData<Fragment>()
+    private var _message = MutableSharedFlow<String>(1)
+    var message = _message
+    var messageDatabase: StateFlow<String> = userAuthUseCase.message
+        .stateIn(viewModelScope, started = SharingStarted.Lazily, initialValue = "")
+    var errorMessage = userAuthUseCase.messageError
+        .stateIn(viewModelScope, started = SharingStarted.Lazily, initialValue = " ")
 
     fun addUser() {
         if (!TextUtils.isEmpty(email)
@@ -34,17 +43,13 @@ class LoginViewModel : ViewModel() {
             && !TextUtils.isEmpty(doublePassword)
         ) {
             if (password == doublePassword) {
-                viewModelScope.launch {
-                    val user = UserAuth(email, password)
-                    userAuthUseCase.addUser(user)
-//                    val userDB = UserDatabase(id, login)
-//                    userDbUseCase.updateUser(userDB)
-                }
+                val user = UserAuth(email, password)
+                userAuthUseCase.addUser(user)
             } else {
-                toast.value = statesUser(StatesUser.PasswordsDontMatch)
+                toast(passwordDont)
             }
         } else {
-            toast.value = statesUser(StatesUser.EmailAndPassword)
+            toast(passwordAndEmail)
         }
     }
 
@@ -55,19 +60,28 @@ class LoginViewModel : ViewModel() {
             val user = UserAuth(email, password)
             userAuthUseCase.singInUser(user)
         } else {
-            toast.value = statesUser(StatesUser.EmailAndPassword)
+            toast(passwordAndEmail)
         }
     }
 
     fun sendPasswordResetEmail() {
         if (!TextUtils.isEmpty(email)) {
             userAuthUseCase.sendPasswordResetEmail(email)
-            toast.value = "Письмо для востановления пороля отправлено на почту"
+            toast(passwordRecovery)
         } else {
-            toast.value = "Проверьте правильность написания электронного адреса"
+            toast(correctEmail)
+        }
+    }
+
+    private fun toast(string: String) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _message.emit(string)
+            }
         }
     }
 }
+
 
 
 

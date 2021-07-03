@@ -7,14 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.egida.activity.MainActivity
 import com.example.egida.databinding.SingInFragmentBinding
 import com.example.egida.presentation.viewModel.LoginViewModel
 import com.example.egida.utils.replaceActivity
 import com.example.egida.utils.replaceFragment
 import com.example.egida.utils.showToast
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class SingInFragment : Fragment() {
 
@@ -23,49 +25,55 @@ class SingInFragment : Fragment() {
         const val TAG = " singInFragment"
     }
 
-    private lateinit var mBinding: SingInFragmentBinding
-    private lateinit var viewModel: LoginViewModel
+    private lateinit var binding: SingInFragmentBinding
+    private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        mBinding = SingInFragmentBinding.inflate(layoutInflater)
-        return mBinding.root
+        binding = SingInFragmentBinding.inflate(layoutInflater)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-        mBinding.singInFragmentInputUserEmail.doAfterTextChanged {
-            viewModel.email = it.toString()
-            Log.d(TAG, viewModel.email)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        binding.inputUserEmail.doAfterTextChanged {
+            loginViewModel.email = it.toString()
+            Log.d(TAG, loginViewModel.email)
         }
 
-        mBinding.singInFragmentInputUserPassword.doAfterTextChanged {
-            viewModel.password = it.toString()
-            Log.d(TAG, viewModel.password)
+        binding.inputUserPassword.doAfterTextChanged {
+            loginViewModel.password = it.toString()
+            Log.d(TAG, loginViewModel.password)
 
         }
 
-        viewModel.toast.observe(viewLifecycleOwner, Observer {
-            showToast(it)
-        })
-
-        mBinding.singInFragmentBtnLogin.setOnClickListener {
-            viewModel.singInUser()
-            //переделать
-          replaceActivity(requireView(), MainActivity())
+        lifecycleScope.launch {
+            loginViewModel.message.collect {
+//                Log.d(TAG,it)
+//                showToast(it)
+            }
+            loginViewModel.errorMessage.collect {
+                showToast(it)
+            }
         }
 
-        mBinding.singInFragmentBtnForgotPassword.setOnClickListener {
+        binding.btnContinue.setOnClickListener {
+            loginViewModel.singInUser()
+            replaceActivity(requireView(), MainActivity())
+        }
+
+        binding.btnForgotPassword.setOnClickListener {
             replaceFragment(
                 this,
                 PasswordRecoveryFragment.newInstance()
             )
         }
 
-        mBinding.singInFragmentBtnCreateAccount.setOnClickListener {
+        binding.btnCreateAccount.setOnClickListener {
             replaceFragment(
                 this,
                 RegistrationFragment.newInstance()

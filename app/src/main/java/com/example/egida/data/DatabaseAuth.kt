@@ -1,18 +1,21 @@
 package com.example.egida.data
 
 import android.util.Log
-import android.widget.Toast
-import com.example.egida.App
 import com.example.egida.R
 import com.example.egida.domain.entity.UserAuth
 import com.example.egida.domain.useCase.userAUTH.UserAuthRepository
 import com.example.egida.utils.AUTH
+import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
 class DatabaseAuth() : UserAuthRepository {
@@ -24,43 +27,48 @@ class DatabaseAuth() : UserAuthRepository {
         AUTH = FirebaseAuth.getInstance()
     }
 
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + Job())
+    private var _message = MutableStateFlow("")
+    override var message: StateFlow<String> = _message.asStateFlow()
+    private var _messageError = MutableStateFlow("")
+    override var messageError: StateFlow<String> = _messageError.asStateFlow()
     private var chek by Delegates.notNull<Boolean>()
 
     override fun getCurrentUser(): FirebaseUser? {
         return AUTH.currentUser
     }
 
-    override suspend fun addUser(userAuth: UserAuth) {
-        withContext(Dispatchers.Main) {
-            AUTH.createUserWithEmailAndPassword(
-                userAuth.email,
-                userAuth.password
-            ).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "createUserWithEmail:success")
-                    this@DatabaseAuth.chek = true
-                }
-            }.addOnFailureListener {
-                this@DatabaseAuth.chek = false
-                val errorCode = (it as FirebaseAuthException).errorCode
-                val errorMessage = authErrors[errorCode]
-                if (errorMessage != null) {
-                    toast(errorMessage)
+    override fun addUser(userAuth: UserAuth) {
+
+        AUTH.createUserWithEmailAndPassword(
+            userAuth.email,
+            userAuth.password
+        ).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Sign in success, update UI with the signed-in user's information
+                Log.d(TAG, "createUserWithEmail:success")
+                sendEmailVerification()
+                scope.launch {
+                    _message.emit(R.string.registration_confirmation.toString())
                 }
             }
-            delay(2000)
-            if (this@DatabaseAuth.chek) {
-                sendEmailVerification()
-                //При такой архитектуре правиль но ли сдесь сделано
-                Toast.makeText(
-                    App.instance.applicationContext,
-                    "Проверьте вашу почту для подтверждения регистрации",
-                    Toast.LENGTH_LONG
-                ).show()
+        }.addOnFailureListener {
+            if (it is FirebaseAuthException) {
+                val errorCode = (it).errorCode
+                val errorMessage = authErrors[errorCode]
+                if (errorMessage != null) {
+                    _message.value = errorMessage.toString()
+                } else {
+                    if (it is FirebaseNetworkException) {
+                        scope.launch {
+                            _message.emit("Проверьте интернет")
+                        }
+                    }
+                }
             }
         }
     }
+
 
     override fun singInUser(userAuth: UserAuth) {
         AUTH.signInWithEmailAndPassword(
@@ -71,12 +79,7 @@ class DatabaseAuth() : UserAuthRepository {
                 Log.d(TAG, "signInWithEmailAndPassword:success")
             }
         }.addOnFailureListener {
-            this@DatabaseAuth.chek = false
-            val errorCode = (it as FirebaseAuthException).errorCode
-            val errorMessage = authErrors[errorCode]
-            if (errorMessage != null) {
-                toast(errorMessage)
-            }
+            errorMessage(it)
         }
     }
 
@@ -99,12 +102,7 @@ class DatabaseAuth() : UserAuthRepository {
                     Log.d(TAG, "Email sent.")
                 }
             }.addOnFailureListener {
-                this@DatabaseAuth.chek = false
-                val errorCode = (it as FirebaseAuthException).errorCode
-                val errorMessage = authErrors[errorCode]
-                if (errorMessage != null) {
-                    toast(errorMessage)
-                }
+                errorMessage(it)
             }
     }
 
@@ -130,13 +128,14 @@ class DatabaseAuth() : UserAuthRepository {
         "ERROR_OPERATION_NOT_ALLOWED" to R.string.error_login_operation_not_allowed,
         "ERROR_WEAK_PASSWORD" to R.string.error_login_password_is_weak
     )
-//Very bad solution. You'd better pass error message as a flow to UseCase-> ViewModel -> UI
-    private fun toast(message: Int) {
-        Toast.makeText(
-            App.instance,
-            App.instance.resources.getString(message),
-            Toast.LENGTH_LONG
-        )
-            .show()
+
+    private fun errorMessage(exception: Exception) {
+        val errorCode = (exception as FirebaseAuthException).errorCode
+        val errorMessage = authErrors[errorCode]
+        if (errorMessage != null) {
+            scope.launch {
+                _message.emit(errorMessage.toString())
+            }
+        }
     }
 }
