@@ -42,15 +42,12 @@ class PasswordRecoveryFragment : Fragment() {
         }
         lifecycleScope.launchWhenStarted {
             loginViewModel.message.collect {
-                showToast(it.toString())
-            }
-            loginViewModel.errorMessage.collect {
                 showToast(it)
             }
         }
 
         binding.btnResetPassword.setOnClickListener {
-            loginViewModel.sendPasswordResetEmail()
+            loginViewModel.sendPasswordResetEmail(this)
         }
 
         binding.btnBack.setOnClickListener {

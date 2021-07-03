@@ -18,7 +18,7 @@ class MainFragment : Fragment() {
         const val TAG = " mainFragment"
     }
 
-    private lateinit var viewModel: MainViewModel
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,14 +27,14 @@ class MainFragment : Fragment() {
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
     override fun onStart() {
         super.onStart()
-        if (!viewModel.checkUser()) replaceActivity(requireView(), LoginActivity())
+        if (!mainViewModel.checkUser()) replaceActivity(requireView(), LoginActivity())
     }
 
 

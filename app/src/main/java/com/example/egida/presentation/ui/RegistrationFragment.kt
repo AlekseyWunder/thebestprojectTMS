@@ -59,16 +59,13 @@ class RegistrationFragment() : Fragment() {
             loginViewModel.message.collect {
                 messageCollect(it)
             }
-            loginViewModel.messageDatabase.collect {
-                messageCollect(it)
-            }
-            loginViewModel.errorMessage.collect {
+            loginViewModel.messageFromDatabaseAuth.collect {
                 messageCollect(it)
             }
         }
 
         binding.btnContinue.setOnClickListener {
-            loginViewModel.addUser()
+            loginViewModel.addUser(this)
         }
         binding.registrationFragmentBtnBack.setOnClickListener {
             replaceFragment(

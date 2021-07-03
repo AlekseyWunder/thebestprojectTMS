@@ -14,7 +14,6 @@ import com.example.egida.databinding.SingInFragmentBinding
 import com.example.egida.presentation.viewModel.LoginViewModel
 import com.example.egida.utils.replaceActivity
 import com.example.egida.utils.replaceFragment
-import com.example.egida.utils.showToast
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -53,17 +52,12 @@ class SingInFragment : Fragment() {
 
         lifecycleScope.launch {
             loginViewModel.message.collect {
-//                Log.d(TAG,it)
-//                showToast(it)
-            }
-            loginViewModel.errorMessage.collect {
-                showToast(it)
+                loginViewModel.messageCollect(this@SingInFragment, it)
             }
         }
 
         binding.btnContinue.setOnClickListener {
-            loginViewModel.singInUser()
-            replaceActivity(requireView(), MainActivity())
+            loginViewModel.singInUser(this)
         }
 
         binding.btnForgotPassword.setOnClickListener {
