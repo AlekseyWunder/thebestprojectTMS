@@ -1,79 +1,88 @@
 package com.example.egida.presentation.ui
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.egida.databinding.RegistrationFragmentBinding
 import com.example.egida.presentation.viewModel.LoginViewModel
 import com.example.egida.utils.replaceFragment
 import com.example.egida.utils.showToast
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.withContext
 
-class RegistrationFragment : Fragment() {
+class RegistrationFragment() : Fragment() {
 
     companion object {
         fun newInstance() = RegistrationFragment()
         const val TAG = " registrationFragment"
     }
 
-    private lateinit var mBinding: RegistrationFragmentBinding
-    private lateinit var viewModel: LoginViewModel
-
+    private lateinit var binding: RegistrationFragmentBinding
+    private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        mBinding = RegistrationFragmentBinding.inflate(inflater, container, false)
-        return mBinding.root
+        binding = RegistrationFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-        mBinding.registrationFragmentInputName.doAfterTextChanged {
-            viewModel.login = it.toString()
-            Log.d(TAG, viewModel.login)
-        }
-        mBinding.registrationFragmentInputUserEmail.doAfterTextChanged {
-            viewModel.email = it.toString()
-            Log.d(TAG, viewModel.email)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+
+        binding.inputUserEmail.doAfterTextChanged {
+            loginViewModel.email = it.toString()
+            Log.d(TAG, loginViewModel.email)
         }
 
-        mBinding.registrationFragmentInputUserPassword.doAfterTextChanged {
-            viewModel.password = it.toString()
-            Log.d(TAG, viewModel.password)
-
+        binding.inputUserPassword.doAfterTextChanged {
+            loginViewModel.password = it.toString()
+            Log.d(TAG, loginViewModel.password)
         }
 
-        mBinding.registrationFragmentInputUserPassword.doAfterTextChanged {
-            viewModel.doublePassword = it.toString()
+        binding.inputDoubleUserPassword.doAfterTextChanged {
+            loginViewModel.doublePassword = it.toString()
+        }
+        lifecycleScope.launchWhenStarted {
+            loginViewModel.message.collect {
+                messageCollect(it)
+            }
+            loginViewModel.messageFromDatabaseAuth.collect {
+                messageCollect(it)
+            }
         }
 
-        viewModel.toast.observe(viewLifecycleOwner, Observer {
-            showToast(it)
-        })
-
-
-        mBinding.registrationFragmentBtnContinue.setOnClickListener {
-            viewModel.addUser()
+        binding.btnContinue.setOnClickListener {
+            loginViewModel.addUser(this)
         }
-
-        mBinding.registrationFragmentBtnBack.setOnClickListener {
+        binding.registrationFragmentBtnBack.setOnClickListener {
             replaceFragment(
                 this,
                 SingInFragment.newInstance()
             )
         }
     }
-}
 
+    private suspend fun messageCollect(message: String) {
+        withContext(Dispatchers.Default) {
+            Handler(Looper.getMainLooper()).post {
+                showToast(message)
+            }
+        }
+    }
+}
 
 
 

@@ -43,7 +43,7 @@
 
 
             <EditText
-                android:id="@+id/settings_edit_first_name"
+                android:id="@+id/edit_first_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="45dp"
@@ -70,7 +70,7 @@
 
 
             <EditText
-                android:id="@+id/setting_edit_last_name"
+                android:id="@+id/edit_last_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
@@ -97,7 +97,7 @@
                 android:textSize="18sp" />
 
             <CheckBox
-                android:id="@+id/setting_check_agreement"
+                android:id="@+id/check_agreement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -120,7 +120,7 @@
 
 
             <EditText
-                android:id="@+id/setting_edit_phone_number"
+                android:id="@+id/edit_phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -147,7 +147,7 @@
                 android:textSize="18sp" />
 
             <ImageButton
-                android:id="@+id/setting_add_photo"
+                android:id="@+id/add_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -174,7 +174,7 @@
                 android:textSize="18sp" />
 
             <ImageButton
-                android:id="@+id/setting_minus_height"
+                android:id="@+id/minus_height"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -183,7 +183,7 @@
                 android:focusable="true" />
 
             <TextView
-                android:id="@+id/setting_text_height"
+                android:id="@+id/text_height"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -193,7 +193,7 @@
                 android:textSize="20sp" />
 
             <ImageButton
-                android:id="@+id/setting_plus_height"
+                android:id="@+id/plus_height"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -221,7 +221,7 @@
                 android:textSize="18sp" />
 
             <ImageButton
-                android:id="@+id/setting_minus_weight"
+                android:id="@+id/minus_weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -230,7 +230,7 @@
                 android:focusable="true" />
 
             <TextView
-                android:id="@+id/setting_text_weight"
+                android:id="@+id/text_weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -240,7 +240,7 @@
                 android:textSize="20sp" />
 
             <ImageButton
-                android:id="@+id/setting_plus_weight"
+                android:id="@+id/plus_weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"

@@ -11,13 +11,12 @@ import com.example.egida.LoginActivity
 import com.example.egida.R
 import com.example.egida.databinding.MainActivityBinding
 import com.example.egida.domain.entity.Day
-import com.example.egida.domain.entity.UserDb
+import com.example.egida.domain.entity.UserDatabase
 import com.example.egida.presentation.`object`.AppDrawer
 import com.example.egida.presentation.ui.MainFragment
 import com.example.egida.presentation.viewModel.MainViewModel
 import com.example.egida.utils.DAY
 import com.example.egida.utils.singOutUser
-import com.example.egida.utils.userDb
 
 class MainActivity : AppCompatActivity(),DrawerController {
 
@@ -37,11 +36,6 @@ class MainActivity : AppCompatActivity(),DrawerController {
         }
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-    }
-
-    init {
-        userDb = UserDb()
-        DAY = Day()
     }
 
     override fun onStart() {

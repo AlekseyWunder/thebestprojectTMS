@@ -1,77 +1,110 @@
 package com.example.egida.presentation.viewModel
 
+import android.os.Handler
+import android.os.Looper
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.egida.Dependencies
+import com.example.egida.activity.MainActivity
 import com.example.egida.domain.entity.UserAuth
-import com.example.egida.domain.entity.UserDb
-import com.example.egida.domain.useCase.UserDbUseCase
 import com.example.egida.domain.useCase.userAUTH.UserAuthUseCase
-import com.example.egida.utils.StatesUser
-import com.example.egida.utils.statesUser
+import com.example.egida.utils.replaceActivity
+import com.example.egida.utils.showToast
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class LoginViewModel : ViewModel() {
+    companion object {
+        const val TAG = " loginViewModel"
+        private const val passwordDont = "Passwords don\'t match"
+        private const val passwordAndEmail = "Enter your email and password"
+        private const val correctEmail = "Проверьте правильность написания электронного адреса"
+    }
 
     private val userAuthUseCase: UserAuthUseCase by lazy { Dependencies.authUseCase() }
-    private val userDbUseCase:UserDbUseCase by lazy { Dependencies.userDbUseCase()}
 
-    var login: String =""
-    var id:String = ""
+    var id: String = ""
     var email: String = ""
     var password: String = ""
     var doublePassword: String = ""
-    var toast = MutableLiveData<String>()
     var fragment = MutableLiveData<Fragment>()
+    private var _message = MutableSharedFlow<String>(1)
+    var message = _message
+    var messageFromDatabaseAuth: SharedFlow<String> = userAuthUseCase.message
+        .shareIn(viewModelScope, SharingStarted.Eagerly, replay = 1)
 
-    fun addUser() {
+    fun addUser(fragment: Fragment) {
         if (!TextUtils.isEmpty(email)
             && !TextUtils.isEmpty(password)
             && !TextUtils.isEmpty(doublePassword)
         ) {
             if (password == doublePassword) {
-                viewModelScope.launch {
-                    val user = UserAuth(email, password)
-                    userAuthUseCase.addUser(user)
-                    val userDB = UserDb(id, login)
-                    userDbUseCase.updateUser(userDB)
-                }
+                val user = UserAuth(email, password)
+                userAuthUseCase.addUser(fragment.requireContext(), user)
+                addMessageFromDatabaseAuth(fragment)
             } else {
-                toast.value = statesUser(StatesUser.PasswordsDontMatch)
+                toast(passwordDont)
             }
         } else {
-            toast.value = statesUser(StatesUser.EmailAndPassword)
+            toast(passwordAndEmail)
         }
     }
 
-    fun singInUser() {
+    fun singInUser(fragment: Fragment) {
         if (!TextUtils.isEmpty(email)
             && !TextUtils.isEmpty(password)
         ) {
             val user = UserAuth(email, password)
-            userAuthUseCase.singInUser(user)
+            userAuthUseCase.singInUser(fragment.requireContext(), user)
+            addMessageFromDatabaseAuth(fragment)
+            viewModelScope.launch {
+                delay(1000)
+                if (userAuthUseCase.getCurrentUser() != null) {
+                    replaceActivity(fragment.requireView(), MainActivity())
+                }
+            }
         } else {
-            toast.value = statesUser(StatesUser.EmailAndPassword)
+            toast(passwordAndEmail)
         }
     }
 
-    fun sendPasswordResetEmail() {
+    fun sendPasswordResetEmail(fragment: Fragment) {
         if (!TextUtils.isEmpty(email)) {
-            userAuthUseCase.sendPasswordResetEmail(email)
-            toast.value = "Письмо для востановления пороля отправлено на почту"
+            userAuthUseCase.sendPasswordResetEmail(fragment.requireContext(), email)
+//            addMessageFromDatabaseAuth(fragment)
         } else {
-            toast.value = "Проверьте правильность написания электронного адреса"
+            toast(correctEmail)
+        }
+    }
+
+    private fun toast(string: String) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _message.emit(string)
+            }
+        }
+    }
+
+    private fun addMessageFromDatabaseAuth(fragment: Fragment) {
+        viewModelScope.launch {
+            messageFromDatabaseAuth.collect {
+                messageCollect(fragment, it)
+            }
+        }
+    }
+
+    suspend fun messageCollect(fragment: Fragment, message: String) {
+        withContext(Dispatchers.Default) {
+            Handler(Looper.getMainLooper()).post {
+                fragment.showToast(message)
+            }
         }
     }
 }
-
-
-
-
-
-
-

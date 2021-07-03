@@ -52,7 +52,7 @@
                 android:padding="@dimen/padding_18dp">
 
                 <EditText
-                    android:id="@+id/sing_in_fragment_input_user_email"
+                    android:id="@+id/input_user_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
@@ -74,7 +74,7 @@
                 android:padding="@dimen/padding_18dp">
 
                 <EditText
-                    android:id="@+id/sing_in_fragment_input_user_password"
+                    android:id="@+id/input_user_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
@@ -89,7 +89,7 @@
                     android:layout_weight="1" />
 
                 <TextView
-                    android:id="@+id/sing_in_fragment_btn_forgot_password"
+                    android:id="@+id/btn_forgot_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat"
@@ -104,7 +104,7 @@
 
 
             <Button
-                android:id="@+id/sing_in_fragment_btn_login"
+                android:id="@+id/btn_continue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/sing_in_fragment_padding_24dp"
@@ -116,7 +116,7 @@
                 android:textColor="@color/white" />
 
             <LinearLayout
-                android:id="@+id/sing_in_fragment_btn_create_account"
+                android:id="@+id/btn_create_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/sing_in_fragment_margin_24dp"

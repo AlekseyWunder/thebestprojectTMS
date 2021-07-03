@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.egida.databinding.PasswordRecoveryFragmentBinding
 import com.example.egida.presentation.viewModel.LoginViewModel
 import com.example.egida.utils.replaceFragment
 import com.example.egida.utils.showToast
+import kotlinx.coroutines.flow.collect
 
 class PasswordRecoveryFragment : Fragment() {
 
@@ -20,34 +22,35 @@ class PasswordRecoveryFragment : Fragment() {
         const val TAG = " passwordRecoveryFragment"
     }
 
-    private lateinit var mBinding: PasswordRecoveryFragmentBinding
-    private lateinit var viewModel: LoginViewModel
+    private lateinit var binding: PasswordRecoveryFragmentBinding
+    private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        mBinding = PasswordRecoveryFragmentBinding.inflate(inflater, container, false)
-        return mBinding.root
+        binding = PasswordRecoveryFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-        mBinding.passwordRecoveryInputEmail.doAfterTextChanged {
-            viewModel.email = it.toString()
-            Log.d(TAG, viewModel.email)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        binding.inputEmail.doAfterTextChanged {
+            loginViewModel.email = it.toString()
+            Log.d(TAG, loginViewModel.email)
+        }
+        lifecycleScope.launchWhenStarted {
+            loginViewModel.message.collect {
+                showToast(it)
+            }
         }
 
-        viewModel.toast.observe(viewLifecycleOwner, {
-            showToast(it)
-        })
-
-        mBinding.btnResetPassword.setOnClickListener {
-            viewModel.sendPasswordResetEmail()
+        binding.btnResetPassword.setOnClickListener {
+            loginViewModel.sendPasswordResetEmail(this)
         }
 
-        mBinding.passwordRecoveryBtnBack.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             replaceFragment(
                 this,
                 SingInFragment.newInstance()

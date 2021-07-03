@@ -8,12 +8,12 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.egida.databinding.SettingFragmentBinding
 import com.example.egida.presentation.viewModel.MainViewModel
 import com.example.egida.presentation.viewModel.SettingViewModel
-import com.example.egida.utils.DAY
 import com.example.egida.utils.replaceFragment
-import com.example.egida.utils.userDb
+import kotlinx.coroutines.flow.collect
 
 class SettingFragment : Fragment() {
 
@@ -22,20 +22,52 @@ class SettingFragment : Fragment() {
         const val TAG = " SettingFragment"
     }
 
-    private lateinit var mBinding: SettingFragmentBinding
-    private lateinit var viewModel: SettingViewModel
+    private lateinit var binding: SettingFragmentBinding
+    private lateinit var settingViewModel: SettingViewModel
     private lateinit var mainViewModel: MainViewModel
 
 
     override fun onStart() {
         super.onStart()
         mainViewModel.closeDrawer(requireActivity())
-        Log.d(FitFragment.TAG, " $DAY")
     }
 
     override fun onResume() {
         super.onResume()
-        changeValuesFragmentFields()
+        binding.editFirstName.doAfterTextChanged { editable ->
+            settingViewModel.setUserFirstName(editable)
+        }
+        binding.editLastName.doAfterTextChanged {
+            settingViewModel.setUserLatName(it)
+        }
+        binding.checkAgreement.setOnClickListener {
+            settingViewModel.setCheckAgreement(binding.checkAgreement)
+        }
+        binding.editPhoneNumber.doAfterTextChanged { editable ->
+            settingViewModel.setPhoneNumber(editable)
+        }
+        binding.addPhoto.setOnClickListener {
+            settingViewModel.setAddPhoto()
+
+        }
+        binding.minusHeight.setOnClickListener {
+            settingViewModel.minusHeight(binding.textHeight)
+        }
+        binding.plusHeight.setOnClickListener {
+            settingViewModel.plusHeight(binding.textHeight)
+        }
+        binding.minusWeight.setOnClickListener {
+            settingViewModel.minusWeight(binding.textWeight)
+        }
+        binding.plusWeight.setOnClickListener {
+            settingViewModel.plusWeight(binding.textWeight)
+        }
+
+        binding.settingsFragmentBtnSave.setOnClickListener {
+            settingViewModel.save()
+            replaceFragment(this, MainFragment.newInstance())
+        }
+
     }
 
     override fun onStop() {
@@ -47,67 +79,25 @@ class SettingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        mBinding = SettingFragmentBinding.inflate(layoutInflater)
-        return mBinding.root
+        binding = SettingFragmentBinding.inflate(layoutInflater)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SettingViewModel::class.java)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        settingViewModel = ViewModelProvider(this).get(SettingViewModel::class.java)
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        mBinding.settingsEditFirstName.doAfterTextChanged {
-            viewModel.firstName = it.toString()
-            Log.d(RegistrationFragment.TAG, viewModel.firstName)
-        }
-        mBinding.settingEditLastName.doAfterTextChanged {
-            viewModel.lastName = it.toString()
-            Log.d(RegistrationFragment.TAG, viewModel.lastName)
-        }
-        mBinding.settingCheckAgreement.setOnClickListener {
-            if (mBinding.settingCheckAgreement.isChecked) {
-                viewModel.checkAgreement = true
+        lifecycleScope.launchWhenStarted {
+            settingViewModel.userDatabase.collect {
+                Log.d(FitFragment.TAG, "$it")
+                binding.editFirstName.setText(it.firstName)
+                binding.editLastName.setText(it.lastName)
+                binding.checkAgreement.isChecked = it.checkAgreement
+                binding.editPhoneNumber.setText(it.phoneNumber)
+                binding.textHeight.text = it.height.toString()
+                binding.textWeight.text = it.weight.toString()
             }
         }
-        mBinding.settingEditPhoneNumber.doAfterTextChanged {
-            viewModel.phoneNumber = it.toString()
-            Log.d(RegistrationFragment.TAG, viewModel.phoneNumber)
-        }
-        mBinding.settingAddPhoto.setOnClickListener {
-            viewModel.photoURL = it.toString()
-        }
-        mBinding.settingTextHeight.text = viewModel.height.toString()
-        mBinding.settingMinusHeight.setOnClickListener {
-            viewModel.height = viewModel.height - 1
-            mBinding.settingTextHeight.text = viewModel.height.toString()
-        }
-        mBinding.settingPlusHeight.setOnClickListener {
-            viewModel.height = viewModel.height + 1
-            mBinding.settingTextHeight.text = viewModel.height.toString()
-        }
-        mBinding.settingTextWeight.text = viewModel.weight.toString()
-        mBinding.settingMinusWeight.setOnClickListener {
-            viewModel.weight = viewModel.weight - 1
-            mBinding.settingTextWeight.text = viewModel.weight.toString()
-        }
-        mBinding.settingPlusWeight.setOnClickListener {
-            viewModel.weight = viewModel.weight + 1
-            mBinding.settingTextWeight.text = viewModel.weight.toString()
-        }
-        mBinding.settingsFragmentBtnSave.setOnClickListener {
-            viewModel.save()
-            replaceFragment(this, MainFragment.newInstance())
-        }
-
-
-    }
-
-    private fun changeValuesFragmentFields() {
-        mBinding.settingsEditFirstName.setText(userDb.firstName)
-        mBinding.settingEditLastName.setText(userDb.lastName)
-        mBinding.settingCheckAgreement.isChecked = userDb.checkAgreement
-        mBinding.settingEditPhoneNumber.setText(userDb.phoneNumber)
-        mBinding.settingTextHeight.text = userDb.height.toString()
-        mBinding.settingTextWeight.text = userDb.weight.toString()
     }
 }

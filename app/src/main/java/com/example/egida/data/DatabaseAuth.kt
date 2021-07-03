@@ -1,19 +1,24 @@
 package com.example.egida.data
 
+
+import android.content.Context
 import android.util.Log
-import android.widget.Toast
-import com.example.egida.App
-import com.example.egida.R
+import com.example.egida.Constants
 import com.example.egida.domain.entity.UserAuth
 import com.example.egida.domain.useCase.userAUTH.UserAuthRepository
 import com.example.egida.utils.AUTH
+import com.example.egida.utils.NetworkHelper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
-import kotlin.properties.Delegates
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+
 
 class DatabaseAuth() : UserAuthRepository {
     companion object {
@@ -24,59 +29,47 @@ class DatabaseAuth() : UserAuthRepository {
         AUTH = FirebaseAuth.getInstance()
     }
 
-    private var chek by Delegates.notNull<Boolean>()
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + Job())
+    private var _message = MutableStateFlow("")
+    override var message: Flow<String> = _message.asStateFlow()
 
     override fun getCurrentUser(): FirebaseUser? {
         return AUTH.currentUser
     }
 
-    override suspend fun addUser(userAuth: UserAuth) {
-        withContext(Dispatchers.Main) {
+    override fun addUser(context: Context, userAuth: UserAuth) {
+        if (NetworkHelper.isNetworkConnected(context)) {
             AUTH.createUserWithEmailAndPassword(
                 userAuth.email,
                 userAuth.password
             ).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "createUserWithEmail:success")
-                    this@DatabaseAuth.chek = true
+                    sendEmailVerification()
                 }
             }.addOnFailureListener {
-                this@DatabaseAuth.chek = false
-                val errorCode = (it as FirebaseAuthException).errorCode
-                val errorMessage = authErrors[errorCode]
-                if (errorMessage != null) {
-                    toast(errorMessage)
-                }
+                errorMessage(it)
             }
-            delay(2000)
-            if (this@DatabaseAuth.chek) {
-                sendEmailVerification()
-                //При такой архитектуре правиль но ли сдесь сделано
-                Toast.makeText(
-                    App.instance.applicationContext,
-                    "Проверьте вашу почту для подтверждения регистрации",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
+        } else {
+            addMessage(Constants.notNetworkConnect)
         }
     }
 
-    override fun singInUser(userAuth: UserAuth) {
-        AUTH.signInWithEmailAndPassword(
-            userAuth.email,
-            userAuth.password
-        ).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Log.d(TAG, "signInWithEmailAndPassword:success")
+
+    override fun singInUser(context: Context, userAuth: UserAuth) {
+        if (NetworkHelper.isNetworkConnected(context)) {
+            AUTH.signInWithEmailAndPassword(
+                userAuth.email,
+                userAuth.password
+            ).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "signInWithEmailAndPassword:success")
+                }
+            }.addOnFailureListener {
+                errorMessage(it)
             }
-        }.addOnFailureListener {
-            this@DatabaseAuth.chek = false
-            val errorCode = (it as FirebaseAuthException).errorCode
-            val errorMessage = authErrors[errorCode]
-            if (errorMessage != null) {
-                toast(errorMessage)
-            }
+        } else {
+            addMessage(Constants.notNetworkConnect)
         }
     }
 
@@ -85,27 +78,27 @@ class DatabaseAuth() : UserAuthRepository {
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "sendEmailVerification:success")
+                    addMessage(Constants.registrationConfirmation)
                 } else {
                     Log.d(TAG, "sendEmailVerification:failure", task.exception)
                 }
             }
     }
 
-    override fun sendPasswordResetEmail(email: String) {
-        var emailAddress = email
-        AUTH.sendPasswordResetEmail(emailAddress)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "Email sent.")
+    override fun sendPasswordResetEmail(context: Context, email: String) {
+        if (NetworkHelper.isNetworkConnected(context)) {
+            AUTH.sendPasswordResetEmail(email)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        addMessage(Constants.passwordRecovery)
+                        Log.d(TAG, "Email sent.")
+                    }
+                }.addOnFailureListener {
+                    errorMessage(it)
                 }
-            }.addOnFailureListener {
-                this@DatabaseAuth.chek = false
-                val errorCode = (it as FirebaseAuthException).errorCode
-                val errorMessage = authErrors[errorCode]
-                if (errorMessage != null) {
-                    toast(errorMessage)
-                }
-            }
+        } else {
+            addMessage(Constants.notNetworkConnect)
+        }
     }
 
     override fun singOutUser() {
@@ -113,30 +106,37 @@ class DatabaseAuth() : UserAuthRepository {
     }
 
     private val authErrors = mapOf(
-        "ERROR_INVALID_CUSTOM_TOKEN" to R.string.error_login_custom_token,
-        "ERROR_CUSTOM_TOKEN_MISMATCH" to R.string.error_login_custom_token_mismatch,
-        "ERROR_INVALID_CREDENTIAL" to R.string.error_login_credential_malformed_or_expired,
-        "ERROR_INVALID_EMAIL" to R.string.error_login_invalid_email,
-        "ERROR_WRONG_PASSWORD" to R.string.error_login_wrong_password,
-        "ERROR_USER_MISMATCH" to R.string.error_login_user_mismatch,
-        "ERROR_REQUIRES_RECENT_LOGIN" to R.string.error_login_requires_recent_login,
-        "ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL" to R.string.error_login_accounts_exits_with_different_credential,
-        "ERROR_EMAIL_ALREADY_IN_USE" to R.string.error_login_email_already_in_use,
-        "ERROR_CREDENTIAL_ALREADY_IN_USE" to R.string.error_login_credential_already_in_use,
-        "ERROR_USER_DISABLED" to R.string.error_login_user_disabled,
-        "ERROR_USER_TOKEN_EXPIRED" to R.string.error_login_user_token_expired,
-        "ERROR_USER_NOT_FOUND" to R.string.error_login_user_not_found,
-        "ERROR_INVALID_USER_TOKEN" to R.string.error_login_invalid_user_token,
-        "ERROR_OPERATION_NOT_ALLOWED" to R.string.error_login_operation_not_allowed,
-        "ERROR_WEAK_PASSWORD" to R.string.error_login_password_is_weak
+        "ERROR_INVALID_CUSTOM_TOKEN" to Constants.errorLoginCustomToken,
+        "ERROR_CUSTOM_TOKEN_MISMATCH" to Constants.errorLoginCustomTokenMismatch,
+        "ERROR_INVALID_CREDENTIAL" to Constants.errorLoginCredentialMalformedOrExpired,
+        "ERROR_INVALID_EMAIL" to Constants.errorLoginInvalidEmail,
+        "ERROR_WRONG_PASSWORD" to Constants.errorLoginWrongPassword,
+        "ERROR_USER_MISMATCH" to Constants.errorLoginUserMismatch,
+        "ERROR_REQUIRES_RECENT_LOGIN" to Constants.errorLoginRequiresRecentLogin,
+        "ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL" to Constants.errorLoginAccountsExitsWithDifferentCredential,
+        "ERROR_EMAIL_ALREADY_IN_USE" to Constants.errorLoginEmailAlreadyInUse,
+        "ERROR_CREDENTIAL_ALREADY_IN_USE" to Constants.errorLoginCredentialAlreadyInUse,
+        "ERROR_USER_DISABLED" to Constants.errorLoginUserDisabled,
+        "ERROR_USER_TOKEN_EXPIRED" to Constants.errorLoginUserTokenExpired,
+        "ERROR_USER_NOT_FOUND" to Constants.errorLoginUserNotFound,
+        "ERROR_INVALID_USER_TOKEN" to Constants.errorLoginInvalidUserToken,
+        "ERROR_OPERATION_NOT_ALLOWED" to Constants.errorLoginOperationNotAllowed,
+        "ERROR_WEAK_PASSWORD" to Constants.errorLoginPasswordIsWeak
     )
-//Very bad solution. You'd better pass error message as a flow to UseCase-> ViewModel -> UI
-    private fun toast(message: Int) {
-        Toast.makeText(
-            App.instance,
-            App.instance.resources.getString(message),
-            Toast.LENGTH_LONG
-        )
-            .show()
+
+    private fun errorMessage(exception: Exception) {
+        val errorCode = (exception as FirebaseAuthException).errorCode
+        val errorMessage = authErrors[errorCode]
+        if (errorMessage != null) {
+            scope.launch {
+                _message.emit(errorMessage.toString())
+            }
+        }
+    }
+
+    private fun addMessage(message: String) {
+        scope.launch {
+            _message.emit(message)
+        }
     }
 }

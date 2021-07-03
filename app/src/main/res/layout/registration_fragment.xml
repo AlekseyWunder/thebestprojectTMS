@@ -67,13 +67,13 @@
                     android:padding="@dimen/padding_18dp">
 
                     <EditText
-                        android:id="@+id/registration_fragment_input_name"
+                        android:id="@+id/input_user_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:fontFamily="@font/montserrat"
-                        android:hint="@string/hint_name"
-                        android:inputType="text"
+                        android:hint="@string/hint_email"
+                        android:inputType="textEmailAddress"
                         android:textSize="@dimen/registration_fragment_text_size_14sp" />
 
                 </LinearLayout>
@@ -87,15 +87,14 @@
                     android:padding="@dimen/padding_18dp">
 
                     <EditText
-                        android:id="@+id/registration_fragment_input_user_email"
+                        android:id="@+id/input_user_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:fontFamily="@font/montserrat"
-                        android:hint="@string/hint_email"
-                        android:inputType="textEmailAddress"
-                        android:textSize="@dimen/registration_fragment_text_size_14sp"
-                         />
+                        android:hint="@string/hint_password"
+                        android:inputType="textPassword"
+                        android:textSize="@dimen/registration_fragment_text_size_14sp" />
 
                 </LinearLayout>
 
@@ -109,12 +108,12 @@
                     android:padding="@dimen/padding_18dp">
 
                     <EditText
-                        android:id="@+id/registration_fragment_input_user_password"
+                        android:id="@+id/input_double_user_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:fontFamily="@font/montserrat"
-                        android:hint="@string/hint_password"
+                        android:hint="@string/repeat_password"
                         android:inputType="textPassword"
                         android:textSize="@dimen/registration_fragment_text_size_14sp" />
 
@@ -133,7 +132,7 @@
                     android:textSize="@dimen/registration_fragment_text_size_12sp" />
 
                 <Button
-                    android:id="@+id/registration_fragment_btn_continue"
+                    android:id="@+id/btn_continue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/registration_fragment_margin_24dp"

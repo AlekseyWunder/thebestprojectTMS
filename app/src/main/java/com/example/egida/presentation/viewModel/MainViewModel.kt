@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.egida.Dependencies
 import com.example.egida.activity.DrawerController
-import com.example.egida.domain.useCase.UserDbUseCase
 import com.example.egida.domain.useCase.day.DayUseCase
 import com.example.egida.domain.useCase.userAUTH.UserAuthUseCase
+import com.example.egida.domain.useCase.userDatabase.UserDatabaseUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -21,7 +21,7 @@ class MainViewModel : ViewModel() {
     }
 
     private val userAuthUseCase: UserAuthUseCase by lazy { Dependencies.authUseCase() }
-    private val userDbUseCase: UserDbUseCase by lazy { Dependencies.userDbUseCase() }
+    private val userDatabaseUseCase: UserDatabaseUseCase by lazy { Dependencies.userDatabaseUseCase() }
     private val dayUseCase: DayUseCase by lazy { Dependencies.dayUseCase() }
     private var toast = MutableLiveData<String>()
 
@@ -44,7 +44,7 @@ class MainViewModel : ViewModel() {
     fun getUser() {
         viewModelScope.launch {
             withContext(Dispatchers.Main) {
-                userDbUseCase.getUser()
+                userDatabaseUseCase.getUser()
                 dayUseCase.getDay()
             }
         }
