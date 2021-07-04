@@ -131,4 +131,40 @@ class DayViewModel : ViewModel() {
         }
     }
 
+    fun minusValueWork(textView: TextView) {
+        viewModelScope.launch {
+            day.collect {
+                it.work--
+                textView.text = it.work.toString()
+            }
+        }
+    }
+
+    fun plusValueWork(textView: TextView) {
+        viewModelScope.launch {
+            day.collect {
+                it.work++
+                textView.text = it.work.toString()
+            }
+        }
+    }
+
+    fun minusValueLeisure(textView: TextView) {
+        viewModelScope.launch {
+            day.collect {
+                it.leisure--
+                textView.text = it.leisure.toString()
+            }
+        }
+    }
+
+    fun plusValueLeisure(textView: TextView) {
+        viewModelScope.launch {
+            day.collect {
+                it.leisure++
+                textView.text = it.leisure.toString()
+            }
+        }
+    }
+
 }

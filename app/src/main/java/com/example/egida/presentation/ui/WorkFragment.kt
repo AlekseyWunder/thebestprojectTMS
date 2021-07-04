@@ -12,7 +12,6 @@ import com.example.egida.presentation.viewModel.DayViewModel
 import com.example.egida.presentation.viewModel.MainViewModel
 import com.example.egida.utils.replaceFragment
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 class WorkFragment : Fragment() {
 
@@ -22,7 +21,7 @@ class WorkFragment : Fragment() {
     }
 
     private lateinit var binding: WorkFragmentBinding
-    private lateinit var viewModel: DayViewModel
+    private lateinit var dayViewModel: DayViewModel
     private lateinit var mainViewModel: MainViewModel
 
     override fun onStart() {
@@ -33,47 +32,23 @@ class WorkFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         binding.minusValueWork.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.day
-                    .collect {
-                        it.work--
-                        binding.textWork.text = it.work.toString()
-                    }
-            }
+            dayViewModel.minusValueWork(binding.textWork)
         }
 
         binding.plusValueWork.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.day
-                    .collect {
-                        it.work++
-                        binding.textWork.text = it.work.toString()
-                    }
-            }
+            dayViewModel.plusValueWork(binding.textWork)
         }
 
         binding.minusValueLeisure.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.day
-                    .collect {
-                        it.leisure--
-                        binding.textLeisure.text = it.leisure.toString()
-                    }
-            }
+            dayViewModel.minusValueLeisure(binding.textLeisure)
         }
 
         binding.plusValueLeisure.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.day
-                    .collect {
-                        it.leisure++
-                        binding.textLeisure.text = it.leisure.toString()
-                    }
-            }
+            dayViewModel.plusValueLeisure(binding.textLeisure)
         }
 
         binding.workBtnSave.setOnClickListener {
-            viewModel.save()
+            dayViewModel.save()
             replaceFragment(this, MainFragment.newInstance())
         }
     }
@@ -93,10 +68,10 @@ class WorkFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(DayViewModel::class.java)
+        dayViewModel = ViewModelProvider(this).get(DayViewModel::class.java)
 
         lifecycleScope.launchWhenStarted {
-            viewModel.day
+            dayViewModel.day
                 .collect {
                     binding.textLeisure.text = it.leisure.toString()
                     binding.textWork.text = it.work.toString()
