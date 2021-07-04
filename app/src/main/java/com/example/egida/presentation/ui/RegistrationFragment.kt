@@ -11,6 +11,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.egida.R
 import com.example.egida.databinding.RegistrationFragmentBinding
 import com.example.egida.presentation.viewModel.LoginViewModel
 import com.example.egida.utils.replaceFragment
@@ -19,7 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.withContext
 
-class RegistrationFragment() : Fragment() {
+class RegistrationFragment() : Fragment(R.layout.registration_fragment) {
 
     companion object {
         fun newInstance() = RegistrationFragment()

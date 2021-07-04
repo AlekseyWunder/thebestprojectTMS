@@ -11,7 +11,7 @@ import com.example.egida.R
 import com.example.egida.presentation.viewModel.MainViewModel
 import com.example.egida.utils.replaceActivity
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(R.layout.main_fragment) {
 
     companion object {
         fun newInstance() = MainFragment()

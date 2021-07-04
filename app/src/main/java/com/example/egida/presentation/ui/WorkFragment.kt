@@ -1,12 +1,15 @@
 package com.example.egida.presentation.ui
 
 import android.os.Bundle
+import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.example.egida.R
 import com.example.egida.databinding.WorkFragmentBinding
 import com.example.egida.presentation.viewModel.DayViewModel
 import com.example.egida.presentation.viewModel.MainViewModel
@@ -14,7 +17,7 @@ import com.example.egida.utils.replaceFragment
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class WorkFragment : Fragment() {
+class WorkFragment : Fragment(R.layout.work_fragment) {
 
     companion object {
         fun newInstance() = WorkFragment()
@@ -93,8 +96,8 @@ class WorkFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(DayViewModel::class.java)
 
+        viewModel = ViewModelProvider(this).get(DayViewModel::class.java)
         lifecycleScope.launchWhenStarted {
             viewModel.day
                 .collect {
@@ -102,5 +105,7 @@ class WorkFragment : Fragment() {
                     binding.textWork.text = it.work.toString()
                 }
         }
+
+
     }
 }

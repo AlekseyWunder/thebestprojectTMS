@@ -7,16 +7,23 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.egida.LoginActivity
 import com.example.egida.R
 import com.example.egida.databinding.MainActivityBinding
-import com.example.egida.domain.entity.Day
-import com.example.egida.domain.entity.UserDatabase
+
 import com.example.egida.presentation.`object`.AppDrawer
 import com.example.egida.presentation.ui.MainFragment
 import com.example.egida.presentation.viewModel.MainViewModel
-import com.example.egida.utils.DAY
+
 import com.example.egida.utils.singOutUser
+
+
 
 class MainActivity : AppCompatActivity(),DrawerController {
 
@@ -37,6 +44,7 @@ class MainActivity : AppCompatActivity(),DrawerController {
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
     }
+
 
     override fun onStart() {
         super.onStart()

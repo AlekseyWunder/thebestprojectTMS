@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.egida.R
 import com.example.egida.databinding.NutritionFragmentBinding
 import com.example.egida.presentation.viewModel.DayViewModel
 import com.example.egida.presentation.viewModel.MainViewModel
@@ -14,7 +15,7 @@ import com.example.egida.utils.replaceFragment
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class NutritionFragment : Fragment() {
+class NutritionFragment : Fragment(R.layout.nutrition_fragment) {
 
     companion object {
         fun newInstance() = NutritionFragment()
