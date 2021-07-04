@@ -9,13 +9,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DatabaseDay : DayRepository {
 
     companion object {
         const val TAG = " databaseDay"
         const val NODE_DAY = "day"
-        const val CHILD_DAY = "day"// нужно предавать текущую дату
         const val CHILD_SCORE_BAL = "scoreBal"
         const val CHILD_WORK = "work"
         const val CHILD_LEISURE = "leisure"
@@ -32,7 +33,9 @@ class DatabaseDay : DayRepository {
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + Job())
     private var baseDay: Day = Day()
     private var dateMap = mutableMapOf<String, Any>()
-
+    private val date = Calendar.getInstance().time
+    private val formatter = SimpleDateFormat("dd-MM-yyyy",Locale.getDefault(Locale.Category.FORMAT)) //or use getDateInstance()
+    private val CHILD_DAY = formatter.format(date)
     init {
         initFirebase()
         initDatabase()
