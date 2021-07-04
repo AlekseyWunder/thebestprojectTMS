@@ -76,4 +76,59 @@ class DayViewModel : ViewModel() {
             }
         }
     }
+
+    fun minusMeal(textView: TextView) {
+        viewModelScope.launch {
+            day.collect {
+                it.meal--
+                textView.text = it.meal.toString()
+            }
+        }
+    }
+
+    fun plusMeal(textView: TextView) {
+        viewModelScope.launch {
+            day.collect {
+                it.meal++
+                textView.text = it.meal.toString()
+            }
+        }
+    }
+
+    fun minusWater(textView: TextView) {
+        viewModelScope.launch {
+            day.collect {
+                it.water--
+                textView.text = it.water.toString()
+            }
+        }
+    }
+
+    fun plusWater(textView: TextView) {
+        viewModelScope.launch {
+            day.collect {
+                it.water++
+                textView.text = it.water.toString()
+            }
+        }
+    }
+
+    fun minusAlcohol(textView: TextView) {
+        viewModelScope.launch {
+            day.collect {
+                it.alcohol--
+                textView.text = it.alcohol.toString()
+            }
+        }
+    }
+
+    fun plusAlcohol(textView: TextView) {
+        viewModelScope.launch {
+            day.collect {
+                it.alcohol++
+                textView.text = it.alcohol.toString()
+            }
+        }
+    }
+
 }
