@@ -7,4 +7,5 @@ interface DayUseCase {
     fun createDay(day: Flow<Day>)
     suspend fun getDay()
     var day: Flow<Day>
+    fun updateValueDay(day: Flow<Day>)
 }

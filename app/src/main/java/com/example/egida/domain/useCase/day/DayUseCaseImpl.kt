@@ -18,4 +18,10 @@ class DayUseCaseImpl(
     override var day: Flow<Day>
         get() = databaseDay.day
         set(value) {}
+
+    override fun updateValueDay(day: Flow<Day>) {
+        return databaseDay.updateValueDay(day)
+    }
+
+
 }

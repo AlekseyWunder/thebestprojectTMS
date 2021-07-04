@@ -69,6 +69,7 @@ class WorkFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dayViewModel = ViewModelProvider(this).get(DayViewModel::class.java)
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         lifecycleScope.launchWhenStarted {
             dayViewModel.day

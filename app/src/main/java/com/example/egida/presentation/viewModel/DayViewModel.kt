@@ -4,11 +4,10 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.egida.Dependencies
-import com.example.egida.domain.entity.Day
 import com.example.egida.domain.useCase.day.DayUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 
 
@@ -17,7 +16,7 @@ class DayViewModel : ViewModel() {
     private val dayUseCase: DayUseCase by lazy { Dependencies.dayUseCase() }
 
     var day = dayUseCase.day
-        .stateIn(viewModelScope, started = SharingStarted.Lazily, initialValue = Day())
+        .shareIn(viewModelScope, started = SharingStarted.Eagerly, replay = 1)
 
     fun save() {
         dayUseCase.createDay(day)
@@ -29,6 +28,7 @@ class DayViewModel : ViewModel() {
                 it.running--
                 textView.text = it.running.toString()
             }
+            dayUseCase.updateValueDay(day)
         }
     }
 
@@ -38,6 +38,7 @@ class DayViewModel : ViewModel() {
                 it.running++
                 textView.text = it.running.toString()
             }
+            dayUseCase.updateValueDay(day)
         }
     }
 
@@ -47,6 +48,7 @@ class DayViewModel : ViewModel() {
                 it.bikeRide--
                 textView.text = it.bikeRide.toString()
             }
+            dayUseCase.updateValueDay(day)
         }
     }
 
@@ -56,6 +58,7 @@ class DayViewModel : ViewModel() {
                 it.bikeRide++
                 textView.text = it.bikeRide.toString()
             }
+            dayUseCase.updateValueDay(day)
         }
     }
 
@@ -65,6 +68,7 @@ class DayViewModel : ViewModel() {
                 it.sleep--
                 textView.text = it.sleep.toString()
             }
+            dayUseCase.updateValueDay(day)
         }
     }
 
@@ -74,6 +78,7 @@ class DayViewModel : ViewModel() {
                 it.sleep++
                 textView.text = it.sleep.toString()
             }
+            dayUseCase.updateValueDay(day)
         }
     }
 
@@ -83,6 +88,7 @@ class DayViewModel : ViewModel() {
                 it.meal--
                 textView.text = it.meal.toString()
             }
+            dayUseCase.updateValueDay(day)
         }
     }
 
@@ -92,6 +98,7 @@ class DayViewModel : ViewModel() {
                 it.meal++
                 textView.text = it.meal.toString()
             }
+            dayUseCase.updateValueDay(day)
         }
     }
 
@@ -101,6 +108,7 @@ class DayViewModel : ViewModel() {
                 it.water--
                 textView.text = it.water.toString()
             }
+            dayUseCase.updateValueDay(day)
         }
     }
 
@@ -110,6 +118,7 @@ class DayViewModel : ViewModel() {
                 it.water++
                 textView.text = it.water.toString()
             }
+            dayUseCase.updateValueDay(day)
         }
     }
 
@@ -119,6 +128,7 @@ class DayViewModel : ViewModel() {
                 it.alcohol--
                 textView.text = it.alcohol.toString()
             }
+            dayUseCase.updateValueDay(day)
         }
     }
 
@@ -128,6 +138,7 @@ class DayViewModel : ViewModel() {
                 it.alcohol++
                 textView.text = it.alcohol.toString()
             }
+            dayUseCase.updateValueDay(day)
         }
     }
 
@@ -137,6 +148,7 @@ class DayViewModel : ViewModel() {
                 it.work--
                 textView.text = it.work.toString()
             }
+            dayUseCase.updateValueDay(day)
         }
     }
 
@@ -146,6 +158,7 @@ class DayViewModel : ViewModel() {
                 it.work++
                 textView.text = it.work.toString()
             }
+            dayUseCase.updateValueDay(day)
         }
     }
 
@@ -155,6 +168,7 @@ class DayViewModel : ViewModel() {
                 it.leisure--
                 textView.text = it.leisure.toString()
             }
+            dayUseCase.updateValueDay(day)
         }
     }
 
@@ -164,6 +178,7 @@ class DayViewModel : ViewModel() {
                 it.leisure++
                 textView.text = it.leisure.toString()
             }
+            dayUseCase.updateValueDay(day)
         }
     }
 

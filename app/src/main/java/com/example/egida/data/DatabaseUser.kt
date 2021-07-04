@@ -54,13 +54,12 @@ class DatabaseUser : UserDatabaseRepository {
     }
 
     override suspend fun updateUser(databaseUser: SharedFlow<UserDatabase>) {
-
         Log.d(TAG, "updaterUser start $databaseUser")
         Log.d(TAG, "updaterUser start $dateMap")
         REF_DATABASE_ROOT.child(NODE_USERS).child(UID).updateChildren(addUser(databaseUser))
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    Log.d(TAG, "database update complete $")
+                    Log.d(TAG, "database update complete ")
                 }
             }
     }
