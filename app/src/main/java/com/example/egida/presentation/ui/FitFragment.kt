@@ -13,7 +13,6 @@ import com.example.egida.presentation.viewModel.DayViewModel
 import com.example.egida.presentation.viewModel.MainViewModel
 import com.example.egida.utils.replaceFragment
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 class FitFragment : Fragment() {
 
@@ -35,63 +34,27 @@ class FitFragment : Fragment() {
         super.onResume()
 
         binding.minusRunning.setOnClickListener {
-            lifecycleScope.launch {
-                dayViewModel.day
-                    .collect {
-                        it.running--
-                        binding.textRunning.text = it.running.toString()
-                    }
-            }
+            dayViewModel.minusRunning(binding.textRunning)
         }
 
         binding.plusRunning.setOnClickListener {
-            lifecycleScope.launch {
-                dayViewModel.day
-                    .collect {
-                        it.running++
-                        binding.textRunning.text = it.running.toString()
-                    }
-            }
+            dayViewModel.plusRunning(binding.textRunning)
         }
 
         binding.minusBikeRide.setOnClickListener {
-            lifecycleScope.launch {
-                dayViewModel.day
-                    .collect {
-                        it.bikeRide--
-                        binding.textBikeRide.text = it.bikeRide.toString()
-                    }
-            }
+            dayViewModel.minusBikeRide(binding.textBikeRide)
         }
 
         binding.plusBikeRide.setOnClickListener {
-            lifecycleScope.launch {
-                dayViewModel.day
-                    .collect {
-                        it.bikeRide++
-                        binding.textBikeRide.text = it.bikeRide.toString()
-                    }
-            }
+            dayViewModel.plusBikeRide(binding.textBikeRide)
         }
 
         binding.minusSleep.setOnClickListener {
-            lifecycleScope.launch {
-                dayViewModel.day
-                    .collect {
-                        it.sleep--
-                        binding.textSleep.text = it.sleep.toString()
-                    }
-            }
+            dayViewModel.minusSleep(binding.textSleep)
         }
 
         binding.plusSleep.setOnClickListener {
-            lifecycleScope.launch {
-                dayViewModel.day
-                    .collect {
-                        it.sleep++
-                        binding.textSleep.text = it.sleep.toString()
-                    }
-            }
+            dayViewModel.plusSleep(binding.textSleep)
         }
 
         binding.btnSave.setOnClickListener {
