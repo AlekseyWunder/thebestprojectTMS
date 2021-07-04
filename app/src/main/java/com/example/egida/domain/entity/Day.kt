@@ -1,6 +1,6 @@
 package com.example.egida.domain.entity
 
-const val valueScoreBal: Int = 0
+const val valueScoreBal: Int = 1000
 const val valueWork: Int = 8
 const val valueLeisure: Int = 8
 const val valueMeal: Int = 180

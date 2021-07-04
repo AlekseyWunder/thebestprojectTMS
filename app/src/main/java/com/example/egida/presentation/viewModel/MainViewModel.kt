@@ -8,6 +8,7 @@ import com.example.egida.Dependencies
 import com.example.egida.activity.DrawerController
 import com.example.egida.domain.entity.UserDatabase
 import com.example.egida.domain.useCase.day.DayUseCase
+import com.example.egida.domain.useCase.scoreBall.UseCaseScoreBal
 import com.example.egida.domain.useCase.userAUTH.UserAuthUseCase
 import com.example.egida.domain.useCase.userDatabase.UserDatabaseUseCase
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +28,7 @@ class MainViewModel : ViewModel() {
     private val userAuthUseCase: UserAuthUseCase by lazy { Dependencies.authUseCase() }
     private val userDatabaseUseCase: UserDatabaseUseCase by lazy { Dependencies.userDatabaseUseCase() }
     private val dayUseCase: DayUseCase by lazy { Dependencies.dayUseCase() }
+    private val scoreBalUseCase: UseCaseScoreBal by lazy { Dependencies.scoreBalUseCase() }
     private var toast = MutableLiveData<String>()
     private var day = dayUseCase.day
         .shareIn(viewModelScope, started = SharingStarted.Eagerly, replay = 1)
@@ -56,6 +58,7 @@ class MainViewModel : ViewModel() {
                 dayUseCase.getDay()
                 dayUseCase.updateValueDay(day)
                 userDatabaseUseCase.updateValueUser(userDatabase)
+                scoreBalUseCase.gettingParametersHeightAndWeight()
             }
         }
     }

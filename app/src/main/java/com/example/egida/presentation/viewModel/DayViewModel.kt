@@ -5,20 +5,28 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.egida.Dependencies
 import com.example.egida.domain.useCase.day.DayUseCase
+import com.example.egida.domain.useCase.scoreBall.UseCaseScoreBal
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class DayViewModel : ViewModel() {
 
     private val dayUseCase: DayUseCase by lazy { Dependencies.dayUseCase() }
-
+    private val scoreBalUseCase: UseCaseScoreBal by lazy { Dependencies.scoreBalUseCase() }
     var day = dayUseCase.day
         .shareIn(viewModelScope, started = SharingStarted.Eagerly, replay = 1)
 
     fun save() {
+        viewModelScope.launch {
+            withContext(Dispatchers.Default) {
+                scoreBalUseCase.calculationScoreBal()
+            }
+        }
         dayUseCase.createDay(day)
     }
 
