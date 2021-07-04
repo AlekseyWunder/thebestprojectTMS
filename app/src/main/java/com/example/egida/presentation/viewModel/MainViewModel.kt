@@ -6,10 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.egida.Dependencies
 import com.example.egida.activity.DrawerController
+import com.example.egida.domain.entity.UserDatabase
 import com.example.egida.domain.useCase.day.DayUseCase
 import com.example.egida.domain.useCase.userAUTH.UserAuthUseCase
 import com.example.egida.domain.useCase.userDatabase.UserDatabaseUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
@@ -28,6 +30,8 @@ class MainViewModel : ViewModel() {
     private var toast = MutableLiveData<String>()
     private var day = dayUseCase.day
         .shareIn(viewModelScope, started = SharingStarted.Eagerly, replay = 1)
+    private var userDatabase: SharedFlow<UserDatabase> = userDatabaseUseCase.databaseUser
+        .shareIn(viewModelScope, started = SharingStarted.Lazily, replay = 1)
 
     fun checkUser(): Boolean {
         val cUser = userAuthUseCase.getCurrentUser()
@@ -51,6 +55,7 @@ class MainViewModel : ViewModel() {
                 userDatabaseUseCase.getUser()
                 dayUseCase.getDay()
                 dayUseCase.updateValueDay(day)
+                userDatabaseUseCase.updateValueUser(userDatabase)
             }
         }
     }

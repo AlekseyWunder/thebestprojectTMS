@@ -9,5 +9,5 @@ interface UserDatabaseUseCase {
     suspend fun updateUser(databaseUser: SharedFlow<UserDatabase>)
     fun getUser()
     var databaseUser: SharedFlow<UserDatabase>
-    suspend fun addUser(databaseUser: SharedFlow<UserDatabase>): Map<String, Any>
+    fun updateValueUser(databaseUser: SharedFlow<UserDatabase>)
 }

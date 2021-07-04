@@ -10,21 +10,18 @@ import com.example.egida.Dependencies
 import com.example.egida.domain.entity.UserDatabase
 import com.example.egida.domain.useCase.userDatabase.UserDatabaseUseCase
 import com.example.egida.presentation.ui.SettingFragment
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class SettingViewModel : ViewModel() {
 
     private val userDatabaseUseCase: UserDatabaseUseCase by lazy { Dependencies.userDatabaseUseCase() }
 
     var userDatabase: SharedFlow<UserDatabase> = userDatabaseUseCase.databaseUser
-        .stateIn(viewModelScope, started = SharingStarted.Lazily, initialValue = UserDatabase())
+        .shareIn(viewModelScope, started = SharingStarted.Lazily, replay = 1)
 
     fun setUserFirstName(editable: Editable?) {
         viewModelScope.launch {
@@ -32,6 +29,7 @@ class SettingViewModel : ViewModel() {
                 userDatabase.firstName = editable.toString()
                 Log.d(SettingFragment.TAG, userDatabase.lastName)
             }
+            userDatabaseUseCase.updateValueUser(userDatabase)
         }
     }
 
@@ -41,6 +39,7 @@ class SettingViewModel : ViewModel() {
                 userDatabase.lastName = editable.toString()
                 Log.d(SettingFragment.TAG, userDatabase.lastName)
             }
+            userDatabaseUseCase.updateValueUser(userDatabase)
         }
     }
 
@@ -55,6 +54,7 @@ class SettingViewModel : ViewModel() {
                     Log.d(SettingFragment.TAG, userDatabase.checkAgreement.toString())
                 }
             }
+            userDatabaseUseCase.updateValueUser(userDatabase)
         }
     }
 
@@ -64,6 +64,7 @@ class SettingViewModel : ViewModel() {
                 userDatabase.phoneNumber = editable.toString()
                 Log.d(SettingFragment.TAG, userDatabase.phoneNumber)
             }
+            userDatabaseUseCase.updateValueUser(userDatabase)
         }
     }
 
@@ -74,6 +75,7 @@ class SettingViewModel : ViewModel() {
                     userDatabase.photoURL = "it.toString()"
                     Log.d(SettingFragment.TAG, userDatabase.photoURL)
                 }
+            userDatabaseUseCase.updateValueUser(userDatabase)
         }
     }
 
@@ -83,6 +85,7 @@ class SettingViewModel : ViewModel() {
                 it.height--
                 textView.text = it.height.toString()
             }
+            userDatabaseUseCase.updateValueUser(userDatabase)
         }
     }
 
@@ -92,6 +95,7 @@ class SettingViewModel : ViewModel() {
                 it.height++
                 textView.text = it.height.toString()
             }
+            userDatabaseUseCase.updateValueUser(userDatabase)
         }
     }
 
@@ -101,6 +105,7 @@ class SettingViewModel : ViewModel() {
                 it.weight--
                 textView.text = it.weight.toString()
             }
+            userDatabaseUseCase.updateValueUser(userDatabase)
         }
     }
 
@@ -110,16 +115,13 @@ class SettingViewModel : ViewModel() {
                 it.weight++
                 textView.text = it.weight.toString()
             }
+            userDatabaseUseCase.updateValueUser(userDatabase)
         }
     }
 
     fun save() {
         viewModelScope.launch {
-            withContext(Dispatchers.Default) {
-                userDatabaseUseCase.addUser(userDatabase)
-            }
-
-            delay(2000)
+            userDatabaseUseCase.updateValueUser(userDatabase)
             userDatabaseUseCase.updateUser(userDatabase)
         }
     }

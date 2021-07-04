@@ -48,7 +48,6 @@ class DatabaseDay : DayRepository {
             delay(1000)
             Log.d(TAG, " start fun createDay")
             addDay()
-
             Log.d(TAG, "dateChildrenMap: ${addDay()} ")
             REF_DATABASE_ROOT.child(NODE_DAY).child(CHILD_DAY).child(UID)
                 .updateChildren(addDay())
