@@ -48,38 +48,39 @@
             android:id="@+id/minus_meal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="100dp"
             android:background="@drawable/remove_circle_grey_700_36dp"
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/text_meal"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text_meal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="68dp"
+            android:layout_marginTop="36dp"
             android:text="@string/_8"
             android:textColor="@color/black"
             android:textSize="15sp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintEnd_toStartOf="@+id/plus_meal"
+            app:layout_constraintHorizontal_bias="0.51"
+            app:layout_constraintStart_toEndOf="@+id/minus_meal"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/plus_meal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="28dp"
             android:background="@drawable/baseline_add_circle_grey_700_36dp"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintEnd_toStartOf="@+id/text_meal"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/minus_meal"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -87,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="48dp"
             android:layout_weight="0.8"
             android:text="@string/water_ml"
             android:textColor="@color/black"
@@ -99,14 +100,12 @@
             android:id="@+id/minus_water"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="100dp"
             android:background="@drawable/remove_circle_grey_700_36dp"
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/text_water"
             app:layout_constraintTop_toBottomOf="@+id/minus_meal" />
 
         <TextView
@@ -114,23 +113,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
-            android:layout_marginEnd="68dp"
             android:text="@string/_8"
             android:textColor="@color/black"
             android:textSize="15sp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintEnd_toStartOf="@+id/plus_water"
+            app:layout_constraintStart_toEndOf="@+id/minus_water"
             app:layout_constraintTop_toBottomOf="@+id/text_meal" />
 
         <ImageButton
             android:id="@+id/plus_water"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="32dp"
             android:background="@drawable/baseline_add_circle_grey_700_36dp"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintEnd_toStartOf="@+id/text_water"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintStart_toEndOf="@+id/minus_water"
             app:layout_constraintTop_toBottomOf="@+id/plus_meal" />
 
         <TextView
@@ -138,7 +138,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="52dp"
             android:layout_weight="0.8"
             android:text="@string/alcohol_ml"
             android:textColor="@color/black"
@@ -150,34 +150,33 @@
             android:id="@+id/minus_alcohol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="100dp"
             android:background="@drawable/remove_circle_grey_700_36dp"
             app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/text_alcohol"
             app:layout_constraintTop_toBottomOf="@+id/minus_water" />
 
         <TextView
             android:id="@+id/text_alcohol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
-            android:layout_marginEnd="60dp"
+            android:layout_marginTop="52dp"
             android:text="@string/_180"
             android:textColor="@color/black"
             android:textSize="15sp"
-            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintEnd_toStartOf="@+id/plus_alcohol"
+            app:layout_constraintStart_toEndOf="@+id/minus_alcohol"
             app:layout_constraintTop_toBottomOf="@+id/text_water" />
 
         <ImageButton
             android:id="@+id/plus_alcohol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="36dp"
             android:background="@drawable/baseline_add_circle_grey_700_36dp"
-            app:layout_constraintEnd_toStartOf="@+id/text_alcohol"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintStart_toEndOf="@+id/minus_alcohol"
             app:layout_constraintTop_toBottomOf="@+id/plus_water" />
 
         <Button
