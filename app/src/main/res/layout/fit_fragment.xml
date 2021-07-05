@@ -40,7 +40,7 @@
             android:layout_weight="0.8"
             android:text="@string/running_km"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="@dimen/text_param_name_size_15sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,7 +65,7 @@
             android:gravity="center"
             android:text="@string/_8"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_param_size_16sp"
             app:layout_constraintEnd_toStartOf="@+id/plus_running"
             app:layout_constraintHorizontal_bias="0.513"
             app:layout_constraintStart_toEndOf="@+id/minus_running"
@@ -90,7 +90,7 @@
             android:layout_weight="0.8"
             android:text="@string/bike_ride_km"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="@dimen/text_param_name_size_15sp"
             app:layout_constraintStart_toStartOf="@+id/guideline_start"
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
@@ -114,7 +114,7 @@
             android:layout_marginTop="56dp"
             android:text="@string/_8"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_param_size_16sp"
             app:layout_constraintEnd_toStartOf="@+id/plus_bike_ride"
             app:layout_constraintHorizontal_bias="0.512"
             app:layout_constraintStart_toEndOf="@+id/minus_bike_ride"
@@ -139,7 +139,7 @@
             android:layout_weight="0.8"
             android:text="@string/sleep_hour"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="@dimen/text_param_name_size_15sp"
             app:layout_constraintStart_toStartOf="@+id/guideline_start"
             app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
@@ -161,7 +161,7 @@
             android:layout_marginTop="52dp"
             android:text="@string/_8"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_param_size_16sp"
             app:layout_constraintEnd_toStartOf="@+id/plus_sleep"
             app:layout_constraintHorizontal_bias="0.512"
             app:layout_constraintStart_toEndOf="@+id/minus_sleep"
