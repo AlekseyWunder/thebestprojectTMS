@@ -10,6 +10,7 @@ import com.example.egida.presentation.ui.FitFragment
 import com.example.egida.presentation.ui.NutritionFragment
 import com.example.egida.presentation.ui.SettingFragment
 import com.example.egida.presentation.ui.WorkFragment
+import com.example.egida.utils.USER
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
@@ -122,12 +123,12 @@ class AppDrawer(
     private fun createHeader() {
         mHeader = AccountHeaderBuilder()
             .withActivity(activity)
-            .withHeaderBackground(R.drawable.gradient_header)
             .addProfiles(
                 ProfileDrawerItem().withIcon(R.drawable.baseline_people_outline_black_24dp)
                     .withName("Антон Горбатович")
             ).build()
     }
+
 
     private fun replaceFragment(fragment: Fragment) {
         activity.supportFragmentManager.beginTransaction()

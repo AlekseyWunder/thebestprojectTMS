@@ -9,13 +9,14 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.egida.R
 import com.example.egida.databinding.PasswordRecoveryFragmentBinding
 import com.example.egida.presentation.viewModel.LoginViewModel
 import com.example.egida.utils.replaceFragment
 import com.example.egida.utils.showToast
 import kotlinx.coroutines.flow.collect
 
-class PasswordRecoveryFragment : Fragment() {
+class PasswordRecoveryFragment : Fragment(R.layout.password_recovery_fragment) {
 
     companion object {
         fun newInstance() = PasswordRecoveryFragment()

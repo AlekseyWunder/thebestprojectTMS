@@ -9,13 +9,14 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.egida.R
 import com.example.egida.databinding.SettingFragmentBinding
 import com.example.egida.presentation.viewModel.MainViewModel
 import com.example.egida.presentation.viewModel.SettingViewModel
 import com.example.egida.utils.replaceFragment
 import kotlinx.coroutines.flow.collect
 
-class SettingFragment : Fragment() {
+class SettingFragment : Fragment(R.layout.setting_fragment) {
 
     companion object {
         fun newInstance() = SettingFragment()
@@ -34,33 +35,33 @@ class SettingFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        binding.editFirstName.doAfterTextChanged { editable ->
+        binding.settingsEditFirstName.doAfterTextChanged { editable ->
             settingViewModel.setUserFirstName(editable)
         }
-        binding.editLastName.doAfterTextChanged {
+        binding.settingEditLastName.doAfterTextChanged {
             settingViewModel.setUserLatName(it)
         }
-        binding.checkAgreement.setOnClickListener {
-            settingViewModel.setCheckAgreement(binding.checkAgreement)
+        binding.settingCheckAgreement.setOnClickListener {
+            settingViewModel.setCheckAgreement(binding.settingCheckAgreement)
         }
-        binding.editPhoneNumber.doAfterTextChanged { editable ->
+        binding.settingEditPhoneNumber.doAfterTextChanged { editable ->
             settingViewModel.setPhoneNumber(editable)
         }
-        binding.addPhoto.setOnClickListener {
+        binding.settingAddPhoto.setOnClickListener {
             settingViewModel.setAddPhoto()
 
         }
-        binding.minusHeight.setOnClickListener {
-            settingViewModel.minusHeight(binding.textHeight)
+        binding.settingMinusHeight.setOnClickListener {
+            settingViewModel.minusHeight(binding.settingTextHeight)
         }
-        binding.plusHeight.setOnClickListener {
-            settingViewModel.plusHeight(binding.textHeight)
+        binding.settingPlusHeight.setOnClickListener {
+            settingViewModel.plusHeight(binding.settingTextHeight)
         }
-        binding.minusWeight.setOnClickListener {
-            settingViewModel.minusWeight(binding.textWeight)
+        binding.settingMinusWeight.setOnClickListener {
+            settingViewModel.minusWeight(binding.settingTextWeight)
         }
-        binding.plusWeight.setOnClickListener {
-            settingViewModel.plusWeight(binding.textWeight)
+        binding.settingPlusWeight.setOnClickListener {
+            settingViewModel.plusWeight(binding.settingTextWeight)
         }
 
         binding.settingsFragmentBtnSave.setOnClickListener {
@@ -91,12 +92,12 @@ class SettingFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             settingViewModel.userDatabase.collect {
                 Log.d(FitFragment.TAG, "$it")
-                binding.editFirstName.setText(it.firstName)
-                binding.editLastName.setText(it.lastName)
-                binding.checkAgreement.isChecked = it.checkAgreement
-                binding.editPhoneNumber.setText(it.phoneNumber)
-                binding.textHeight.text = it.height.toString()
-                binding.textWeight.text = it.weight.toString()
+                binding.settingsEditFirstName.setText(it.firstName)
+                binding.settingEditLastName.setText(it.lastName)
+                binding.settingCheckAgreement.isChecked = it.checkAgreement
+                binding.settingEditPhoneNumber.setText(it.phoneNumber)
+                binding.settingTextHeight.text = it.height.toString()
+                binding.settingTextWeight.text = it.weight.toString()
             }
         }
     }

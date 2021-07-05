@@ -1,158 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/fit_fragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:id="@+id/fit_fragment"
+    tools:context=".presentation.ui.FitFragment"
 
+    android:theme="@style/Theme.AppLogin">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:orientation="horizontal">
+        android:paddingTop="@dimen/sing_in_fragment_padding_66dp">
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/margin_20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/margin_20dp" />
 
         <TextView
+            android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="24dp"
             android:layout_weight="0.8"
             android:text="@string/running_km"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="@dimen/text_param_name_size_15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/minus_running"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/remove_circle_grey_700_36dp"
             android:clickable="true"
-            android:focusable="true"/>
+            android:focusable="true"
+            app:layout_constraintEnd_toStartOf="@+id/plus_running"
+            app:layout_constraintStart_toEndOf="@+id/textView9"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text_running"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
             android:text="@string/_8"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="@dimen/text_param_size_16sp"
+            app:layout_constraintEnd_toStartOf="@+id/plus_running"
+            app:layout_constraintHorizontal_bias="0.513"
+            app:layout_constraintStart_toEndOf="@+id/minus_running"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/plus_running"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/baseline_add_circle_grey_700_36dp"
             android:clickable="true"
-            android:focusable="true"/>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            android:focusable="true"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="60dp"
             android:layout_weight="0.8"
             android:text="@string/bike_ride_km"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="@dimen/text_param_name_size_15sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
         <ImageButton
             android:id="@+id/minus_bike_ride"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="44dp"
             android:background="@drawable/remove_circle_grey_700_36dp"
             android:clickable="true"
-            android:focusable="true"/>
+            android:focusable="true"
+            app:layout_constraintEnd_toStartOf="@+id/plus_bike_ride"
+            app:layout_constraintStart_toEndOf="@+id/textView8"
+            app:layout_constraintTop_toBottomOf="@+id/minus_running" />
 
         <TextView
             android:id="@+id/text_bike_ride"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="56dp"
             android:text="@string/_8"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="@dimen/text_param_size_16sp"
+            app:layout_constraintEnd_toStartOf="@+id/plus_bike_ride"
+            app:layout_constraintHorizontal_bias="0.512"
+            app:layout_constraintStart_toEndOf="@+id/minus_bike_ride"
+            app:layout_constraintTop_toBottomOf="@+id/text_running" />
 
         <ImageButton
             android:id="@+id/plus_bike_ride"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginTop="44dp"
             android:background="@drawable/baseline_add_circle_grey_700_36dp"
             android:clickable="true"
-            android:focusable="true"/>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            android:focusable="true"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintTop_toBottomOf="@+id/plus_running" />
 
         <TextView
+            android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="52dp"
             android:layout_weight="0.8"
             android:text="@string/sleep_hour"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="@dimen/text_param_name_size_15sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
         <ImageButton
             android:id="@+id/minus_sleep"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/remove_circle_grey_700_36dp" />
+            android:layout_marginStart="105dp"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/remove_circle_grey_700_36dp"
+            app:layout_constraintEnd_toStartOf="@+id/plus_sleep"
+            app:layout_constraintStart_toEndOf="@+id/textView7"
+            app:layout_constraintTop_toBottomOf="@+id/minus_bike_ride" />
 
         <TextView
             android:id="@+id/text_sleep"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="52dp"
             android:text="@string/_8"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="@dimen/text_param_size_16sp"
+            app:layout_constraintEnd_toStartOf="@+id/plus_sleep"
+            app:layout_constraintHorizontal_bias="0.512"
+            app:layout_constraintStart_toEndOf="@+id/minus_sleep"
+            app:layout_constraintTop_toBottomOf="@+id/text_bike_ride" />
 
         <ImageButton
             android:id="@+id/plus_sleep"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/baseline_add_circle_grey_700_36dp" />
+            android:layout_marginTop="36dp"
+            android:background="@drawable/baseline_add_circle_grey_700_36dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintTop_toBottomOf="@+id/plus_bike_ride" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <Button
-        android:id="@+id/btn_save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_20dp"
-        android:text="SAVE" />
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_20dp"
+            android:background="@drawable/circular_blue_border_solid"
+            android:fontFamily="@font/montserrat"
+            android:padding="@dimen/sing_in_fragment_padding_16dp"
+            android:text="SAVE"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.425"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/plus_sleep" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

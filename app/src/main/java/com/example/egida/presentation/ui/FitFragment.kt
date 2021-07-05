@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.egida.R
 import com.example.egida.databinding.FitFragmentBinding
 import com.example.egida.presentation.viewModel.DayViewModel
 import com.example.egida.presentation.viewModel.MainViewModel
@@ -15,7 +16,7 @@ import com.example.egida.utils.replaceFragment
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class FitFragment : Fragment() {
+class FitFragment : Fragment(R.layout.fit_fragment) {
 
     companion object {
         fun newInstance() = FitFragment()
@@ -111,6 +112,8 @@ class FitFragment : Fragment() {
     ): View {
         binding = FitFragmentBinding.inflate(layoutInflater)
         return binding.root
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -126,5 +129,6 @@ class FitFragment : Fragment() {
                     binding.textSleep.text = it.sleep.toString()
                 }
         }
+
     }
 }
