@@ -6,6 +6,6 @@ import kotlinx.coroutines.flow.SharedFlow
 interface UserDatabaseRepository {
     fun getUser()
     var databaseUser: SharedFlow<UserDatabase>
-    suspend fun updateUser(databaseUser: SharedFlow<UserDatabase>)
-    fun updateValueUser(databaseUser: SharedFlow<UserDatabase>)
+    suspend fun updateUser()
+    fun updateValueUser()
 }

@@ -7,7 +7,6 @@ import com.example.egida.utils.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.collect
 
 class DatabaseUser : UserDatabaseRepository {
@@ -25,7 +24,7 @@ class DatabaseUser : UserDatabaseRepository {
     }
 
     private var _databaseUser = MutableSharedFlow<UserDatabase>(replay = 1)
-    override var databaseUser: SharedFlow<UserDatabase> = _databaseUser.asSharedFlow()
+    override var databaseUser: SharedFlow<UserDatabase> = _databaseUser
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + Job())
     private var userDatabase: UserDatabase = UserDatabase()
     private val dateMap = mutableMapOf<String, Any>()
@@ -49,12 +48,12 @@ class DatabaseUser : UserDatabaseRepository {
             })
     }
 
-    override suspend fun updateUser(databaseUser: SharedFlow<UserDatabase>) {
+    override suspend fun updateUser() {
         scope.launch {
             delay(1000)
             addUser()
             Log.d(TAG, "updaterUser start $dateMap")
-            REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).updateChildren(addUser())
+            REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).updateChildren(dateMap)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         Log.d(TAG, "database update complete ")
@@ -66,6 +65,7 @@ class DatabaseUser : UserDatabaseRepository {
     private fun addUser(): Map<String, Any> {
         val uid = CURRENT_UID
         userDatabase.id = uid
+        updateValueUser()
         dateMap[CHILD_ID] = userDatabase.id
         dateMap[CHILD_FIRST_NAME] = userDatabase.firstName
         dateMap[CHILD_LAST_NAME] = userDatabase.lastName
@@ -78,7 +78,7 @@ class DatabaseUser : UserDatabaseRepository {
         return dateMap
     }
 
-    override fun updateValueUser(databaseUser: SharedFlow<UserDatabase>) {
+    override fun updateValueUser() {
         scope.launch {
             withContext(Dispatchers.Default) {
                 databaseUser.collect {
@@ -95,5 +95,4 @@ class DatabaseUser : UserDatabaseRepository {
             }
         }
     }
-
 }

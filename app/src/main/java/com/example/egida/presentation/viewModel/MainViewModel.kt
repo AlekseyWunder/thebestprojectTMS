@@ -40,7 +40,6 @@ class MainViewModel : ViewModel() {
     private var day = dayUseCase.day
         .shareIn(viewModelScope, started = SharingStarted.Eagerly, replay = 1)
     private var userDatabase: SharedFlow<UserDatabase> = userDatabaseUseCase.databaseUser
-        .shareIn(viewModelScope, started = SharingStarted.Lazily, replay = 1)
 
     fun checkUser(): Boolean {
         val cUser = userAuthUseCase.getCurrentUser()
@@ -64,28 +63,31 @@ class MainViewModel : ViewModel() {
                 userDatabaseUseCase.getUser()
                 dayUseCase.getDay()
                 dayUseCase.updateValueDay(day)
-                userDatabaseUseCase.updateValueUser(userDatabase)
+                userDatabaseUseCase.updateValueUser()
                 scoreBalUseCase.gettingParametersHeightAndWeight()
             }
         }
     }
 
-    fun addProfileImage(uri: Uri){
+    fun addProfileImage(uri: Uri) {
         dataStorageUsecase.addProfileImage(uri)
     }
+
     fun setAddPhoto() {
         viewModelScope.launch {
             userDatabase
                 .collect { userDatabase ->
-                    dataStorageUsecase.photoUrl.collect {dataStorageState ->
-                        when(dataStorageState){
-                            is DataStorageState.Success -> userDatabase.photoURL = dataStorageState.photoUrl
+                    dataStorageUsecase.photoUrl.collect { dataStorageState ->
+                        when (dataStorageState) {
+                            is DataStorageState.Success -> userDatabase.photoURL =
+                                dataStorageState.photoUrl
                         }
                         Log.d(TAG, "photoURL $dataStorageState")
+                        Log.d(TAG, userDatabase.photoURL)
                     }
                     Log.d(SettingFragment.TAG, userDatabase.photoURL)
                 }
-            userDatabaseUseCase.updateValueUser(userDatabase)
+            userDatabaseUseCase.updateValueUser()
         }
     }
 

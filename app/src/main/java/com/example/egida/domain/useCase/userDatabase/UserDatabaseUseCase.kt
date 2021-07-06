@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 
 interface UserDatabaseUseCase {
-    suspend fun updateUser(databaseUser: SharedFlow<UserDatabase>)
+    suspend fun updateUser()
     fun getUser()
     var databaseUser: SharedFlow<UserDatabase>
-    fun updateValueUser(databaseUser: SharedFlow<UserDatabase>)
+    fun updateValueUser()
 }
