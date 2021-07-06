@@ -1,16 +1,17 @@
 package com.example.egida.presentation.viewModel
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.egida.Constants
 import com.example.egida.Dependencies
+import com.example.egida.data.DataStorageState
 import com.example.egida.domain.entity.UserDatabase
+import com.example.egida.domain.useCase.dataStorage.DataStorageUsecase
 import com.example.egida.domain.useCase.userDatabase.UserDatabaseUseCase
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 
 class SettingViewModel : ViewModel() {
@@ -20,15 +21,16 @@ class SettingViewModel : ViewModel() {
     }
 
     private val userDatabaseUseCase: UserDatabaseUseCase by lazy { Dependencies.userDatabaseUseCase() }
+    private val dataStorageUsecase: DataStorageUsecase by lazy { Dependencies.dataStorageUsecase() }
 
     var userDatabase: SharedFlow<UserDatabase> = userDatabaseUseCase.databaseUser
-        .shareIn(viewModelScope, started = SharingStarted.Lazily, replay = 1)
     var userFirstName = Constants.firstName
     var userLastName = Constants.lastName
     var check: Boolean = Constants.checkAgreement
     var userPhoneNumber = Constants.phoneNumber
     var userHeight: Int = Constants.height
     var userWeight: Int = Constants.weight
+    private var photoURL: String = Constants.photoURL
 
     fun initValue() {
         viewModelScope.launch {
@@ -127,5 +129,26 @@ class SettingViewModel : ViewModel() {
         }
     }
 
+    fun addProfileImage(uri: Uri) {
+        dataStorageUsecase.addProfileImage(uri)
+    }
+
+    fun setAddPhoto() {
+        viewModelScope.launch {
+            dataStorageUsecase.photoUrl.collect { dataStorageState ->
+                when (dataStorageState) {
+                    is DataStorageState.Success -> photoURL =
+                        dataStorageState.photoUrl
+                }
+                Log.d(MainViewModel.TAG, "photoURL $photoURL")
+            }
+        }
+        Log.d(MainViewModel.TAG, "photoURL2 $photoURL")
+    }
+
+    fun addPhotoURL() {
+        userDatabaseUseCase.addPhotoUrl(photoURL)
+        Log.d(MainViewModel.TAG, "photoURL3 $photoURL")
+    }
 
 }

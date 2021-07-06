@@ -1,12 +1,15 @@
 package com.example.egida.presentation.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.egida.appActivity
 import com.example.egida.databinding.SettingFragmentBinding
 import com.example.egida.presentation.viewModel.MainViewModel
@@ -14,6 +17,10 @@ import com.example.egida.presentation.viewModel.SettingViewModel
 import com.example.egida.utils.replaceFragment
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SettingFragment : Fragment() {
 
@@ -112,7 +119,25 @@ class SettingFragment : Fragment() {
             .setAspectRatio(1, 1)
             .setRequestedSize(600, 600)
             .setCropShape(CropImageView.CropShape.OVAL)
-            .start(appActivity)
+            .start(appActivity, this)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE
+            && resultCode == AppCompatActivity.RESULT_OK && data != null
+        ) {
+            val uri = CropImage.getActivityResult(data).uri
+            lifecycleScope.launch {
+                withContext(Dispatchers.Default) {
+                    settingViewModel.addProfileImage(uri)
+                }
+                settingViewModel.setAddPhoto()
+                delay(2000)
+                settingViewModel.addPhotoURL()
+                mainViewModel.updateHeader(requireActivity())
+            }
+        }
     }
 
 

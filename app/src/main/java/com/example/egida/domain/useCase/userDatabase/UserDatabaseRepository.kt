@@ -8,4 +8,5 @@ interface UserDatabaseRepository {
     var databaseUser: SharedFlow<UserDatabase>
     suspend fun updateUser()
     fun updateValueUser()
+    fun addPhotoUrl(photoUrl: String)
 }

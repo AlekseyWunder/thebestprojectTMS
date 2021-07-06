@@ -1,15 +1,22 @@
 package com.example.egida.presentation.`object`
 
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.example.egida.Constants
+import com.example.egida.Dependencies
 import com.example.egida.R
+import com.example.egida.domain.useCase.userDatabase.UserDatabaseUseCase
 import com.example.egida.presentation.ui.FitFragment
 import com.example.egida.presentation.ui.NutritionFragment
 import com.example.egida.presentation.ui.SettingFragment
 import com.example.egida.presentation.ui.WorkFragment
+import com.example.egida.utils.downloadAndSetImage
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
@@ -17,6 +24,13 @@ import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
+import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader
+import com.mikepenz.materialdrawer.util.DrawerImageLoader
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class AppDrawer(
     val activity: AppCompatActivity,
@@ -32,20 +46,29 @@ class AppDrawer(
         const val drawerItemFriends = 6
     }
 
-    private lateinit var mDrawer: Drawer
-    lateinit var mHeader: AccountHeader
-    private lateinit var mDrawerLayout: DrawerLayout
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + Job())
+    private val userDatabaseUseCase: UserDatabaseUseCase by lazy { Dependencies.userDatabaseUseCase() }
+    private lateinit var drawer: Drawer
+    lateinit var header: AccountHeader
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var currentProfile: ProfileDrawerItem
+    private var userFirstName: String = Constants.firstName
+    private var userLastName: String = Constants.lastName
+    private var userPhoneNumber: String = Constants.phoneNumber
+    private var userUrl: String = Constants.phoneNumber
 
     fun create() {
+        initValue()
+        initLoader()
         createHeader()
         createDrawer()
-        mDrawerLayout = mDrawer.drawerLayout
+        drawerLayout = drawer.drawerLayout
     }
 
     fun disableDrawer() {
-        mDrawer.actionBarDrawerToggle?.isDrawerIndicatorEnabled = false
+        drawer.actionBarDrawerToggle?.isDrawerIndicatorEnabled = false
         activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         toolbar.setNavigationOnClickListener {
             activity.supportFragmentManager.popBackStack()
         }
@@ -53,22 +76,22 @@ class AppDrawer(
 
     fun enableDrawer() {
         activity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        mDrawer.actionBarDrawerToggle?.isDrawerIndicatorEnabled = true
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        drawer.actionBarDrawerToggle?.isDrawerIndicatorEnabled = true
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
         toolbar.setNavigationOnClickListener {
-            mDrawer.openDrawer()
+            drawer.openDrawer()
         }
     }
 
     private fun createDrawer() {
 
-        mDrawer = DrawerBuilder()
+        drawer = DrawerBuilder()
             .withSliderBackgroundDrawableRes(R.drawable.gradient)
             .withActivity(activity)
             .withToolbar(toolbar)
             .withActionBarDrawerToggle(true)
             .withSelectedItem(-1)
-            .withAccountHeader(mHeader)
+            .withAccountHeader(header)
             .addDrawerItems(
                 PrimaryDrawerItem().withIdentifier(1)
                     .withIconTintingEnabled(true)
@@ -120,12 +143,18 @@ class AppDrawer(
     }
 
     private fun createHeader() {
-        mHeader = AccountHeaderBuilder()
+        initValue()
+        currentProfile = ProfileDrawerItem()
+            .withName("$userFirstName $userLastName")
+            .withEmail(userPhoneNumber)
+            .withIcon(userUrl)
+            .withIdentifier(10)
+
+        header = AccountHeaderBuilder()
             .withActivity(activity)
             .withHeaderBackground(R.drawable.gradient_header)
             .addProfiles(
-                ProfileDrawerItem().withIcon(R.drawable.baseline_people_outline_black_24dp)
-                    .withName("Антон Горбатович")
+                currentProfile
             ).build()
     }
 
@@ -134,6 +163,34 @@ class AppDrawer(
             .addToBackStack(null)
             .replace(R.id.container, fragment)
             .commit()
+    }
+
+    fun updateHeader() {
+        initValue()
+        currentProfile
+            .withName("$userFirstName $userLastName")
+            .withEmail(userPhoneNumber)
+            .withIcon(userUrl)
+        header.updateProfile(currentProfile)
+    }
+
+    private fun initLoader() {
+        DrawerImageLoader.init(object : AbstractDrawerImageLoader() {
+            override fun set(imageView: ImageView, uri: Uri, placeholder: Drawable) {
+                imageView.downloadAndSetImage(uri.toString())
+            }
+        })
+    }
+
+    private fun initValue() {
+        scope.launch {
+            userDatabaseUseCase.databaseUser.collect {
+                userFirstName = it.firstName
+                userLastName = it.lastName
+                userPhoneNumber = it.phoneNumber
+                userUrl = it.photoURL
+            }
+        }
     }
 
 }

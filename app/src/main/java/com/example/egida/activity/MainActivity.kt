@@ -7,23 +7,14 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.example.egida.LoginActivity
 import com.example.egida.R
 import com.example.egida.appActivity
 import com.example.egida.databinding.MainActivityBinding
 import com.example.egida.presentation.`object`.AppDrawer
 import com.example.egida.presentation.ui.MainFragment
-import com.example.egida.presentation.ui.SettingFragment
 import com.example.egida.presentation.viewModel.MainViewModel
-import com.example.egida.utils.replaceActivity
-import com.example.egida.utils.replaceFragment
 import com.example.egida.utils.singOutUser
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageActivity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity(), DrawerController {
 
@@ -42,16 +33,11 @@ class MainActivity : AppCompatActivity(), DrawerController {
                 .commitNow()
         }
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
-    }
-
-    override fun onStart() {
-        super.onStart()
         appActivity = this
-        initFields()
-        initFun()
-        mainViewModel.updateUserAndDay()
-
+        initValue {
+            initFields()
+            initFun()
+        }
     }
 
     private fun initFun() {
@@ -80,28 +66,21 @@ class MainActivity : AppCompatActivity(), DrawerController {
         return true
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE
-            && resultCode == RESULT_OK && data != null
-        ) {
-            val uri = CropImage.getActivityResult(data).uri
-            lifecycleScope.launch {
-                withContext(Dispatchers.Default){
-                    mainViewModel.addProfileImage(uri)
-                }
-                mainViewModel.setAddPhoto()
-                mainViewModel.closeDrawer(this@MainActivity)
-            }
-        }
-    }
-
     override fun openDrawer() {
         drawer.enableDrawer()
     }
 
     override fun closeDrawer() {
         drawer.disableDrawer()
+    }
+
+    override fun updateDrawer() {
+        drawer.updateHeader()
+    }
+
+    private inline fun initValue(crossinline function: () -> Unit) {
+        mainViewModel.updateUserAndDay()
+        function()
     }
 }
 

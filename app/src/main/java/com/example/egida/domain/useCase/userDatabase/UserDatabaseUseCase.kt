@@ -10,4 +10,5 @@ interface UserDatabaseUseCase {
     fun getUser()
     var databaseUser: SharedFlow<UserDatabase>
     fun updateValueUser()
+    fun addPhotoUrl(photoUrl: String)
 }

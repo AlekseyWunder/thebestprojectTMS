@@ -26,4 +26,8 @@ class UserDatabaseUseCaseImpl(
         return data.updateValueUser()
     }
 
+    override fun addPhotoUrl(photoUrl: String) {
+        return data.addPhotoUrl(photoUrl)
+    }
+
 }

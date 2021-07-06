@@ -95,4 +95,12 @@ class DatabaseUser : UserDatabaseRepository {
             }
         }
     }
+
+    override fun addPhotoUrl(photoUrl: String) {
+        scope.launch {
+            databaseUser.collect {
+                it.photoURL = photoUrl
+            }
+        }
+    }
 }
