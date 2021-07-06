@@ -9,13 +9,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DatabaseDay : DayRepository {
 
     companion object {
         const val TAG = " databaseDay"
         const val NODE_DAY = "day"
-        const val CHILD_DAY = "day"// нужно предавать текущую дату
         const val CHILD_SCORE_BAL = "scoreBal"
         const val CHILD_WORK = "work"
         const val CHILD_LEISURE = "leisure"
@@ -31,7 +32,10 @@ class DatabaseDay : DayRepository {
     override var day: Flow<Day> = _day.asStateFlow()
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + Job())
     private var baseDay: Day = Day()
-
+    private var dateMap = mutableMapOf<String, Any>()
+    private val date = Calendar.getInstance().time
+    private val formatter = SimpleDateFormat("dd-MM-yyyy",Locale.getDefault(Locale.Category.FORMAT)) //or use getDateInstance()
+    private val CHILD_DAY = formatter.format(date)
     init {
         initFirebase()
         initDatabase()
@@ -42,17 +46,20 @@ class DatabaseDay : DayRepository {
         return Day()
     }
 
-
     override fun createDay(day: Flow<Day>) {
-        addDay(day)
-        REF_DATABASE_ROOT.child(NODE_DAY).child(CHILD_DAY).child(UID)
-            .updateChildren(addDay(day))
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "database day complete")
+        scope.launch {
+            delay(1000)
+            Log.d(TAG, " start fun createDay")
+            addDay()
+            Log.d(TAG, "dateChildrenMap: ${addDay()} ")
+            REF_DATABASE_ROOT.child(NODE_DAY).child(CHILD_DAY).child(UID)
+                .updateChildren(addDay())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "database day complete")
+                    }
                 }
-
-            }
+        }
     }
 
     override suspend fun getDay() {
@@ -66,23 +73,8 @@ class DatabaseDay : DayRepository {
     }
 
 
-    private fun addDay(day: Flow<Day>): Map<String, Any> {
-        scope.launch {
-            withContext(Dispatchers.IO) {
-                day.collect {
-                    baseDay.scoreBal = it.scoreBal
-                    baseDay.work = it.work
-                    baseDay.leisure = it.leisure
-                    baseDay.meal = it.meal
-                    baseDay.water = it.water
-                    baseDay.alcohol = it.alcohol
-                    baseDay.running = it.running
-                    baseDay.bikeRide = it.bikeRide
-                    baseDay.sleep = it.sleep
-                }
-            }
-        }
-        val dateMap = mutableMapOf<String, Any>()
+    private fun addDay(): Map<String, Any> {
+        updateValueDay(day)
         dateMap[CHILD_SCORE_BAL] = baseDay.scoreBal
         dateMap[CHILD_WORK] = baseDay.work
         dateMap[CHILD_LEISURE] = baseDay.leisure
@@ -92,6 +84,23 @@ class DatabaseDay : DayRepository {
         dateMap[CHILD_RUNNING] = baseDay.running
         dateMap[CHILD_BIKE_RIDE] = baseDay.bikeRide
         dateMap[CHILD_SLEEP] = baseDay.sleep
+        Log.d(TAG, "Finish fun addDay $dateMap")
         return dateMap
+    }
+
+    override fun updateValueDay(day: Flow<Day>) {
+        scope.launch {
+            day.collect {
+                baseDay.scoreBal = it.scoreBal
+                baseDay.work = it.work
+                baseDay.leisure = it.leisure
+                baseDay.meal = it.meal
+                baseDay.water = it.water
+                baseDay.alcohol = it.alcohol
+                baseDay.running = it.running
+                baseDay.bikeRide = it.bikeRide
+                baseDay.sleep = it.sleep
+            }
+        }
     }
 }

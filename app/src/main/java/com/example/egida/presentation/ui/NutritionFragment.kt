@@ -12,7 +12,6 @@ import com.example.egida.presentation.viewModel.DayViewModel
 import com.example.egida.presentation.viewModel.MainViewModel
 import com.example.egida.utils.replaceFragment
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 class NutritionFragment : Fragment() {
 
@@ -22,7 +21,7 @@ class NutritionFragment : Fragment() {
     }
 
     private lateinit var binding: NutritionFragmentBinding
-    private lateinit var viewModel: DayViewModel
+    private lateinit var dayViewModel: DayViewModel
     private lateinit var mainViewModel: MainViewModel
 
     override fun onStart() {
@@ -33,67 +32,30 @@ class NutritionFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         binding.minusMeal.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.day
-                    .collect {
-                        it.meal--
-                        binding.textMeal.text = it.meal.toString()
-                    }
-            }
+            dayViewModel.minusMeal(binding.textMeal)
         }
         binding.plusMeal.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.day
-                    .collect {
-                        it.meal++
-                        binding.textMeal.text = it.meal.toString()
-                    }
-            }
+            dayViewModel.plusMeal(binding.textMeal)
         }
 
-
         binding.minusWater.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.day
-                    .collect {
-                        it.water--
-                        binding.textWater.text = it.water.toString()
-                    }
-            }
+            dayViewModel.minusWater(binding.textWater)
         }
 
         binding.plusWater.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.day
-                    .collect {
-                        it.water++
-                        binding.textWater.text = it.water.toString()
-                    }
-            }
+            dayViewModel.plusWater(binding.textWater)
         }
 
         binding.minusAlcohol.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.day
-                    .collect {
-                        it.alcohol--
-                        binding.textAlcohol.text = it.alcohol.toString()
-                    }
-            }
+            dayViewModel.minusAlcohol(binding.textAlcohol)
         }
 
         binding.plusAlcohol.setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.day
-                    .collect {
-                        it.alcohol++
-                        binding.textAlcohol.text = it.alcohol.toString()
-                    }
-            }
+            dayViewModel.plusAlcohol(binding.textAlcohol)
         }
 
         binding.btnSave.setOnClickListener {
-            viewModel.save()
+            dayViewModel.save()
             replaceFragment(this, MainFragment.newInstance())
         }
     }
@@ -111,12 +73,13 @@ class NutritionFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(DayViewModel::class.java)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        dayViewModel = ViewModelProvider(this).get(DayViewModel::class.java)
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         lifecycleScope.launchWhenStarted {
-            viewModel.day
+            dayViewModel.day
                 .collect {
                     binding.textMeal.text = it.meal.toString()
                     binding.textWater.text = it.water.toString()

@@ -90,7 +90,7 @@ class SettingFragment : Fragment() {
 
         lifecycleScope.launchWhenStarted {
             settingViewModel.userDatabase.collect {
-                Log.d(FitFragment.TAG, "$it")
+                Log.d(TAG, "$it")
                 binding.editFirstName.setText(it.firstName)
                 binding.editLastName.setText(it.lastName)
                 binding.checkAgreement.isChecked = it.checkAgreement

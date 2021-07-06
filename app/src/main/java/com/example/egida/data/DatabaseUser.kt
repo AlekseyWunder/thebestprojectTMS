@@ -36,10 +36,6 @@ class DatabaseUser : UserDatabaseRepository {
         UID = AUTH.currentUser?.uid.toString()
     }
 
-    private fun initUser(): UserDatabase {
-        return UserDatabase()
-    }
-
     override fun getUser() {
 
         REF_DATABASE_ROOT.child(NODE_USERS).child(UID)
@@ -54,35 +50,22 @@ class DatabaseUser : UserDatabaseRepository {
     }
 
     override suspend fun updateUser(databaseUser: SharedFlow<UserDatabase>) {
-
-        Log.d(TAG, "updaterUser start $databaseUser")
-        Log.d(TAG, "updaterUser start $dateMap")
-        REF_DATABASE_ROOT.child(NODE_USERS).child(UID).updateChildren(addUser(databaseUser))
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    Log.d(TAG, "database update complete $")
+        scope.launch {
+            delay(1000)
+            addUser()
+            Log.d(TAG, "updaterUser start $dateMap")
+            REF_DATABASE_ROOT.child(NODE_USERS).child(UID).updateChildren(addUser())
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        Log.d(TAG, "database update complete ")
+                    }
                 }
-            }
+        }
     }
 
-    override suspend fun addUser(databaseUser: SharedFlow<UserDatabase>): Map<String, Any> {
-
+    private fun addUser(): Map<String, Any> {
         val uid = UID
         userDatabase.id = uid
-        scope.launch {
-            async {
-                databaseUser.collect {
-                    userDatabase.id = it.id
-                    userDatabase.firstName = it.firstName
-                    userDatabase.lastName = it.lastName
-                    userDatabase.checkAgreement = it.checkAgreement
-                    userDatabase.phoneNumber = it.phoneNumber
-                    userDatabase.photoURL = it.photoURL
-                    userDatabase.height = it.height
-                    userDatabase.weight = it.weight
-                }
-            }.await()
-        }
         dateMap[CHILD_ID] = userDatabase.id
         dateMap[CHILD_FIRST_NAME] = userDatabase.firstName
         dateMap[CHILD_LAST_NAME] = userDatabase.lastName
@@ -93,6 +76,24 @@ class DatabaseUser : UserDatabaseRepository {
         dateMap[CHILD_WEIGHT] = userDatabase.weight
         Log.d(TAG, "addUser complete")
         return dateMap
+    }
+
+    override fun updateValueUser(databaseUser: SharedFlow<UserDatabase>) {
+        scope.launch {
+            withContext(Dispatchers.Default) {
+                databaseUser.collect {
+                    userDatabase.id = it.id
+                    userDatabase.firstName = it.firstName
+                    userDatabase.lastName = it.lastName
+                    userDatabase.checkAgreement = it.checkAgreement
+                    userDatabase.phoneNumber = it.phoneNumber
+                    userDatabase.photoURL = it.photoURL
+                    userDatabase.height = it.height
+                    userDatabase.weight = it.weight
+                    Log.d(TAG, "finish updateValueUser $databaseUser")
+                }
+            }
+        }
     }
 
 }
