@@ -7,21 +7,22 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.egida.Dependencies
+import com.example.egida.data.DataStorageState
 import com.example.egida.domain.entity.UserDatabase
+import com.example.egida.domain.useCase.dataStorage.DataStorageUsecase
 import com.example.egida.domain.useCase.userDatabase.UserDatabaseUseCase
 import com.example.egida.presentation.ui.SettingFragment
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class SettingViewModel : ViewModel() {
 
     private val userDatabaseUseCase: UserDatabaseUseCase by lazy { Dependencies.userDatabaseUseCase() }
+    private val dataStorageUsecase: DataStorageUsecase by lazy { Dependencies.dataStorageUsecase() }
 
     var userDatabase: SharedFlow<UserDatabase> = userDatabaseUseCase.databaseUser
         .shareIn(viewModelScope, started = SharingStarted.Lazily, replay = 1)
+
 
     fun setUserFirstName(editable: Editable?) {
         viewModelScope.launch {
@@ -64,17 +65,6 @@ class SettingViewModel : ViewModel() {
                 userDatabase.phoneNumber = editable.toString()
                 Log.d(SettingFragment.TAG, userDatabase.phoneNumber)
             }
-            userDatabaseUseCase.updateValueUser(userDatabase)
-        }
-    }
-
-    fun setAddPhoto() {
-        viewModelScope.launch {
-            userDatabase
-                .collect { userDatabase ->
-                    userDatabase.photoURL = "it.toString()"
-                    Log.d(SettingFragment.TAG, userDatabase.photoURL)
-                }
             userDatabaseUseCase.updateValueUser(userDatabase)
         }
     }
@@ -125,4 +115,6 @@ class SettingViewModel : ViewModel() {
             userDatabaseUseCase.updateUser(userDatabase)
         }
     }
+
+
 }

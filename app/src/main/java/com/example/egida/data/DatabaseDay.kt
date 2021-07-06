@@ -39,7 +39,7 @@ class DatabaseDay : DayRepository {
     init {
         initFirebase()
         initDatabase()
-        UID = AUTH.currentUser?.uid.toString()
+        CURRENT_UID = AUTH.currentUser?.uid.toString()
     }
 
     private fun initDay(): Day {
@@ -52,7 +52,7 @@ class DatabaseDay : DayRepository {
             Log.d(TAG, " start fun createDay")
             addDay()
             Log.d(TAG, "dateChildrenMap: ${addDay()} ")
-            REF_DATABASE_ROOT.child(NODE_DAY).child(CHILD_DAY).child(UID)
+            REF_DATABASE_ROOT.child(NODE_DAY).child(CHILD_DAY).child(CURRENT_UID)
                 .updateChildren(addDay())
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -63,7 +63,7 @@ class DatabaseDay : DayRepository {
     }
 
     override suspend fun getDay() {
-        REF_DATABASE_ROOT.child(NODE_DAY).child(CHILD_DAY).child(UID)
+        REF_DATABASE_ROOT.child(NODE_DAY).child(CHILD_DAY).child(CURRENT_UID)
             .addListenerForSingleValueEvent(AppValueEventListener { data ->
                 scope.launch {
                     _day.emit((data.getValue(Day::class.java) ?: Day()))

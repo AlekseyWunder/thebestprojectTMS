@@ -33,12 +33,12 @@ class DatabaseUser : UserDatabaseRepository {
     init {
         initFirebase()
         initDatabase()
-        UID = AUTH.currentUser?.uid.toString()
+        CURRENT_UID = AUTH.currentUser?.uid.toString()
     }
 
     override fun getUser() {
 
-        REF_DATABASE_ROOT.child(NODE_USERS).child(UID)
+        REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
             .addListenerForSingleValueEvent(AppValueEventListener { snapshot ->
                 scope.launch {
                     _databaseUser.emit(
@@ -54,7 +54,7 @@ class DatabaseUser : UserDatabaseRepository {
             delay(1000)
             addUser()
             Log.d(TAG, "updaterUser start $dateMap")
-            REF_DATABASE_ROOT.child(NODE_USERS).child(UID).updateChildren(addUser())
+            REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).updateChildren(addUser())
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         Log.d(TAG, "database update complete ")
@@ -64,7 +64,7 @@ class DatabaseUser : UserDatabaseRepository {
     }
 
     private fun addUser(): Map<String, Any> {
-        val uid = UID
+        val uid = CURRENT_UID
         userDatabase.id = uid
         dateMap[CHILD_ID] = userDatabase.id
         dateMap[CHILD_FIRST_NAME] = userDatabase.firstName
