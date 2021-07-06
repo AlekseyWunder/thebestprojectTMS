@@ -52,7 +52,7 @@ class PasswordRecoveryFragment : Fragment() {
 
         binding.btnBack.setOnClickListener {
             replaceFragment(
-                this,
+                requireView(),
                 SingInFragment.newInstance()
             )
         }

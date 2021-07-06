@@ -62,14 +62,14 @@ class SingInFragment : Fragment() {
 
         binding.btnForgotPassword.setOnClickListener {
             replaceFragment(
-                this,
+                requireView(),
                 PasswordRecoveryFragment.newInstance()
             )
         }
 
         binding.btnCreateAccount.setOnClickListener {
             replaceFragment(
-                this,
+                requireView(),
                 RegistrationFragment.newInstance()
             )
         }

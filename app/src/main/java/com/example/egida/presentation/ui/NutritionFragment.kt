@@ -56,7 +56,7 @@ class NutritionFragment : Fragment() {
 
         binding.btnSave.setOnClickListener {
             dayViewModel.save()
-            replaceFragment(this, MainFragment.newInstance())
+            replaceFragment(requireView(), MainFragment.newInstance())
         }
     }
 

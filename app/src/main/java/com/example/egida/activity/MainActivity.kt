@@ -14,9 +14,13 @@ import com.example.egida.appActivity
 import com.example.egida.databinding.MainActivityBinding
 import com.example.egida.presentation.`object`.AppDrawer
 import com.example.egida.presentation.ui.MainFragment
+import com.example.egida.presentation.ui.SettingFragment
 import com.example.egida.presentation.viewModel.MainViewModel
+import com.example.egida.utils.replaceActivity
+import com.example.egida.utils.replaceFragment
 import com.example.egida.utils.singOutUser
 import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -87,9 +91,8 @@ class MainActivity : AppCompatActivity(), DrawerController {
                     mainViewModel.addProfileImage(uri)
                 }
                 mainViewModel.setAddPhoto()
+                mainViewModel.closeDrawer(this@MainActivity)
             }
-
-
         }
     }
 

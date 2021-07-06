@@ -6,18 +6,16 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.egida.Constants
 import com.example.egida.Dependencies
 import com.example.egida.activity.DrawerController
 import com.example.egida.data.DataStorageState
-import com.example.egida.domain.entity.UserDatabase
 import com.example.egida.domain.useCase.dataStorage.DataStorageUsecase
 import com.example.egida.domain.useCase.day.DayUseCase
 import com.example.egida.domain.useCase.scoreBall.UseCaseScoreBal
 import com.example.egida.domain.useCase.userAUTH.UserAuthUseCase
 import com.example.egida.domain.useCase.userDatabase.UserDatabaseUseCase
-import com.example.egida.presentation.ui.SettingFragment
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.shareIn
@@ -39,7 +37,7 @@ class MainViewModel : ViewModel() {
     private var toast = MutableLiveData<String>()
     private var day = dayUseCase.day
         .shareIn(viewModelScope, started = SharingStarted.Eagerly, replay = 1)
-    private var userDatabase: SharedFlow<UserDatabase> = userDatabaseUseCase.databaseUser
+    private var photoURL: String = Constants.photoURL
 
     fun checkUser(): Boolean {
         val cUser = userAuthUseCase.getCurrentUser()
@@ -75,19 +73,13 @@ class MainViewModel : ViewModel() {
 
     fun setAddPhoto() {
         viewModelScope.launch {
-            userDatabase
-                .collect { userDatabase ->
-                    dataStorageUsecase.photoUrl.collect { dataStorageState ->
-                        when (dataStorageState) {
-                            is DataStorageState.Success -> userDatabase.photoURL =
-                                dataStorageState.photoUrl
-                        }
-                        Log.d(TAG, "photoURL $dataStorageState")
-                        Log.d(TAG, userDatabase.photoURL)
-                    }
-                    Log.d(SettingFragment.TAG, userDatabase.photoURL)
+            dataStorageUsecase.photoUrl.collect { dataStorageState ->
+                when (dataStorageState) {
+                    is DataStorageState.Success -> photoURL =
+                        dataStorageState.photoUrl
                 }
-            userDatabaseUseCase.updateValueUser()
+                Log.d(TAG, "photoURL $photoURL")
+            }
         }
     }
 

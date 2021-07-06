@@ -69,7 +69,7 @@ class RegistrationFragment() : Fragment() {
         }
         binding.registrationFragmentBtnBack.setOnClickListener {
             replaceFragment(
-                this,
+                requireView(),
                 SingInFragment.newInstance()
             )
         }

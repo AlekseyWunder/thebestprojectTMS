@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.egida.R
 
-fun replaceFragment(view: Fragment, fragment: Fragment) {
+fun replaceFragment(view: View, fragment: Fragment) {
     val activity: AppCompatActivity? = (view.context as AppCompatActivity?)
     activity?.supportFragmentManager
         ?.beginTransaction()

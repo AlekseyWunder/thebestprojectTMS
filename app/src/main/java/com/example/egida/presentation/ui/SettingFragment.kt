@@ -98,7 +98,7 @@ class SettingFragment : Fragment() {
 
         binding.settingsFragmentBtnSave.setOnClickListener {
             settingViewModel.save()
-            replaceFragment(this, MainFragment.newInstance())
+            replaceFragment(requireView(), MainFragment.newInstance())
         }
     }
 

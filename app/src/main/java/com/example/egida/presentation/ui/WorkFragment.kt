@@ -49,7 +49,7 @@ class WorkFragment : Fragment() {
 
         binding.workBtnSave.setOnClickListener {
             dayViewModel.save()
-            replaceFragment(this, MainFragment.newInstance())
+            replaceFragment(requireView(), MainFragment.newInstance())
         }
     }
 
