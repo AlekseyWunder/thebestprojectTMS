@@ -8,8 +8,8 @@ class UserDatabaseUseCaseImpl(
     private val data: DatabaseUser
 ) : UserDatabaseUseCase {
 
-    override suspend fun updateUser(databaseUser: SharedFlow<UserDatabase>) {
-        return data.updateUser(databaseUser)
+    override suspend fun updateUser() {
+        return data.updateUser()
     }
 
     override fun getUser() {
@@ -18,10 +18,12 @@ class UserDatabaseUseCaseImpl(
 
     override var databaseUser: SharedFlow<UserDatabase>
         get() = data.databaseUser
-        set(value) {}
+        set(value) {
+            databaseUser = value
+        }
 
-    override fun updateValueUser(databaseUser: SharedFlow<UserDatabase>) {
-        return data.updateValueUser(databaseUser)
+    override fun updateValueUser() {
+        return data.updateValueUser()
     }
 
 }

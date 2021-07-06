@@ -1,15 +1,12 @@
 package com.example.egida.presentation.viewModel
 
-import android.text.Editable
 import android.util.Log
-import android.widget.CheckBox
-import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.egida.Constants
 import com.example.egida.Dependencies
 import com.example.egida.domain.entity.UserDatabase
 import com.example.egida.domain.useCase.userDatabase.UserDatabaseUseCase
-import com.example.egida.presentation.ui.SettingFragment
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collect
@@ -18,111 +15,117 @@ import kotlinx.coroutines.launch
 
 class SettingViewModel : ViewModel() {
 
+    companion object {
+        const val TAG = "settingViewModel: "
+    }
+
     private val userDatabaseUseCase: UserDatabaseUseCase by lazy { Dependencies.userDatabaseUseCase() }
 
     var userDatabase: SharedFlow<UserDatabase> = userDatabaseUseCase.databaseUser
         .shareIn(viewModelScope, started = SharingStarted.Lazily, replay = 1)
+    var userFirstName = Constants.firstName
+    var userLastName = Constants.lastName
+    var check: Boolean = Constants.checkAgreement
+    var userPhoneNumber = Constants.phoneNumber
+    var userHeight: Int = Constants.height
+    var userWeight: Int = Constants.weight
 
-    fun setUserFirstName(editable: Editable?) {
-        viewModelScope.launch {
-            userDatabase.collect { userDatabase ->
-                userDatabase.firstName = editable.toString()
-                Log.d(SettingFragment.TAG, userDatabase.lastName)
-            }
-            userDatabaseUseCase.updateValueUser(userDatabase)
-        }
-    }
-
-    fun setUserLatName(editable: Editable?) {
-        viewModelScope.launch {
-            userDatabase.collect { userDatabase ->
-                userDatabase.lastName = editable.toString()
-                Log.d(SettingFragment.TAG, userDatabase.lastName)
-            }
-            userDatabaseUseCase.updateValueUser(userDatabase)
-        }
-    }
-
-    fun setCheckAgreement(checkBox: CheckBox) {
-        viewModelScope.launch {
-            userDatabase.collect { userDatabase ->
-                if (checkBox.isChecked) {
-                    userDatabase.checkAgreement = true
-                    Log.d(SettingFragment.TAG, userDatabase.checkAgreement.toString())
-                } else {
-                    userDatabase.checkAgreement = false
-                    Log.d(SettingFragment.TAG, userDatabase.checkAgreement.toString())
-                }
-            }
-            userDatabaseUseCase.updateValueUser(userDatabase)
-        }
-    }
-
-    fun setPhoneNumber(editable: Editable?) {
-        viewModelScope.launch {
-            userDatabase.collect { userDatabase ->
-                userDatabase.phoneNumber = editable.toString()
-                Log.d(SettingFragment.TAG, userDatabase.phoneNumber)
-            }
-            userDatabaseUseCase.updateValueUser(userDatabase)
-        }
-    }
-
-    fun setAddPhoto() {
-        viewModelScope.launch {
-            userDatabase
-                .collect { userDatabase ->
-                    userDatabase.photoURL = "it.toString()"
-                    Log.d(SettingFragment.TAG, userDatabase.photoURL)
-                }
-            userDatabaseUseCase.updateValueUser(userDatabase)
-        }
-    }
-
-    fun minusHeight(textView: TextView) {
+    fun initValue() {
         viewModelScope.launch {
             userDatabase.collect {
-                it.height--
-                textView.text = it.height.toString()
+                userFirstName = it.firstName
+                userLastName = it.lastName
+                userPhoneNumber = it.phoneNumber
+                check = it.checkAgreement
+                userHeight = it.height
+                userWeight = it.weight
+                Log.d(TAG, "$userFirstName $userLastName $userPhoneNumber $check")
             }
-            userDatabaseUseCase.updateValueUser(userDatabase)
         }
     }
 
-    fun plusHeight(textView: TextView) {
+    fun setUserFirstName() {
         viewModelScope.launch {
-            userDatabase.collect {
-                it.height++
-                textView.text = it.height.toString()
+            userDatabase.collect { userDatabase ->
+                userDatabase.firstName = userFirstName
+                Log.d(TAG, userDatabase.firstName)
             }
-            userDatabaseUseCase.updateValueUser(userDatabase)
         }
     }
 
-    fun minusWeight(textView: TextView) {
+    fun setUserLatName() {
         viewModelScope.launch {
-            userDatabase.collect {
-                it.weight--
-                textView.text = it.weight.toString()
+            userDatabase.collect { userDatabase ->
+                userDatabase.lastName = userLastName
+                Log.d(TAG, userDatabase.lastName)
             }
-            userDatabaseUseCase.updateValueUser(userDatabase)
         }
     }
 
-    fun plusWeight(textView: TextView) {
+    fun setCheckAgreement() {
+        viewModelScope.launch {
+            userDatabase.collect { userDatabase ->
+                userDatabase.checkAgreement = check
+                Log.d(TAG, userDatabase.checkAgreement.toString())
+            }
+        }
+    }
+
+    fun setPhoneNumber() {
+        viewModelScope.launch {
+            userDatabase.collect { userDatabase ->
+                userDatabase.phoneNumber = userPhoneNumber
+                Log.d(TAG, userDatabase.phoneNumber)
+            }
+        }
+    }
+
+    fun minusHeight() {
+        userHeight--
         viewModelScope.launch {
             userDatabase.collect {
-                it.weight++
-                textView.text = it.weight.toString()
+                it.height = userHeight
+                Log.d(TAG, it.height.toString())
             }
-            userDatabaseUseCase.updateValueUser(userDatabase)
+        }
+    }
+
+    fun plusHeight() {
+        viewModelScope.launch {
+            userHeight++
+            userDatabase.collect {
+                it.height = userHeight
+                Log.d(TAG, userHeight.toString())
+            }
+        }
+    }
+
+    fun minusWeight() {
+        userWeight--
+        viewModelScope.launch {
+            userDatabase.collect {
+                it.weight = userWeight
+                Log.d(TAG, userWeight.toString())
+            }
+        }
+    }
+
+    fun plusWeight() {
+        viewModelScope.launch {
+            userWeight++
+            userDatabase.collect {
+                it.weight = userWeight
+                Log.d(TAG, userWeight.toString())
+            }
         }
     }
 
     fun save() {
         viewModelScope.launch {
-            userDatabaseUseCase.updateValueUser(userDatabase)
-            userDatabaseUseCase.updateUser(userDatabase)
+            userDatabaseUseCase.updateValueUser()
+            userDatabaseUseCase.updateUser()
         }
     }
+
+
 }

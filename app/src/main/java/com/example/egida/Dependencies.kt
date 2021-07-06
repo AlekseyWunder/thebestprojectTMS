@@ -1,8 +1,11 @@
 package com.example.egida
 
+import com.example.egida.data.DataStorage
 import com.example.egida.data.DatabaseAuth
 import com.example.egida.data.DatabaseDay
 import com.example.egida.data.DatabaseUser
+import com.example.egida.domain.useCase.dataStorage.DataStorageUsecase
+import com.example.egida.domain.useCase.dataStorage.DataStorageUsecaseImpl
 import com.example.egida.domain.useCase.day.DayUseCase
 import com.example.egida.domain.useCase.day.DayUseCaseImpl
 import com.example.egida.domain.useCase.scoreBall.UseCaseScoreBal
@@ -18,6 +21,7 @@ object Dependencies {
     private val databaseAuth: DatabaseAuth by lazy { DatabaseAuth() }
     private val databaseUser: DatabaseUser by lazy { DatabaseUser() }
     private val databaseDay: DatabaseDay by lazy { DatabaseDay() }
+    private val dataStorage: DataStorage by lazy { DataStorage() }
 
     fun authUseCase(): UserAuthUseCase =
         UserAuthUseCaseImpl(databaseAuth)
@@ -30,4 +34,7 @@ object Dependencies {
 
     fun scoreBalUseCase(): UseCaseScoreBal =
         UseCaseScoreBalImpl()
+
+    fun dataStorageUsecase(): DataStorageUsecase =
+        DataStorageUsecaseImpl(dataStorage)
 }

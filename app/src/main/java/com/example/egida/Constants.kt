@@ -35,4 +35,13 @@ object Constants {
     const val notNetworkConnect = "Проверьте подключение к сети"
     const val passwordRecovery = "Письмо для востановления пороля отправлено на почту"
 
+    const val id = ""
+    const val firstName = ""
+    const val lastName = ""
+    const val checkAgreement = false
+    const val phoneNumber: String = ""
+    const val photoURL: String = ""
+    const val height: Int = 180
+    const val weight: Int = 80
+
 }
