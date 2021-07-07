@@ -41,6 +41,7 @@
     <dimen name="password_recovery_text_size_16sp">16sp</dimen>
     <dimen name="text_param_size_16sp">16sp</dimen>
     <dimen name="text_param_name_size_15sp">15sp</dimen>
+    <dimen name="paddingtopresourse_20dp">20dp</dimen>
     <!-- -->
 
     <!-- Password recovery fragment-->

@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/sing_in_fragment_padding_66dp">
+        android:paddingTop="@dimen/paddingtopresourse_20dp">
 
 
         <androidx.constraintlayout.widget.Guideline
@@ -58,14 +58,14 @@
 
         <TextView
             android:id="@+id/text_meal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
+            android:layout_width="64dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="28dp"
+            android:gravity="center"
             android:text="@string/_8"
             android:textColor="@color/black"
             android:textSize="@dimen/text_param_size_16sp"
             app:layout_constraintEnd_toStartOf="@+id/plus_meal"
-            app:layout_constraintHorizontal_bias="0.51"
             app:layout_constraintStart_toEndOf="@+id/minus_meal"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -110,9 +110,10 @@
 
         <TextView
             android:id="@+id/text_water"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_width="64dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
             android:text="@string/_8"
             android:textColor="@color/black"
             android:textSize="@dimen/text_param_size_16sp"
@@ -158,9 +159,10 @@
 
         <TextView
             android:id="@+id/text_alcohol"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
+            android:layout_width="64dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="36dp"
+            android:gravity="center"
             android:text="@string/_180"
             android:textColor="@color/black"
             android:textSize="@dimen/text_param_size_16sp"

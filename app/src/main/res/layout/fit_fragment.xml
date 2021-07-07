@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/sing_in_fragment_padding_66dp">
+        android:paddingTop="@dimen/paddingtopresourse_20dp">
 
 
         <androidx.constraintlayout.widget.Guideline
@@ -35,39 +35,37 @@
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="24dp"
             android:layout_weight="0.8"
             android:text="@string/running_km"
             android:textColor="@color/black"
             android:textSize="@dimen/text_param_name_size_15sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline_start"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.074" />
 
         <ImageButton
             android:id="@+id/minus_running"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="48dp"
             android:background="@drawable/remove_circle_grey_700_36dp"
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintEnd_toStartOf="@+id/plus_running"
-            app:layout_constraintStart_toEndOf="@+id/textView9"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text_running"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_width="49dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="16dp"
             android:gravity="center"
             android:text="@string/_8"
             android:textColor="@color/black"
             android:textSize="@dimen/text_param_size_16sp"
             app:layout_constraintEnd_toStartOf="@+id/plus_running"
-            app:layout_constraintHorizontal_bias="0.513"
             app:layout_constraintStart_toEndOf="@+id/minus_running"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -86,37 +84,38 @@
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="52dp"
             android:layout_weight="0.8"
             android:text="@string/bike_ride_km"
             android:textColor="@color/black"
             android:textSize="@dimen/text_param_name_size_15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            app:layout_constraintTop_toBottomOf="@+id/textView9"
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageButton
             android:id="@+id/minus_bike_ride"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="48dp"
             android:background="@drawable/remove_circle_grey_700_36dp"
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintEnd_toStartOf="@+id/plus_bike_ride"
-            app:layout_constraintStart_toEndOf="@+id/textView8"
             app:layout_constraintTop_toBottomOf="@+id/minus_running" />
 
         <TextView
             android:id="@+id/text_bike_ride"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
+            android:layout_width="49dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="36dp"
+            android:gravity="center"
             android:text="@string/_8"
             android:textColor="@color/black"
             android:textSize="@dimen/text_param_size_16sp"
             app:layout_constraintEnd_toStartOf="@+id/plus_bike_ride"
-            app:layout_constraintHorizontal_bias="0.512"
             app:layout_constraintStart_toEndOf="@+id/minus_bike_ride"
             app:layout_constraintTop_toBottomOf="@+id/text_running" />
 
@@ -124,7 +123,7 @@
             android:id="@+id/plus_bike_ride"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="36dp"
             android:background="@drawable/baseline_add_circle_grey_700_36dp"
             android:clickable="true"
             android:focusable="true"
@@ -135,35 +134,36 @@
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="48dp"
             android:layout_weight="0.8"
             android:text="@string/sleep_hour"
             android:textColor="@color/black"
             android:textSize="@dimen/text_param_name_size_15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+            app:layout_constraintTop_toBottomOf="@+id/textView8"
+            app:layout_constraintVertical_bias="0.047" />
 
         <ImageButton
             android:id="@+id/minus_sleep"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="105dp"
             android:layout_marginTop="36dp"
+            android:layout_marginEnd="48dp"
             android:background="@drawable/remove_circle_grey_700_36dp"
             app:layout_constraintEnd_toStartOf="@+id/plus_sleep"
-            app:layout_constraintStart_toEndOf="@+id/textView7"
             app:layout_constraintTop_toBottomOf="@+id/minus_bike_ride" />
 
         <TextView
             android:id="@+id/text_sleep"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
+            android:layout_width="49dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="36dp"
+            android:gravity="center"
             android:text="@string/_8"
             android:textColor="@color/black"
             android:textSize="@dimen/text_param_size_16sp"
             app:layout_constraintEnd_toStartOf="@+id/plus_sleep"
-            app:layout_constraintHorizontal_bias="0.512"
             app:layout_constraintStart_toEndOf="@+id/minus_sleep"
             app:layout_constraintTop_toBottomOf="@+id/text_bike_ride" />
 

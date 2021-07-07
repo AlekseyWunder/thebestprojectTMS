@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingTop="@dimen/sing_in_fragment_padding_66dp"
+        android:paddingTop="@dimen/paddingtopresourse_20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,10 +84,12 @@
             android:paddingStart="@dimen/margin_10dp"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/first_name"
             app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-            app:layout_constraintHorizontal_bias="0.943"
+            app:layout_constraintHorizontal_bias="0.833"
             app:layout_constraintStart_toEndOf="@+id/first_name"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/first_name"
+            app:layout_constraintVertical_bias="0.0"
             tools:text="" />
 
         <EditText
@@ -95,16 +97,17 @@
             android:layout_width="216dp"
             android:layout_height="28dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="28dp"
             android:background="@drawable/search_box_1"
             android:fontFamily="@font/montserrat"
             android:paddingStart="@dimen/margin_10dp"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/textView"
             app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-            app:layout_constraintHorizontal_bias="0.946"
+            app:layout_constraintHorizontal_bias="0.882"
             app:layout_constraintStart_toEndOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/settings_edit_first_name"
+            app:layout_constraintTop_toBottomOf="@+id/first_name"
+            app:layout_constraintVertical_bias="0.482"
             tools:text="" />
 
         <TextView
@@ -142,25 +145,30 @@
             android:id="@+id/setting_check_agreement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
             android:layout_weight="0"
+            android:buttonTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/textView2"
             app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-            app:layout_constraintTop_toBottomOf="@+id/setting_edit_last_name" />
+            app:layout_constraintHorizontal_bias="0.444"
+            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintTop_toTopOf="@+id/textView2"
+            app:layout_constraintVertical_bias="0.583" />
 
         <EditText
             android:id="@+id/setting_edit_phone_number"
             android:layout_width="216dp"
             android:layout_height="28dp"
-            android:layout_marginTop="96dp"
             android:layout_marginEnd="21dp"
             android:background="@drawable/search_box_1"
             android:fontFamily="@font/montserrat"
             android:paddingStart="@dimen/margin_10dp"
             android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/textView3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.948"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/textView3"
-            app:layout_constraintTop_toBottomOf="@+id/setting_edit_last_name"
+            app:layout_constraintTop_toTopOf="@+id/textView3"
+            app:layout_constraintVertical_bias="0.428"
             tools:text="" />
 
         <TextView
@@ -193,12 +201,13 @@
             android:id="@+id/setting_add_photo"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="20dp"
             android:background="@drawable/add_circle_grey_700_48dp"
             android:clickable="true"
             android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="@+id/textView4"
             app:layout_constraintEnd_toStartOf="@+id/guideline_end"
-            app:layout_constraintTop_toBottomOf="@+id/setting_edit_phone_number" />
+            app:layout_constraintTop_toTopOf="@+id/textView4"
+            app:layout_constraintVertical_bias="0.576" />
 
         <TextView
             android:id="@+id/textView5"
@@ -210,10 +219,11 @@
             android:text="@string/height"
             android:textColor="@color/black"
             android:textSize="@dimen/text_param_name_size_15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/setting_text_height"
             app:layout_constraintEnd_toStartOf="@+id/setting_minus_height"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            app:layout_constraintTop_toTopOf="@+id/setting_text_height" />
 
 
         <ImageButton
@@ -230,15 +240,17 @@
 
         <TextView
             android:id="@+id/setting_text_height"
-            android:layout_width="28dp"
-            android:layout_height="18dp"
+            android:layout_width="57dp"
+            android:layout_height="30dp"
+            android:gravity="center"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="20dp"
             android:fontFamily="@font/montserrat"
             android:textColor="@color/black"
             android:textSize="@dimen/text_param_size_16sp"
             app:layout_constraintEnd_toStartOf="@+id/setting_plus_height"
+            app:layout_constraintHorizontal_bias="0.512"
             app:layout_constraintStart_toEndOf="@+id/setting_minus_height"
             app:layout_constraintTop_toBottomOf="@+id/setting_add_photo"
             tools:text="@string/_180" />
@@ -258,7 +270,6 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:layout_marginEnd="150dp"
             android:layout_weight="0.8"
             android:fontFamily="@font/montserrat"
@@ -266,10 +277,11 @@
             android:text="@string/weight"
             android:textColor="@color/black"
             android:textSize="@dimen/text_param_name_size_15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/setting_text_weight"
             app:layout_constraintEnd_toStartOf="@+id/setting_minus_weight"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            app:layout_constraintTop_toTopOf="@+id/setting_text_weight" />
 
         <ImageButton
             android:id="@+id/setting_minus_weight"
@@ -285,9 +297,10 @@
 
         <TextView
             android:id="@+id/setting_text_weight"
-            android:layout_width="23dp"
-            android:layout_height="22dp"
+            android:layout_width="57dp"
+            android:layout_height="30dp"
             android:layout_marginStart="20dp"
+            android:gravity="center"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="20dp"
             android:fontFamily="@font/montserrat"
@@ -295,7 +308,6 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_param_size_16sp"
             app:layout_constraintEnd_toStartOf="@+id/setting_plus_weight"
-            app:layout_constraintHorizontal_bias="0.625"
             app:layout_constraintStart_toEndOf="@+id/setting_minus_weight"
             app:layout_constraintTop_toBottomOf="@+id/setting_plus_height" />
 

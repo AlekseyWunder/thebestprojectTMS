@@ -98,6 +98,7 @@ class WorkFragment : Fragment(R.layout.work_fragment) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(DayViewModel::class.java)
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         lifecycleScope.launchWhenStarted {
             viewModel.day
                 .collect {

@@ -64,7 +64,7 @@ class AppDrawer(
     private fun createDrawer() {
 
         mDrawer = DrawerBuilder()
-            .withSliderBackgroundDrawableRes(R.drawable.gradient)
+            .withSliderBackgroundDrawableRes(R.color.black)
             .withActivity(activity)
             .withToolbar(toolbar)
             .withActionBarDrawerToggle(true)
@@ -123,6 +123,7 @@ class AppDrawer(
     private fun createHeader() {
         mHeader = AccountHeaderBuilder()
             .withActivity(activity)
+            .withHeaderBackground(R.drawable.gradient_header)
             .addProfiles(
                 ProfileDrawerItem().withIcon(R.drawable.baseline_people_outline_black_24dp)
                     .withName("Антон Горбатович")
