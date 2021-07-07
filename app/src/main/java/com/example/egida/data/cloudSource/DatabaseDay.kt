@@ -1,8 +1,10 @@
-package com.example.egida.data
+package com.example.egida.data.cloudSource
 
 import android.util.Log
+import com.example.egida.data.localSource.LocalSourceDay
 import com.example.egida.domain.entity.Day
 import com.example.egida.domain.useCase.day.DayRepository
+import com.example.egida.domain.useCase.localsource.localeSourceDay.LocalSourceDayRepository
 import com.example.egida.utils.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
@@ -12,7 +14,9 @@ import kotlinx.coroutines.flow.collect
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DatabaseDay : DayRepository {
+class DatabaseDay(
+    localSourceDay: LocalSourceDay
+) : DayRepository, LocalSourceDayRepository {
 
     companion object {
         const val TAG = " databaseDay"
@@ -31,11 +35,16 @@ class DatabaseDay : DayRepository {
     private var _day = MutableStateFlow(initDay())
     override var day: Flow<Day> = _day.asStateFlow()
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.IO + Job())
-    private var baseDay: Day = Day()
     private var dateMap = mutableMapOf<String, Any>()
     private val date = Calendar.getInstance().time
-    private val formatter = SimpleDateFormat("dd-MM-yyyy",Locale.getDefault(Locale.Category.FORMAT)) //or use getDateInstance()
+    private val formatter = SimpleDateFormat(
+        "dd-MM-yyyy",
+        Locale.getDefault(Locale.Category.FORMAT)
+    ) //or use getDateInstance()
     private val CHILD_DAY = formatter.format(date)
+
+    override var localDay: Day = localSourceDay.localDay
+
     init {
         initFirebase()
         initDatabase()
@@ -53,7 +62,7 @@ class DatabaseDay : DayRepository {
             addDay()
             Log.d(TAG, "dateChildrenMap: ${addDay()} ")
             REF_DATABASE_ROOT.child(NODE_DAY).child(CHILD_DAY).child(CURRENT_UID)
-                .updateChildren(addDay())
+                .updateChildren(dateMap)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Log.d(TAG, "database day complete")
@@ -75,15 +84,15 @@ class DatabaseDay : DayRepository {
 
     private fun addDay(): Map<String, Any> {
         updateValueDay(day)
-        dateMap[CHILD_SCORE_BAL] = baseDay.scoreBal
-        dateMap[CHILD_WORK] = baseDay.work
-        dateMap[CHILD_LEISURE] = baseDay.leisure
-        dateMap[CHILD_MEAL] = baseDay.meal
-        dateMap[CHILD_WATER] = baseDay.water
-        dateMap[CHILD_ALCOHOL] = baseDay.alcohol
-        dateMap[CHILD_RUNNING] = baseDay.running
-        dateMap[CHILD_BIKE_RIDE] = baseDay.bikeRide
-        dateMap[CHILD_SLEEP] = baseDay.sleep
+        dateMap[CHILD_SCORE_BAL] = localDay.scoreBal
+        dateMap[CHILD_WORK] = localDay.work
+        dateMap[CHILD_LEISURE] = localDay.leisure
+        dateMap[CHILD_MEAL] = localDay.meal
+        dateMap[CHILD_WATER] = localDay.water
+        dateMap[CHILD_ALCOHOL] = localDay.alcohol
+        dateMap[CHILD_RUNNING] = localDay.running
+        dateMap[CHILD_BIKE_RIDE] = localDay.bikeRide
+        dateMap[CHILD_SLEEP] = localDay.sleep
         Log.d(TAG, "Finish fun addDay $dateMap")
         return dateMap
     }
@@ -91,16 +100,17 @@ class DatabaseDay : DayRepository {
     override fun updateValueDay(day: Flow<Day>) {
         scope.launch {
             day.collect {
-                baseDay.scoreBal = it.scoreBal
-                baseDay.work = it.work
-                baseDay.leisure = it.leisure
-                baseDay.meal = it.meal
-                baseDay.water = it.water
-                baseDay.alcohol = it.alcohol
-                baseDay.running = it.running
-                baseDay.bikeRide = it.bikeRide
-                baseDay.sleep = it.sleep
+                localDay.scoreBal = it.scoreBal
+                localDay.work = it.work
+                localDay.leisure = it.leisure
+                localDay.meal = it.meal
+                localDay.water = it.water
+                localDay.alcohol = it.alcohol
+                localDay.running = it.running
+                localDay.bikeRide = it.bikeRide
+                localDay.sleep = it.sleep
             }
         }
     }
+
 }

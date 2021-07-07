@@ -1,6 +1,6 @@
 package com.example.egida.domain.useCase.day
 
-import com.example.egida.data.DatabaseDay
+import com.example.egida.data.cloudSource.DatabaseDay
 import com.example.egida.domain.entity.Day
 import kotlinx.coroutines.flow.Flow
 
@@ -15,9 +15,7 @@ class DayUseCaseImpl(
         return databaseDay.getDay()
     }
 
-    override var day: Flow<Day>
-        get() = databaseDay.day
-        set(value) {}
+    override var day: Flow<Day> = databaseDay.day
 
     override fun updateValueDay(day: Flow<Day>) {
         return databaseDay.updateValueDay(day)

@@ -1,6 +1,6 @@
 package com.example.egida.domain.entity
 
-data class UserDatabase(
+data class User(
     var id: String = "",
     var firstName: String = "",
     var lastName: String = "",
