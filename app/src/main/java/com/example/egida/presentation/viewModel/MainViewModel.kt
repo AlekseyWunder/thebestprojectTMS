@@ -55,7 +55,6 @@ class MainViewModel : ViewModel() {
                 dayUseCase.getDay()
                 dayUseCase.updateValueDay(day)
                 userDatabaseUseCase.updateValueUser()
-                scoreBalUseCase.gettingParametersHeightAndWeight()
             }
         }
     }

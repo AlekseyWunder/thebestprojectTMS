@@ -1,6 +1,7 @@
 package com.example.egida
 
 object Constants {
+    //value entity Error code AUTH
     const val errorLoginCustomToken =
         "The custom token format is incorrect. Please check the documentation."
     const val errorLoginCustomTokenMismatch =
@@ -35,6 +36,7 @@ object Constants {
     const val notNetworkConnect = "Проверьте подключение к сети"
     const val passwordRecovery = "Письмо для востановления пороля отправлено на почту"
 
+    // value entity User
     const val id = ""
     const val firstName = ""
     const val lastName = ""
@@ -43,5 +45,16 @@ object Constants {
     const val photoURL: String = ""
     const val height: Int = 180
     const val weight: Int = 80
+
+    //value entity Day
+    const val baseValueScoreBal: Int = 1000
+    const val baseValueWork: Int = 8
+    const val baseValueLeisure: Int = 3
+    const val baseValueMeal: Int = 2000
+    const val baseValueWater: Int = 180
+    const val baseValueAlcohol: Int = 0
+    const val baseValueRunning: Int = 0
+    const val baseValueBikeRide: Int = 0
+    const val baseValueSleep: Int = 7
 
 }

@@ -1,37 +1,40 @@
 package com.example.egida.domain.useCase.scoreBall
 
 import android.util.Log
-import com.example.egida.Dependencies
-import com.example.egida.domain.entity.UserDatabase
-import com.example.egida.domain.useCase.day.DayUseCase
-import com.example.egida.domain.useCase.userDatabase.UserDatabaseUseCase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.shareIn
-import kotlinx.coroutines.launch
+import com.example.egida.Constants
+import com.example.egida.data.localSource.LocalSourceDay
+import com.example.egida.data.localSource.LocalSourceUser
+import com.example.egida.domain.entity.Day
+import com.example.egida.domain.entity.User
+import com.example.egida.domain.useCase.localsource.localSourceUser.LocalSourceUserUsecase
+import com.example.egida.domain.useCase.localsource.localeSourceDay.LocalSourceDayUsecase
 
-class UseCaseScoreBalImpl : UseCaseScoreBal {
+class UseCaseScoreBalImpl(
+    localSourceDay: LocalSourceDay,
+    localSourceUser: LocalSourceUser
+) : UseCaseScoreBal, LocalSourceDayUsecase, LocalSourceUserUsecase {
+
     companion object {
         const val TAG = "UseCaseScoreBalImpl"
         const val steep: Int = 35
+        const val baseValueWaterNorm: Double = 0.00
+        const val valueWaterNormMin = 0.25
+        const val valueWaterNormMiddle = 0.5
+        const val valueWaterNormMax = 0.75
+        const val valueWaterNormOne = 1.00
+        const val valueWaterNormTwo = 2.00
+        const val valueWaterNormThree = 3.00
+        const val valueWaterNormFour = 4.00
+        const val valueBodyMassIndexMin = 18.5
+        const val valueBodyMassIndexMax = 25
+        const val valueMealNormMax = 2800
     }
 
-    private val dayUseCase: DayUseCase by lazy { Dependencies.dayUseCase() }
-    private val userDatabaseUseCase: UserDatabaseUseCase by lazy { Dependencies.userDatabaseUseCase() }
-    private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main + Job())
-    var day = dayUseCase.day
-        .shareIn(scope, started = SharingStarted.Eagerly, replay = 1)
-    var user: SharedFlow<UserDatabase> = userDatabaseUseCase.databaseUser
-        .shareIn(scope, started = SharingStarted.Lazily, replay = 1)
     private var bodyMassIndex: Int = 0
-    private var waterNorm: Double = 0.00
-    private var weight: Int = 0
-    private var height: Int = 0
-    private var userDatabase: UserDatabase = UserDatabase()
+    private var waterNorm: Double = baseValueWaterNorm
+
+    override var localDay: Day = localSourceDay.localDay
+    override var localUser: User = localSourceUser.localUser
 
     private fun calculationBodyMassIndex(weight: Int, height: Int): Int {
 
@@ -44,22 +47,22 @@ class UseCaseScoreBalImpl : UseCaseScoreBal {
     private fun calculationWaterNorm(weight: Int): Double {
 
         when (weight) {
-            in 0..9 -> waterNorm = 0.25
-            in 9..18 -> waterNorm = 0.5
-            in 18..27 -> waterNorm = 0.75
-            in 27..36 -> waterNorm = 1.00
-            in 36..45 -> waterNorm = 1.25
-            in 45..54 -> waterNorm = 1.5
-            in 54..63 -> waterNorm = 1.75
-            in 63..72 -> waterNorm = 2.00
-            in 72..81 -> waterNorm = 2.25
-            in 81..90 -> waterNorm = 2.5
-            in 90..99 -> waterNorm = 2.75
-            in 99..108 -> waterNorm = 3.00
-            in 108..117 -> waterNorm = 3.25
-            in 117..126 -> waterNorm = 3.50
-            in 126..135 -> waterNorm = 3.75
-            in 135..144 -> waterNorm = 4.0
+            in 0 until 9 -> waterNorm = valueWaterNormMin
+            in 9 until 18 -> waterNorm = valueWaterNormMiddle
+            in 18 until 27 -> waterNorm = valueWaterNormMax
+            in 27 until 36 -> waterNorm = valueWaterNormOne
+            in 36 until 45 -> waterNorm = valueWaterNormOne + valueWaterNormMin
+            in 45 until 54 -> waterNorm = valueWaterNormOne + valueWaterNormMiddle
+            in 54 until 63 -> waterNorm = valueWaterNormOne + valueWaterNormMax
+            in 63 until 72 -> waterNorm = valueWaterNormTwo
+            in 72 until 81 -> waterNorm = valueWaterNormTwo + valueWaterNormMin
+            in 81 until 90 -> waterNorm = valueWaterNormTwo + valueWaterNormMiddle
+            in 90 until 99 -> waterNorm = valueWaterNormTwo + valueWaterNormMax
+            in 99 until 108 -> waterNorm = valueWaterNormThree
+            in 108 until 117 -> waterNorm = valueWaterNormThree + valueWaterNormMin
+            in 117 until 126 -> waterNorm = valueWaterNormThree + valueWaterNormMiddle
+            in 126 until 135 -> waterNorm = valueWaterNormThree + valueWaterNormMax
+            in 135 until 144 -> waterNorm = valueWaterNormFour
         }
         Log.d(TAG, " waterNorm $waterNorm")
         return waterNorm
@@ -67,72 +70,61 @@ class UseCaseScoreBalImpl : UseCaseScoreBal {
 
     override fun calculationScoreBal() {
 
-        scope.launch {
+        val weight = localUser.weight
+        val height = localUser.height
+        calculationWaterNorm(weight)
+        calculationBodyMassIndex(weight, height)
+        Log.d(TAG, " waterNorm $waterNorm")
+        Log.d(TAG, " bodyMassIndex $bodyMassIndex")
 
-            weight = userDatabase.weight
-            height = userDatabase.height
-            calculationWaterNorm(weight)
-            calculationBodyMassIndex(weight, height)
-            Log.d(TAG, " waterNorm $waterNorm")
-            Log.d(TAG, " bodyMassIndex $bodyMassIndex")
-            day.collect { day ->
-                day.scoreBal = 1000
-                if (bodyMassIndex.toDouble() < 18.50 || bodyMassIndex.toDouble() > 25) {
-                    day.scoreBal = day.scoreBal - steep
-                    Log.d(TAG, " bodyMassIndex ${day.scoreBal}")
-                }
-
-                if ((day.water.toDouble() / 1000) != waterNorm) {
-                    day.scoreBal = day.scoreBal - steep
-                    Log.d(TAG, " water ${day.scoreBal}")
-                }
-
-                if (day.work > 8) {
-                    day.scoreBal = day.scoreBal - steep
-                    Log.d(TAG, " work ${day.scoreBal}")
-                }
-
-                if (day.leisure >= 3) {
-                    day.scoreBal = day.scoreBal + steep
-                    Log.d(TAG, " leisure ${day.scoreBal}")
-                }
-
-                if (day.alcohol > 0) {
-                    day.scoreBal = day.scoreBal - steep
-                    Log.d(TAG, " alcohol ${day.scoreBal}")
-                }
-
-                if (day.meal < 2000 || bodyMassIndex.toDouble() > 2800) {
-                    day.scoreBal = day.scoreBal - steep
-                    Log.d(TAG, " meal ${day.scoreBal}")
-                }
-
-                if (day.running > 0) {
-                    day.scoreBal = day.scoreBal + steep
-                    Log.d(TAG, " running ${day.scoreBal}")
-                }
-
-                if (day.bikeRide > 0) {
-                    day.scoreBal = day.scoreBal + steep
-                    Log.d(TAG, " bikeRide ${day.scoreBal}")
-                }
-
-                if (day.sleep < 7) {
-                    day.scoreBal = day.scoreBal - steep
-                    Log.d(TAG, " sleep ${day.scoreBal}")
-                }
-            }
+        localDay.scoreBal = Constants.baseValueScoreBal
+        if (bodyMassIndex.toDouble() < valueBodyMassIndexMin
+            || bodyMassIndex.toDouble() > valueBodyMassIndexMax
+        ) {
+            localDay.scoreBal = localDay.scoreBal - steep
+            Log.d(TAG, " bodyMassIndex ${localDay.scoreBal}")
         }
-    }
 
-    override fun gettingParametersHeightAndWeight() {
-        scope.launch {
-            user.collect {
-                userDatabase.weight = it.weight
-                userDatabase.height = it.height
-                Log.d(TAG, " weight ${userDatabase.weight}")
-                Log.d(TAG, " height ${userDatabase.height}")
-            }
+        if ((localDay.water.toDouble() / 1000) != waterNorm) {
+            localDay.scoreBal = localDay.scoreBal - steep
+            Log.d(TAG, " water ${localDay.scoreBal}")
+        }
+
+        if (localDay.work > Constants.baseValueWork) {
+            localDay.scoreBal = localDay.scoreBal - steep
+            Log.d(TAG, " work ${localDay.scoreBal}")
+        }
+
+        if (localDay.leisure >= Constants.baseValueLeisure) {
+            localDay.scoreBal = localDay.scoreBal + steep
+            Log.d(TAG, " leisure ${localDay.scoreBal}")
+        }
+
+        if (localDay.alcohol > Constants.baseValueAlcohol) {
+            localDay.scoreBal = localDay.scoreBal - steep
+            Log.d(TAG, " alcohol ${localDay.scoreBal}")
+        }
+
+        if (localDay.meal < Constants.baseValueMeal ||
+            bodyMassIndex.toDouble() > valueMealNormMax
+        ) {
+            localDay.scoreBal = localDay.scoreBal - steep
+            Log.d(TAG, " meal ${localDay.scoreBal}")
+        }
+
+        if (localDay.running > Constants.baseValueRunning) {
+            localDay.scoreBal = localDay.scoreBal + steep
+            Log.d(TAG, " running ${localDay.scoreBal}")
+        }
+
+        if (localDay.bikeRide > Constants.baseValueBikeRide) {
+            localDay.scoreBal = localDay.scoreBal + steep
+            Log.d(TAG, " bikeRide ${localDay.scoreBal}")
+        }
+
+        if (localDay.sleep < Constants.baseValueSleep) {
+            localDay.scoreBal = localDay.scoreBal - steep
+            Log.d(TAG, " sleep ${localDay.scoreBal}")
         }
     }
 }
