@@ -6,12 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.example.egida.databinding.WorkFragmentBinding
 import com.example.egida.presentation.viewModel.DayViewModel
 import com.example.egida.presentation.viewModel.MainViewModel
 import com.example.egida.utils.replaceFragment
-import kotlinx.coroutines.flow.collect
 
 class WorkFragment : Fragment() {
 
@@ -23,40 +21,6 @@ class WorkFragment : Fragment() {
     private lateinit var binding: WorkFragmentBinding
     private lateinit var dayViewModel: DayViewModel
     private lateinit var mainViewModel: MainViewModel
-
-    override fun onStart() {
-        super.onStart()
-        mainViewModel.closeDrawer(requireActivity())
-    }
-
-    override fun onResume() {
-        super.onResume()
-        binding.minusValueWork.setOnClickListener {
-            dayViewModel.minusValueWork(binding.textWork)
-        }
-
-        binding.plusValueWork.setOnClickListener {
-            dayViewModel.plusValueWork(binding.textWork)
-        }
-
-        binding.minusValueLeisure.setOnClickListener {
-            dayViewModel.minusValueLeisure(binding.textLeisure)
-        }
-
-        binding.plusValueLeisure.setOnClickListener {
-            dayViewModel.plusValueLeisure(binding.textLeisure)
-        }
-
-        binding.workBtnSave.setOnClickListener {
-            dayViewModel.save()
-            replaceFragment(requireView(), MainFragment.newInstance())
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mainViewModel.openDrawer(requireActivity())
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,13 +34,47 @@ class WorkFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         dayViewModel = ViewModelProvider(this).get(DayViewModel::class.java)
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        binding.textLeisure.text = dayViewModel.viewModelDay.leisure.toString()
+        binding.textWork.text = dayViewModel.viewModelDay.work.toString()
 
-        lifecycleScope.launchWhenStarted {
-            dayViewModel.day
-                .collect {
-                    binding.textLeisure.text = it.leisure.toString()
-                    binding.textWork.text = it.work.toString()
-                }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mainViewModel.closeDrawer(requireActivity())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.minusValueWork.setOnClickListener {
+            dayViewModel.minusValueWork()
+            binding.textWork.text = dayViewModel.viewModelDay.work.toString()
+        }
+
+        binding.plusValueWork.setOnClickListener {
+            dayViewModel.plusValueWork()
+            binding.textWork.text = dayViewModel.viewModelDay.work.toString()
+        }
+
+        binding.minusValueLeisure.setOnClickListener {
+            dayViewModel.minusValueLeisure()
+            binding.textLeisure.text = dayViewModel.viewModelDay.leisure.toString()
+        }
+
+        binding.plusValueLeisure.setOnClickListener {
+            dayViewModel.plusValueLeisure()
+            binding.textLeisure.text = dayViewModel.viewModelDay.leisure.toString()
+        }
+
+        binding.workBtnSave.setOnClickListener {
+            dayViewModel.save()
+            replaceFragment(requireView(), MainFragment.newInstance())
         }
     }
+
+    override fun onStop() {
+        super.onStop()
+        mainViewModel.openDrawer(requireActivity())
+    }
+
 }

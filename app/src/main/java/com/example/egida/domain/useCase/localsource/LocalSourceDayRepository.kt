@@ -1,4 +1,4 @@
-package com.example.egida.domain.useCase.localsource.localeSourceDay
+package com.example.egida.domain.useCase.localsource
 
 import com.example.egida.domain.entity.Day
 import com.example.egida.domain.entity.User

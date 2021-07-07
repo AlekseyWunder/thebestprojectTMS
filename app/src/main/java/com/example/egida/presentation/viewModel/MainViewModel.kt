@@ -6,14 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.egida.Dependencies
 import com.example.egida.activity.DrawerController
+import com.example.egida.domain.entity.Day
 import com.example.egida.domain.useCase.day.DayUseCase
-import com.example.egida.domain.useCase.scoreBall.UseCaseScoreBal
 import com.example.egida.domain.useCase.userAUTH.UserAuthUseCase
 import com.example.egida.domain.useCase.userDatabase.UserDatabaseUseCase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -27,10 +25,18 @@ class MainViewModel : ViewModel() {
     private val userAuthUseCase: UserAuthUseCase by lazy { Dependencies.authUseCase() }
     private val userDatabaseUseCase: UserDatabaseUseCase by lazy { Dependencies.userDatabaseUseCase() }
     private val dayUseCase: DayUseCase by lazy { Dependencies.dayUseCase() }
-    private val scoreBalUseCase: UseCaseScoreBal by lazy { Dependencies.scoreBalUseCase() }
     private var toast = MutableLiveData<String>()
     private var day = dayUseCase.day
-        .shareIn(viewModelScope, started = SharingStarted.Eagerly, replay = 1)
+    var viewModelDay = Day()
+
+    init {
+        viewModelScope.launch {
+            day.collect {
+                viewModelDay = it
+            }
+
+        }
+    }
 
     fun checkUser(): Boolean {
         val cUser = userAuthUseCase.getCurrentUser()
@@ -53,8 +59,15 @@ class MainViewModel : ViewModel() {
             withContext(Dispatchers.Main) {
                 userDatabaseUseCase.getUser()
                 dayUseCase.getDay()
-                dayUseCase.updateValueDay(day)
                 userDatabaseUseCase.updateValueUser()
+            }
+        }
+    }
+
+    fun updateDay() {
+        viewModelScope.launch {
+            withContext(Dispatchers.Main) {
+                dayUseCase.getDay()
             }
         }
     }

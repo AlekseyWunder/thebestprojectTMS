@@ -3,7 +3,7 @@ package com.example.egida.data.cloudSource
 import android.util.Log
 import com.example.egida.data.localSource.LocalSourceUser
 import com.example.egida.domain.entity.User
-import com.example.egida.domain.useCase.localsource.localSourceUser.LocalSourceUserRepository
+import com.example.egida.domain.useCase.localsource.LocalSourceUserRepository
 import com.example.egida.domain.useCase.userDatabase.UserDatabaseRepository
 import com.example.egida.utils.*
 import kotlinx.coroutines.*

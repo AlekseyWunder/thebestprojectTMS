@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.Flow
 class DayUseCaseImpl(
     private val databaseDay: DatabaseDay
 ) : DayUseCase {
-    override fun createDay(day: Flow<Day>) {
-        return databaseDay.createDay(day)
+    override fun saveDayInDatabase() {
+        return databaseDay.saveDayInDatabase()
     }
 
     override suspend fun getDay() {
@@ -17,7 +17,7 @@ class DayUseCaseImpl(
 
     override var day: Flow<Day> = databaseDay.day
 
-    override fun updateValueDay(day: Flow<Day>) {
+    override fun updateValueDay(day: Day) {
         return databaseDay.updateValueDay(day)
     }
 

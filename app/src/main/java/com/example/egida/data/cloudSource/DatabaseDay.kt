@@ -4,13 +4,12 @@ import android.util.Log
 import com.example.egida.data.localSource.LocalSourceDay
 import com.example.egida.domain.entity.Day
 import com.example.egida.domain.useCase.day.DayRepository
-import com.example.egida.domain.useCase.localsource.localeSourceDay.LocalSourceDayRepository
+import com.example.egida.domain.useCase.localsource.LocalSourceDayRepository
 import com.example.egida.utils.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -43,8 +42,6 @@ class DatabaseDay(
     ) //or use getDateInstance()
     private val CHILD_DAY = formatter.format(date)
 
-    override var localDay: Day = localSourceDay.localDay
-
     init {
         initFirebase()
         initDatabase()
@@ -54,15 +51,16 @@ class DatabaseDay(
     private fun initDay(): Day {
         return Day()
     }
+    override var localDay: Day = localSourceDay.localDay
 
-    override fun createDay(day: Flow<Day>) {
+    override fun saveDayInDatabase() {
         scope.launch {
             delay(1000)
             Log.d(TAG, " start fun createDay")
-            addDay()
+            val map = addDay()
             Log.d(TAG, "dateChildrenMap: ${addDay()} ")
             REF_DATABASE_ROOT.child(NODE_DAY).child(CHILD_DAY).child(CURRENT_UID)
-                .updateChildren(dateMap)
+                .updateChildren(map)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Log.d(TAG, "database day complete")
@@ -75,15 +73,15 @@ class DatabaseDay(
         REF_DATABASE_ROOT.child(NODE_DAY).child(CHILD_DAY).child(CURRENT_UID)
             .addListenerForSingleValueEvent(AppValueEventListener { data ->
                 scope.launch {
-                    _day.emit((data.getValue(Day::class.java) ?: Day()))
+                    localDay = data.getValue(Day::class.java) ?: Day()
+                    _day.emit(localDay)
+                    updateValueDay(localDay)
                 }
-                Log.d(TAG, " load day: $day")
             })
     }
 
 
     private fun addDay(): Map<String, Any> {
-        updateValueDay(day)
         dateMap[CHILD_SCORE_BAL] = localDay.scoreBal
         dateMap[CHILD_WORK] = localDay.work
         dateMap[CHILD_LEISURE] = localDay.leisure
@@ -97,20 +95,16 @@ class DatabaseDay(
         return dateMap
     }
 
-    override fun updateValueDay(day: Flow<Day>) {
-        scope.launch {
-            day.collect {
-                localDay.scoreBal = it.scoreBal
-                localDay.work = it.work
-                localDay.leisure = it.leisure
-                localDay.meal = it.meal
-                localDay.water = it.water
-                localDay.alcohol = it.alcohol
-                localDay.running = it.running
-                localDay.bikeRide = it.bikeRide
-                localDay.sleep = it.sleep
-            }
-        }
+    override fun updateValueDay(day: Day) {
+        localDay.scoreBal = day.scoreBal
+        localDay.work = day.work
+        localDay.leisure = day.leisure
+        localDay.meal = day.meal
+        localDay.water = day.water
+        localDay.alcohol = day.alcohol
+        localDay.running = day.running
+        localDay.bikeRide = day.bikeRide
+        localDay.sleep = day.sleep
+        Log.d(TAG, "update value $localDay")
     }
-
 }

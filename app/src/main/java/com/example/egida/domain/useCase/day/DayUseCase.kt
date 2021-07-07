@@ -4,8 +4,8 @@ import com.example.egida.domain.entity.Day
 import kotlinx.coroutines.flow.Flow
 
 interface DayUseCase {
-    fun createDay(day: Flow<Day>)
+    fun saveDayInDatabase()
     suspend fun getDay()
     var day: Flow<Day>
-    fun updateValueDay(day: Flow<Day>)
+    fun updateValueDay(day: Day)
 }
