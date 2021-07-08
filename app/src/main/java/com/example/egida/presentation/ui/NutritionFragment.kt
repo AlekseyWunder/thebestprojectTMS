@@ -6,13 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import com.example.egida.R
 import com.example.egida.databinding.NutritionFragmentBinding
 import com.example.egida.presentation.viewModel.DayViewModel
 import com.example.egida.presentation.viewModel.MainViewModel
 import com.example.egida.utils.replaceFragment
-import kotlinx.coroutines.flow.collect
 
 class NutritionFragment : Fragment(R.layout.nutrition_fragment) {
 
@@ -24,47 +21,6 @@ class NutritionFragment : Fragment(R.layout.nutrition_fragment) {
     private lateinit var binding: NutritionFragmentBinding
     private lateinit var dayViewModel: DayViewModel
     private lateinit var mainViewModel: MainViewModel
-
-    override fun onStart() {
-        super.onStart()
-        mainViewModel.closeDrawer(requireActivity())
-    }
-
-    override fun onResume() {
-        super.onResume()
-        binding.minusMeal.setOnClickListener {
-            dayViewModel.minusMeal(binding.textMeal)
-        }
-        binding.plusMeal.setOnClickListener {
-            dayViewModel.plusMeal(binding.textMeal)
-        }
-
-        binding.minusWater.setOnClickListener {
-            dayViewModel.minusWater(binding.textWater)
-        }
-
-        binding.plusWater.setOnClickListener {
-            dayViewModel.plusWater(binding.textWater)
-        }
-
-        binding.minusAlcohol.setOnClickListener {
-            dayViewModel.minusAlcohol(binding.textAlcohol)
-        }
-
-        binding.plusAlcohol.setOnClickListener {
-            dayViewModel.plusAlcohol(binding.textAlcohol)
-        }
-
-        binding.btnSave.setOnClickListener {
-            dayViewModel.save()
-            replaceFragment(requireView(), MainFragment.newInstance())
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mainViewModel.openDrawer(requireActivity())
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,13 +35,59 @@ class NutritionFragment : Fragment(R.layout.nutrition_fragment) {
 
         dayViewModel = ViewModelProvider(this).get(DayViewModel::class.java)
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        lifecycleScope.launchWhenStarted {
-            dayViewModel.day
-                .collect {
-                    binding.textMeal.text = it.meal.toString()
-                    binding.textWater.text = it.water.toString()
-                    binding.textAlcohol.text = it.alcohol.toString()
-                }
+
+        binding.textMeal.text = dayViewModel.viewModelDay.meal.toString()
+        binding.textWater.text = dayViewModel.viewModelDay.water.toString()
+        binding.textAlcohol.text = dayViewModel.viewModelDay.alcohol.toString()
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mainViewModel.closeDrawer(requireActivity())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.minusMeal.setOnClickListener {
+            dayViewModel.minusMeal()
+            binding.textMeal.text = dayViewModel.viewModelDay.meal.toString()
+        }
+        binding.plusMeal.setOnClickListener {
+            dayViewModel.plusMeal()
+            binding.textMeal.text = dayViewModel.viewModelDay.meal.toString()
+        }
+
+        binding.minusWater.setOnClickListener {
+            dayViewModel.minusWater()
+            binding.textWater.text = dayViewModel.viewModelDay.water.toString()
+        }
+
+        binding.plusWater.setOnClickListener {
+            dayViewModel.plusWater()
+            binding.textWater.text = dayViewModel.viewModelDay.water.toString()
+        }
+
+        binding.minusAlcohol.setOnClickListener {
+            dayViewModel.minusAlcohol()
+            binding.textAlcohol.text = dayViewModel.viewModelDay.alcohol.toString()
+        }
+
+        binding.plusAlcohol.setOnClickListener {
+            dayViewModel.plusAlcohol()
+            binding.textAlcohol.text = dayViewModel.viewModelDay.alcohol.toString()
+        }
+
+        binding.btnSave.setOnClickListener {
+            dayViewModel.save()
+            replaceFragment(requireView(), MainFragment.newInstance())
         }
     }
+
+    override fun onStop() {
+        super.onStop()
+        mainViewModel.openDrawer(requireActivity())
+    }
+
+
 }

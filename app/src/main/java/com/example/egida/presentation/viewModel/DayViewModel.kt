@@ -1,15 +1,13 @@
 package com.example.egida.presentation.viewModel
 
-import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.egida.Dependencies
+import com.example.egida.domain.entity.Day
 import com.example.egida.domain.useCase.day.DayUseCase
 import com.example.egida.domain.useCase.scoreBall.UseCaseScoreBal
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -19,175 +17,89 @@ class DayViewModel : ViewModel() {
     private val dayUseCase: DayUseCase by lazy { Dependencies.dayUseCase() }
     private val scoreBalUseCase: UseCaseScoreBal by lazy { Dependencies.scoreBalUseCase() }
     var day = dayUseCase.day
-        .shareIn(viewModelScope, started = SharingStarted.Eagerly, replay = 1)
+    var viewModelDay = Day()
+
+    init {
+        viewModelScope.launch {
+            day.collect {
+                viewModelDay = it
+            }
+//            day.emit(_day)
+        }
+    }
 
     fun save() {
         viewModelScope.launch {
             withContext(Dispatchers.Default) {
-                scoreBalUseCase.calculationScoreBal()
+                scoreBalUseCase.calculationScoreBal(viewModelDay)
             }
         }
-        dayUseCase.createDay(day)
+        dayUseCase.updateValueDay(viewModelDay)
+        dayUseCase.saveDayInDatabase()
     }
 
-    fun minusRunning(textView: TextView) {
-        viewModelScope.launch {
-            day.collect {
-                it.running--
-                textView.text = it.running.toString()
-            }
-            dayUseCase.updateValueDay(day)
-        }
+    fun minusRunning() {
+        viewModelDay.running--
     }
 
-    fun plusRunning(textView: TextView) {
-        viewModelScope.launch {
-            day.collect {
-                it.running++
-                textView.text = it.running.toString()
-            }
-            dayUseCase.updateValueDay(day)
-        }
+    fun plusRunning() {
+        viewModelDay.running++
     }
 
-    fun minusBikeRide(textView: TextView) {
-        viewModelScope.launch {
-            day.collect {
-                it.bikeRide--
-                textView.text = it.bikeRide.toString()
-            }
-            dayUseCase.updateValueDay(day)
-        }
+    fun minusBikeRide() {
+        viewModelDay.bikeRide--
     }
 
-    fun plusBikeRide(textView: TextView) {
-        viewModelScope.launch {
-            day.collect {
-                it.bikeRide++
-                textView.text = it.bikeRide.toString()
-            }
-            dayUseCase.updateValueDay(day)
-        }
+    fun plusBikeRide() {
+        viewModelDay.bikeRide++
     }
 
-    fun minusSleep(textView: TextView) {
-        viewModelScope.launch {
-            day.collect {
-                it.sleep--
-                textView.text = it.sleep.toString()
-            }
-            dayUseCase.updateValueDay(day)
-        }
+    fun minusSleep() {
+        viewModelDay.sleep--
     }
 
-    fun plusSleep(textView: TextView) {
-        viewModelScope.launch {
-            day.collect {
-                it.sleep++
-                textView.text = it.sleep.toString()
-            }
-            dayUseCase.updateValueDay(day)
-        }
+    fun plusSleep() {
+        viewModelDay.sleep++
     }
 
-    fun minusMeal(textView: TextView) {
-        viewModelScope.launch {
-            day.collect {
-                it.meal--
-                textView.text = it.meal.toString()
-            }
-            dayUseCase.updateValueDay(day)
-        }
+    fun minusMeal() {
+        viewModelDay.meal--
     }
 
-    fun plusMeal(textView: TextView) {
-        viewModelScope.launch {
-            day.collect {
-                it.meal++
-                textView.text = it.meal.toString()
-            }
-            dayUseCase.updateValueDay(day)
-        }
+    fun plusMeal() {
+        viewModelDay.meal++
     }
 
-    fun minusWater(textView: TextView) {
-        viewModelScope.launch {
-            day.collect {
-                it.water--
-                textView.text = it.water.toString()
-            }
-            dayUseCase.updateValueDay(day)
-        }
+    fun minusWater() {
+        viewModelDay.water--
     }
 
-    fun plusWater(textView: TextView) {
-        viewModelScope.launch {
-            day.collect {
-                it.water++
-                textView.text = it.water.toString()
-            }
-            dayUseCase.updateValueDay(day)
-        }
+    fun plusWater() {
+        viewModelDay.water++
     }
 
-    fun minusAlcohol(textView: TextView) {
-        viewModelScope.launch {
-            day.collect {
-                it.alcohol--
-                textView.text = it.alcohol.toString()
-            }
-            dayUseCase.updateValueDay(day)
-        }
+    fun minusAlcohol() {
+        viewModelDay.alcohol--
     }
 
-    fun plusAlcohol(textView: TextView) {
-        viewModelScope.launch {
-            day.collect {
-                it.alcohol++
-                textView.text = it.alcohol.toString()
-            }
-            dayUseCase.updateValueDay(day)
-        }
+    fun plusAlcohol() {
+        viewModelDay.alcohol++
     }
 
-    fun minusValueWork(textView: TextView) {
-        viewModelScope.launch {
-            day.collect {
-                it.work--
-                textView.text = it.work.toString()
-            }
-            dayUseCase.updateValueDay(day)
-        }
+    fun minusValueWork() {
+        viewModelDay.work--
     }
 
-    fun plusValueWork(textView: TextView) {
-        viewModelScope.launch {
-            day.collect {
-                it.work++
-                textView.text = it.work.toString()
-            }
-            dayUseCase.updateValueDay(day)
-        }
+    fun plusValueWork() {
+        viewModelDay.work++
     }
 
-    fun minusValueLeisure(textView: TextView) {
-        viewModelScope.launch {
-            day.collect {
-                it.leisure--
-                textView.text = it.leisure.toString()
-            }
-            dayUseCase.updateValueDay(day)
-        }
+    fun minusValueLeisure() {
+        viewModelDay.leisure--
     }
 
-    fun plusValueLeisure(textView: TextView) {
-        viewModelScope.launch {
-            day.collect {
-                it.leisure++
-                textView.text = it.leisure.toString()
-            }
-            dayUseCase.updateValueDay(day)
-        }
+    fun plusValueLeisure() {
+        viewModelDay.leisure++
     }
 
 }

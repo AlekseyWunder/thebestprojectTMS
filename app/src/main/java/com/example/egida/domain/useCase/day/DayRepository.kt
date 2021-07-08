@@ -6,6 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface DayRepository {
     suspend fun getDay()
     var day: Flow<Day>
-    fun createDay(day: Flow<Day>)
-    fun updateValueDay(day: Flow<Day>)
+    fun saveDayInDatabase()
+    fun updateValueDay(day: Day)
 }

@@ -1,23 +1,23 @@
 package com.example.egida.domain.entity
 
-const val valueScoreBal: Int = 1000
-const val valueWork: Int = 8
-const val valueLeisure: Int = 8
-const val valueMeal: Int = 180
-const val valueWater: Int = 180
-const val valueAlcohol: Int = 180
-const val valueRunning: Int = 8
-const val valueBikeRide: Int = 8
-const val valueSleep: Int = 8
+import com.example.egida.Constants.baseValueAlcohol
+import com.example.egida.Constants.baseValueBikeRide
+import com.example.egida.Constants.baseValueLeisure
+import com.example.egida.Constants.baseValueMeal
+import com.example.egida.Constants.baseValueRunning
+import com.example.egida.Constants.baseValueScoreBal
+import com.example.egida.Constants.baseValueSleep
+import com.example.egida.Constants.baseValueWater
+import com.example.egida.Constants.baseValueWork
 
 data class Day(
-    var scoreBal: Int = valueScoreBal,
-    var work: Int = valueWork,
-    var leisure: Int = valueLeisure,
-    var meal: Int = valueMeal,
-    var water: Int = valueWater,
-    var alcohol: Int = valueAlcohol,
-    var running: Int = valueRunning,
-    var bikeRide: Int = valueBikeRide,
-    var sleep: Int = valueSleep,
+    var scoreBal: Int = baseValueScoreBal,
+    var work: Int = baseValueWork,
+    var leisure: Int = baseValueLeisure,
+    var meal: Int = baseValueMeal,
+    var water: Int = baseValueWater,
+    var alcohol: Int = baseValueAlcohol,
+    var running: Int = baseValueRunning,
+    var bikeRide: Int = baseValueBikeRide,
+    var sleep: Int = baseValueSleep,
 )

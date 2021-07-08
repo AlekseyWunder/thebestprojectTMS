@@ -1,7 +1,7 @@
 package com.example.egida.domain.useCase.userDatabase
 
-import com.example.egida.data.DatabaseUser
-import com.example.egida.domain.entity.UserDatabase
+import com.example.egida.data.cloudSource.DatabaseUser
+import com.example.egida.domain.entity.User
 import kotlinx.coroutines.flow.SharedFlow
 
 class UserDatabaseUseCaseImpl(
@@ -16,11 +16,7 @@ class UserDatabaseUseCaseImpl(
         return data.getUser()
     }
 
-    override var databaseUser: SharedFlow<UserDatabase>
-        get() = data.databaseUser
-        set(value) {
-            databaseUser = value
-        }
+    override var databaseUser: SharedFlow<User> = data.databaseUser
 
     override fun updateValueUser() {
         return data.updateValueUser()

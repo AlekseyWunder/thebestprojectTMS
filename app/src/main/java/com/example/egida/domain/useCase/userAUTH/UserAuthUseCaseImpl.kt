@@ -1,7 +1,7 @@
 package com.example.egida.domain.useCase.userAUTH
 
 import android.content.Context
-import com.example.egida.data.DatabaseAuth
+import com.example.egida.data.cloudSource.DatabaseAuth
 import com.example.egida.domain.entity.UserAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.Flow
@@ -30,7 +30,5 @@ class UserAuthUseCaseImpl(
         return databaseAUTH.singOutUser()
     }
 
-    override var message: Flow<String>
-        get() = databaseAUTH.message
-        set(value) {}
+    override var message: Flow<String> = databaseAUTH.message
 }

@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.egida.Constants
 import com.example.egida.Dependencies
 import com.example.egida.data.DataStorageState
-import com.example.egida.domain.entity.UserDatabase
+import com.example.egida.domain.entity.User
 import com.example.egida.domain.useCase.dataStorage.DataStorageUsecase
 import com.example.egida.domain.useCase.userDatabase.UserDatabaseUseCase
 import kotlinx.coroutines.flow.SharedFlow
@@ -23,7 +23,7 @@ class SettingViewModel : ViewModel() {
     private val userDatabaseUseCase: UserDatabaseUseCase by lazy { Dependencies.userDatabaseUseCase() }
     private val dataStorageUsecase: DataStorageUsecase by lazy { Dependencies.dataStorageUsecase() }
 
-    var userDatabase: SharedFlow<UserDatabase> = userDatabaseUseCase.databaseUser
+    var user: SharedFlow<User> = userDatabaseUseCase.databaseUser
     var userFirstName = Constants.firstName
     var userLastName = Constants.lastName
     var check: Boolean = Constants.checkAgreement
@@ -34,7 +34,7 @@ class SettingViewModel : ViewModel() {
 
     fun initValue() {
         viewModelScope.launch {
-            userDatabase.collect {
+            user.collect {
                 userFirstName = it.firstName
                 userLastName = it.lastName
                 userPhoneNumber = it.phoneNumber
@@ -48,7 +48,7 @@ class SettingViewModel : ViewModel() {
 
     fun setUserFirstName() {
         viewModelScope.launch {
-            userDatabase.collect { userDatabase ->
+            user.collect { userDatabase ->
                 userDatabase.firstName = userFirstName
                 Log.d(TAG, userDatabase.firstName)
             }
@@ -57,7 +57,7 @@ class SettingViewModel : ViewModel() {
 
     fun setUserLatName() {
         viewModelScope.launch {
-            userDatabase.collect { userDatabase ->
+            user.collect { userDatabase ->
                 userDatabase.lastName = userLastName
                 Log.d(TAG, userDatabase.lastName)
             }
@@ -66,7 +66,7 @@ class SettingViewModel : ViewModel() {
 
     fun setCheckAgreement() {
         viewModelScope.launch {
-            userDatabase.collect { userDatabase ->
+            user.collect { userDatabase ->
                 userDatabase.checkAgreement = check
                 Log.d(TAG, userDatabase.checkAgreement.toString())
             }
@@ -75,7 +75,7 @@ class SettingViewModel : ViewModel() {
 
     fun setPhoneNumber() {
         viewModelScope.launch {
-            userDatabase.collect { userDatabase ->
+            user.collect { userDatabase ->
                 userDatabase.phoneNumber = userPhoneNumber
                 Log.d(TAG, userDatabase.phoneNumber)
             }
@@ -85,7 +85,7 @@ class SettingViewModel : ViewModel() {
     fun minusHeight() {
         userHeight--
         viewModelScope.launch {
-            userDatabase.collect {
+            user.collect {
                 it.height = userHeight
                 Log.d(TAG, it.height.toString())
             }
@@ -95,7 +95,7 @@ class SettingViewModel : ViewModel() {
     fun plusHeight() {
         viewModelScope.launch {
             userHeight++
-            userDatabase.collect {
+            user.collect {
                 it.height = userHeight
                 Log.d(TAG, userHeight.toString())
             }
@@ -105,7 +105,7 @@ class SettingViewModel : ViewModel() {
     fun minusWeight() {
         userWeight--
         viewModelScope.launch {
-            userDatabase.collect {
+            user.collect {
                 it.weight = userWeight
                 Log.d(TAG, userWeight.toString())
             }
@@ -115,7 +115,7 @@ class SettingViewModel : ViewModel() {
     fun plusWeight() {
         viewModelScope.launch {
             userWeight++
-            userDatabase.collect {
+            user.collect {
                 it.weight = userWeight
                 Log.d(TAG, userWeight.toString())
             }

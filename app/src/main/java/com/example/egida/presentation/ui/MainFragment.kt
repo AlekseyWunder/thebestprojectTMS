@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -41,7 +43,10 @@ class MainFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         if (!mainViewModel.checkUser()) replaceActivity(requireView(), LoginActivity())
-        mainViewModel.updateHeader(requireActivity())
+        lifecycleScope.launch {
+            delay(2000)
+            binding.score.text = mainViewModel.viewModelDay.scoreBal.toString()
+        }
     }
 
     override fun onResume() {

@@ -1,19 +1,15 @@
 package com.example.egida.presentation.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import com.example.egida.R
 import com.example.egida.databinding.FitFragmentBinding
 import com.example.egida.presentation.viewModel.DayViewModel
 import com.example.egida.presentation.viewModel.MainViewModel
 import com.example.egida.utils.replaceFragment
-import kotlinx.coroutines.flow.collect
 
 class FitFragment : Fragment(R.layout.fit_fragment) {
 
@@ -26,6 +22,24 @@ class FitFragment : Fragment(R.layout.fit_fragment) {
     private lateinit var dayViewModel: DayViewModel
     private lateinit var mainViewModel: MainViewModel
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FitFragmentBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        dayViewModel = ViewModelProvider(this).get(DayViewModel::class.java)
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+        binding.textRunning.text = dayViewModel.viewModelDay.running.toString()
+        binding.textBikeRide.text = dayViewModel.viewModelDay.bikeRide.toString()
+        binding.textSleep.text = dayViewModel.viewModelDay.sleep.toString()
+    }
+
     override fun onStart() {
         super.onStart()
         mainViewModel.closeDrawer(requireActivity())
@@ -35,27 +49,33 @@ class FitFragment : Fragment(R.layout.fit_fragment) {
         super.onResume()
 
         binding.minusRunning.setOnClickListener {
-            dayViewModel.minusRunning(binding.textRunning)
+            dayViewModel.minusRunning()
+            binding.textRunning.text = dayViewModel.viewModelDay.running.toString()
         }
 
         binding.plusRunning.setOnClickListener {
-            dayViewModel.plusRunning(binding.textRunning)
+            dayViewModel.plusRunning()
+            binding.textRunning.text = dayViewModel.viewModelDay.running.toString()
         }
 
         binding.minusBikeRide.setOnClickListener {
-            dayViewModel.minusBikeRide(binding.textBikeRide)
+            dayViewModel.minusBikeRide()
+            binding.textBikeRide.text = dayViewModel.viewModelDay.bikeRide.toString()
         }
 
         binding.plusBikeRide.setOnClickListener {
-            dayViewModel.plusBikeRide(binding.textBikeRide)
+            dayViewModel.plusBikeRide()
+            binding.textBikeRide.text = dayViewModel.viewModelDay.bikeRide.toString()
         }
 
         binding.minusSleep.setOnClickListener {
-            dayViewModel.minusSleep(binding.textSleep)
+            dayViewModel.minusSleep()
+            binding.textSleep.text = dayViewModel.viewModelDay.sleep.toString()
         }
 
         binding.plusSleep.setOnClickListener {
-            dayViewModel.plusSleep(binding.textSleep)
+            dayViewModel.plusSleep()
+            binding.textSleep.text = dayViewModel.viewModelDay.sleep.toString()
         }
 
         binding.btnSave.setOnClickListener {
@@ -67,31 +87,5 @@ class FitFragment : Fragment(R.layout.fit_fragment) {
     override fun onStop() {
         super.onStop()
         mainViewModel.openDrawer(requireActivity())
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FitFragmentBinding.inflate(layoutInflater)
-        return binding.root
-
-
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        dayViewModel = ViewModelProvider(this).get(DayViewModel::class.java)
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        lifecycleScope.launchWhenStarted {
-            dayViewModel.day
-                .collect {
-                    Log.d(TAG, "$it")
-                    binding.textRunning.text = it.running.toString()
-                    binding.textBikeRide.text = it.bikeRide.toString()
-                    binding.textSleep.text = it.sleep.toString()
-                }
-        }
-
     }
 }
