@@ -11,6 +11,7 @@ import com.example.egida.domain.useCase.day.DayUseCase
 import com.example.egida.domain.useCase.userAUTH.UserAuthUseCase
 import com.example.egida.domain.useCase.userDatabase.UserDatabaseUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -67,6 +68,7 @@ class MainViewModel : ViewModel() {
     fun updateDay() {
         viewModelScope.launch {
             withContext(Dispatchers.Main) {
+                delay(2000)
                 dayUseCase.getDay()
             }
         }

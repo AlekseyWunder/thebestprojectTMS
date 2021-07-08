@@ -51,25 +51,31 @@ class NutritionFragment : Fragment() {
         super.onResume()
         binding.minusMeal.setOnClickListener {
             dayViewModel.minusMeal()
+            binding.textMeal.text = dayViewModel.viewModelDay.meal.toString()
         }
         binding.plusMeal.setOnClickListener {
             dayViewModel.plusMeal()
+            binding.textMeal.text = dayViewModel.viewModelDay.meal.toString()
         }
 
         binding.minusWater.setOnClickListener {
             dayViewModel.minusWater()
+            binding.textWater.text = dayViewModel.viewModelDay.water.toString()
         }
 
         binding.plusWater.setOnClickListener {
             dayViewModel.plusWater()
+            binding.textWater.text = dayViewModel.viewModelDay.water.toString()
         }
 
         binding.minusAlcohol.setOnClickListener {
             dayViewModel.minusAlcohol()
+            binding.textAlcohol.text = dayViewModel.viewModelDay.alcohol.toString()
         }
 
         binding.plusAlcohol.setOnClickListener {
             dayViewModel.plusAlcohol()
+            binding.textAlcohol.text = dayViewModel.viewModelDay.alcohol.toString()
         }
 
         binding.btnSave.setOnClickListener {
