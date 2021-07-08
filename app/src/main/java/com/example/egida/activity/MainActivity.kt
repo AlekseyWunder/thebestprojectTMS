@@ -16,7 +16,7 @@ import com.example.egida.presentation.ui.MainFragment
 import com.example.egida.presentation.viewModel.MainViewModel
 import com.example.egida.utils.singOutUser
 
-class MainActivity : AppCompatActivity(), DrawerController {
+class MainActivity : AppCompatActivity(),DrawerController {
 
     private lateinit var mBinding: MainActivityBinding
     private lateinit var mToolbar: Toolbar

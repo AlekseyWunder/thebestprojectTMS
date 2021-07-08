@@ -9,6 +9,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.egida.R
 import com.example.egida.activity.MainActivity
 import com.example.egida.databinding.SingInFragmentBinding
 import com.example.egida.presentation.viewModel.LoginViewModel
@@ -17,7 +18,7 @@ import com.example.egida.utils.replaceFragment
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class SingInFragment : Fragment() {
+class SingInFragment : Fragment(R.layout.sing_in_fragment) {
 
     companion object {
         fun newInstance() = SingInFragment()
