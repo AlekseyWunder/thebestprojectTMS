@@ -1,6 +1,9 @@
 package com.example.egida.presentation.`object`
 
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -14,7 +17,6 @@ import com.example.egida.presentation.ui.NutritionFragment
 import com.example.egida.presentation.ui.SettingFragment
 import com.example.egida.presentation.ui.WorkFragment
 import com.example.egida.utils.downloadAndSetImage
-import com.example.egida.utils.USER
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
@@ -83,7 +85,7 @@ class AppDrawer(
 
     private fun createDrawer() {
 
-        mDrawer = DrawerBuilder()
+        drawer = DrawerBuilder()
             .withSliderBackgroundDrawableRes(R.color.black)
             .withActivity(activity)
             .withToolbar(toolbar)

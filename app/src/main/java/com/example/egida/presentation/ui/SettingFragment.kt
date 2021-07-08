@@ -48,12 +48,12 @@ class SettingFragment : Fragment() {
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         settingViewModel.initValue()
-        binding.editFirstName.setText(settingViewModel.userFirstName)
-        binding.editLastName.setText(settingViewModel.userLastName)
-        binding.checkAgreement.isChecked = settingViewModel.check
-        binding.editPhoneNumber.setText(settingViewModel.userPhoneNumber)
-        binding.textHeight.text = settingViewModel.userHeight.toString()
-        binding.textWeight.text = settingViewModel.userWeight.toString()
+        binding.settingsEditFirstName.setText(settingViewModel.userFirstName)
+        binding.settingEditLastName.setText(settingViewModel.userLastName)
+        binding.settingCheckAgreement.isChecked = settingViewModel.check
+        binding.settingEditPhoneNumber.setText(settingViewModel.userPhoneNumber)
+        binding.settingTextHeight.text = settingViewModel.userHeight.toString()
+        binding.settingTextWeight.text = settingViewModel.userWeight.toString()
     }
 
     override fun onStart() {
@@ -63,16 +63,16 @@ class SettingFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        binding.editFirstName.doAfterTextChanged {
+        binding.settingsEditFirstName.doAfterTextChanged {
             settingViewModel.userFirstName = it.toString()
             settingViewModel.setUserFirstName()
         }
-        binding.editLastName.doAfterTextChanged {
+        binding.settingEditLastName.doAfterTextChanged {
             settingViewModel.userLastName = it.toString()
             settingViewModel.setUserLatName()
         }
-        binding.checkAgreement.setOnClickListener {
-            if (binding.checkAgreement.isChecked) {
+        binding.settingCheckAgreement.setOnClickListener {
+            if (binding.settingCheckAgreement.isChecked) {
                 settingViewModel.check = true
                 settingViewModel.setCheckAgreement()
             } else {
@@ -80,28 +80,28 @@ class SettingFragment : Fragment() {
                 settingViewModel.setCheckAgreement()
             }
         }
-        binding.editPhoneNumber.doAfterTextChanged {
+        binding.settingEditPhoneNumber.doAfterTextChanged {
             settingViewModel.userPhoneNumber = it.toString()
             settingViewModel.setPhoneNumber()
         }
-        binding.addPhoto.setOnClickListener {
+        binding.settingAddPhoto.setOnClickListener {
             changePhotoUser()
         }
-        binding.minusHeight.setOnClickListener {
+        binding.settingMinusHeight.setOnClickListener {
             settingViewModel.minusHeight()
-            binding.textHeight.text = settingViewModel.userHeight.toString()
+            binding.settingTextHeight.text = settingViewModel.userHeight.toString()
         }
-        binding.plusHeight.setOnClickListener {
+        binding.settingPlusHeight.setOnClickListener {
             settingViewModel.plusHeight()
-            binding.textHeight.text = settingViewModel.userHeight.toString()
+            binding.settingTextHeight.text = settingViewModel.userHeight.toString()
         }
-        binding.minusWeight.setOnClickListener {
+        binding.settingMinusWeight.setOnClickListener {
             settingViewModel.minusWeight()
-            binding.textWeight.text = settingViewModel.userWeight.toString()
+            binding.settingTextWeight.text = settingViewModel.userWeight.toString()
         }
-        binding.plusWeight.setOnClickListener {
+        binding.settingPlusWeight.setOnClickListener {
             settingViewModel.plusWeight()
-            binding.textWeight.text = settingViewModel.userWeight.toString()
+            binding.settingTextWeight.text = settingViewModel.userWeight.toString()
         }
 
         binding.settingsFragmentBtnSave.setOnClickListener {

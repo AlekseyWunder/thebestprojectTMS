@@ -14,7 +14,7 @@ import com.example.egida.utils.replaceActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MainFragment : Fragment(R.layout.main_fragment) {
+class MainFragment : Fragment() {
 
     companion object {
         fun newInstance() = MainFragment()

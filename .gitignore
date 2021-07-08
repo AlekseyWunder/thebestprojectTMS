@@ -1,16 +1,26 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+# General Folders
+
+# gradle/ comment this when using gradle wrapper.
+build/
+bin/
+gen/
+tmp/
+# proguard/ comment if not using proguard.
+.gradle/
+.settings/
+.idea/
+
+# General Files
+
+.project
+.classpath
 .DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
 local.properties
-.idea
+*.iml
+# gradlew comment when using gradle wrapper
+# gradlew.bat comment when using gradle wrapper
+Thumbs.db
+
+
+# files specific to current project
+your_apk.apk
