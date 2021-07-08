@@ -11,7 +11,7 @@ import com.example.egida.presentation.viewModel.DayViewModel
 import com.example.egida.presentation.viewModel.MainViewModel
 import com.example.egida.utils.replaceFragment
 
-class FitFragment : Fragment() {
+class FitFragment : Fragment(R.layout.fit_fragment) {
 
     companion object {
         fun newInstance() = FitFragment()

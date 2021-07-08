@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/singInFragment">
+
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="com.example.egida.presentation.ui.RegistrationFragment"
+        android:label="Registration">
+        <action
+            android:id="@+id/action_registrationFragment_to_singInFragment"
+            app:destination="@id/singInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/passwordRecoveryFragment"
+        android:name="com.example.egida.presentation.ui.PasswordRecoveryFragment"
+        android:label="Recovery Pasword">
+        <action
+            android:id="@+id/action_passwordRecoveryFragment_to_singInFragment"
+            app:destination="@id/singInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/singInFragment"
+        android:name="com.example.egida.presentation.ui.SingInFragment"
+        android:label="Sing-in">
+        <action
+            android:id="@+id/action_singInFragment_to_passwordRecoveryFragment"
+            app:destination="@id/passwordRecoveryFragment" />
+        <action
+            android:id="@+id/action_singInFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_singInFragment_to_mainFragment2"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fitFragment"
+        android:name="com.example.egida.presentation.ui.FitFragment"
+        android:label="Fit">
+        <action
+            android:id="@+id/action_fitFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.egida.presentation.ui.MainFragment"
+        android:label="Home">
+        <action
+            android:id="@+id/action_mainFragment_to_singInFragment"
+            app:destination="@id/singInFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_nutritionFragment"
+            app:destination="@id/nutritionFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_workFragment"
+            app:destination="@id/workFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_fitFragment"
+            app:destination="@id/fitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/workFragment"
+        android:name="com.example.egida.presentation.ui.WorkFragment"
+        android:label="Work">
+        <action
+            android:id="@+id/action_workFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nutritionFragment"
+        android:name="com.example.egida.presentation.ui.NutritionFragment"
+        android:label="Nutrition">
+        <action
+            android:id="@+id/action_nutritionFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.egida.presentation.ui.SettingFragment"
+        android:label="Setting"
+        tools:layout="@layout/setting_fragment">
+        <action
+            android:id="@+id/action_settingFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+</navigation>

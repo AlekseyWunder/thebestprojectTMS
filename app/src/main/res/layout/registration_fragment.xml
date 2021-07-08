@@ -3,41 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
     android:scrollbars="none"
     android:background="@drawable/background_logo"
-    android:theme="@style/Theme.AppLogin">
+    android:theme="@style/Theme.AppLogin"
+    tools:context="presentation.ui.RegistrationFragment"
+    >
 
-    <RelativeLayout
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/sing_in_fragment_padding_66dp">
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/margin_20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/margin_20dp" />
 
         <ImageView
             android:id="@+id/registration_fragment_btn_back"
+            style="@style/btn_back"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
             android:src="@drawable/btn_back"
-            style="@style/btn_back" />
+            app:layout_constraintStart_toStartOf="@+id/title_logo"
+            app:layout_constraintTop_toBottomOf="@+id/logo" />
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/logo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/registration_fragment_padding_24dp"
-            android:paddingTop="@dimen/registration_fragment_padding_26dp"
-            android:paddingRight="@dimen/registration_fragment_padding_24dp">
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/new_egida_file"/>
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_20dp"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/new_egida_file" />
 
                 <TextView
+                    android:id="@+id/title_logo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_10dp"
@@ -45,95 +58,65 @@
                     android:gravity="center"
                     android:text="@string/registration_fragment_text_registration"
                     android:textColor="@color/dark_grey"
-                    android:textSize="@dimen/text_size_22sp" />
+                    android:textSize="@dimen/text_size_22sp"
+                    app:layout_constraintBottom_toTopOf="@id/input_user_email"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/logo"
+                    app:layout_constraintVertical_bias="0.0"/>
 
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/userinfo_tab"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_20dp"
-                    android:background="@drawable/circular_border_solid"
-                    android:gravity="center"
-                    android:padding="@dimen/padding_18dp">
-
-                    <EditText
-                        android:id="@+id/input_user_email"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:fontFamily="@font/montserrat"
-                        android:hint="@string/hint_email"
-                        android:inputType="textEmailAddress"
-                        android:textSize="@dimen/registration_fragment_text_size_14sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_20dp"
-                    android:background="@drawable/circular_border_solid"
-                    android:gravity="center"
-                    android:padding="@dimen/padding_18dp">
-
-                    <EditText
-                        android:id="@+id/input_user_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:fontFamily="@font/montserrat"
-                        android:hint="@string/hint_password"
-                        android:inputType="textPassword"
-                        android:textSize="@dimen/registration_fragment_text_size_14sp" />
-
-                </LinearLayout>
+        <EditText
+            android:id="@+id/input_user_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20dp"
+            android:background="@drawable/circular_border_solid_top"
+            android:baselineAligned="false"
+            android:fontFamily="@font/montserrat"
+            android:hint="@string/hint_email"
+            android:inputType="textEmailAddress"
+            android:padding="@dimen/padding_18dp"
+            android:textSize="@dimen/sing_in_fragment_text_size_14sp"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/title_logo"/>
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_20dp"
-                    android:background="@drawable/circular_border_solid"
-                    android:gravity="center"
-                    android:padding="@dimen/padding_18dp">
+        <EditText
+            android:id="@+id/input_user_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:baselineAligned="false"
+            android:fontFamily="@font/montserrat"
+            android:hint="@string/hint_password"
+            android:inputType="textPassword"
+            android:padding="@dimen/padding_18dp"
+            android:textSize="@dimen/registration_fragment_text_size_14sp"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/input_user_email" />
 
-                    <EditText
+        <EditText
                         android:id="@+id/input_double_user_password"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="@null"
+                        android:baselineAligned="false"
+                        android:background="@drawable/circular_border_solid_bottom"
                         android:fontFamily="@font/montserrat"
                         android:hint="@string/repeat_password"
+                        android:padding="@dimen/padding_18dp"
                         android:inputType="textPassword"
-                        android:textSize="@dimen/registration_fragment_text_size_14sp" />
+                        android:textSize="@dimen/registration_fragment_text_size_14sp"
+                        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                        app:layout_constraintStart_toStartOf="@id/guideline_start"
+                        app:layout_constraintTop_toBottomOf="@id/input_user_password"/>
 
-                </LinearLayout>
-
-
-                <TextView
-                    android:id="@+id/phone_number_textll"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/registration_fragment_margin_8dp"
-                    android:fontFamily="@font/montserrat"
-                    android:padding="@dimen/registration_fragment_padding_10dp"
-                    android:text=""
-                    android:textAlignment="center"
-                    android:textSize="@dimen/registration_fragment_text_size_12sp" />
 
                 <Button
                     android:id="@+id/btn_continue"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/registration_fragment_margin_24dp"
                     android:layout_marginBottom="@dimen/registration_fragment_margin_14dp"
@@ -141,19 +124,12 @@
                     android:fontFamily="@font/montserrat"
                     android:padding="@dimen/registration_fragment_padding_18dp"
                     android:text="@string/text_continue"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toBottomOf="@+id/input_double_user_password"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end" />
 
-            </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/verification_tab"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="@dimen/margin_20dp"/>
 
-        </LinearLayout>
-
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

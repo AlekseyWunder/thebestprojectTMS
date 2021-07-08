@@ -27,6 +27,7 @@ class MainViewModel : ViewModel() {
     private val userDatabaseUseCase: UserDatabaseUseCase by lazy { Dependencies.userDatabaseUseCase() }
     private val dayUseCase: DayUseCase by lazy { Dependencies.dayUseCase() }
     private var toast = MutableLiveData<String>()
+    var viewModelDay: Day = Day()
     private var day = dayUseCase.day
     var viewModelDay = Day()
 
@@ -36,6 +37,14 @@ class MainViewModel : ViewModel() {
                 viewModelDay = it
             }
 
+        }
+    }
+
+    init {
+        viewModelScope.launch {
+            day.collect {
+                viewModelDay = it
+            }
         }
     }
 

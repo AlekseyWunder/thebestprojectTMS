@@ -86,7 +86,7 @@ class AppDrawer(
     private fun createDrawer() {
 
         drawer = DrawerBuilder()
-            .withSliderBackgroundDrawableRes(R.drawable.gradient)
+            .withSliderBackgroundDrawableRes(R.color.black)
             .withActivity(activity)
             .withToolbar(toolbar)
             .withActionBarDrawerToggle(true)

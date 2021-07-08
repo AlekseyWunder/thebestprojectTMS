@@ -11,7 +11,7 @@ import com.example.egida.presentation.viewModel.DayViewModel
 import com.example.egida.presentation.viewModel.MainViewModel
 import com.example.egida.utils.replaceFragment
 
-class NutritionFragment : Fragment() {
+class NutritionFragment : Fragment(R.layout.nutrition_fragment) {
 
     companion object {
         fun newInstance() = NutritionFragment()

@@ -37,7 +37,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-//        binding.score.isGone
+        binding.score.visibility = View.GONE
     }
 
     override fun onStart() {
@@ -45,7 +45,6 @@ class MainFragment : Fragment() {
         if (!mainViewModel.checkUser()) replaceActivity(requireView(), LoginActivity())
         lifecycleScope.launch {
             delay(2000)
-//            binding.score.isVisible
             binding.score.text = mainViewModel.viewModelDay.scoreBal.toString()
         }
     }
@@ -53,7 +52,9 @@ class MainFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         lifecycleScope.launch {
-            delay(2000)
+            delay(3000)
+            binding.score.text = mainViewModel.viewModelDay.scoreBal.toString()
+            binding.score.visibility = View.VISIBLE
             mainViewModel.updateHeader(requireActivity())
         }
     }

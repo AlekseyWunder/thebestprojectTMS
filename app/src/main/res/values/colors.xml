@@ -11,7 +11,7 @@
 
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#FFA9A8A8</color>
-    <color name="colorAccent">#FF000000</color>
+    <color name="colorAccent">#FFFFFF</color>
 
     <!-- Material DEFAULT colors -->
     <color name="material_drawer_primary">#2196F3</color>
